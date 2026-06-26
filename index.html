@@ -10,223 +10,187 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #1b3b7a;
-    --navy-deep: #14305f;
-    --navy-grad: linear-gradient(140deg, #2350a8 0%, #1b3b7a 55%, #14305f 100%);
-    --blue: #2f6bff;
-    --blue-soft: #eaf0ff;
-    --bg: #eef2f9;
-    --surface: #ffffff;
-    --ink: #16213e;
-    --ink-soft: #5a6478;
-    --muted: #9aa3b7;
-    --line: #eef1f7;
-    --line-strong: #dde3ef;
-    --success: #18a957;
-    --success-soft: #e4f7ec;
-    --error: #e23b4e;
-    --error-soft: #fdecee;
-    --warn: #d98a13;
-    --warn-soft: #fdf3e2;
-    --r-xl: 26px; --r-lg: 20px; --r-md: 14px; --r-sm: 11px;
-    --sh-card: 0 16px 40px -18px rgba(27, 59, 122, 0.28);
-    --sh-soft: 0 6px 18px -10px rgba(27, 59, 122, 0.4);
-    --sh-pop: 0 18px 44px -10px rgba(20, 48, 95, 0.4);
+    --navy:#1b3b7a; --navy-deep:#14305f; --navy-grad:linear-gradient(140deg,#2350a8 0%,#1b3b7a 55%,#14305f 100%);
+    --blue:#2f6bff; --blue-soft:#eaf0ff; --bg:#eef2f9; --surface:#fff;
+    --ink:#16213e; --ink-soft:#5a6478; --muted:#9aa3b7; --line:#eef1f7; --line-strong:#dde3ef;
+    --success:#18a957; --success-soft:#e4f7ec; --error:#e23b4e; --error-soft:#fdecee; --warn:#d98a13; --warn-soft:#fdf3e2;
+    --r-xl:26px; --r-lg:20px; --r-md:14px; --r-sm:11px;
+    --sh-card:0 16px 40px -18px rgba(27,59,122,.28); --sh-soft:0 6px 18px -10px rgba(27,59,122,.4); --sh-pop:0 18px 44px -10px rgba(20,48,95,.4);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.5;
-    -webkit-font-smoothing: antialiased; min-height: 100vh; padding-bottom: 120px;
-  }
-  h1,h2,h3 { font-family: 'Poppins', sans-serif; }
-  .icon { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-  .icon-lg { width: 22px; height: 22px; } .icon-sm { width: 15px; height: 15px; } .icon-xl { width: 30px; height: 30px; }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:120px}
+  h1,h2,h3{font-family:'Poppins',sans-serif}
+  .icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  .icon-lg{width:22px;height:22px}.icon-sm{width:15px;height:15px}.icon-xl{width:30px;height:30px}
 
-  /* ===== TOPBAR ===== */
-  .topbar {
-    background: var(--navy-grad); color: #fff;
-    padding: 20px 20px 26px; border-radius: 0 0 28px 28px;
-    position: sticky; top: 0; z-index: 40; overflow: hidden;
-  }
-  .topbar::before { content:''; position:absolute; top:-50px; right:-30px; width:150px; height:150px; background:rgba(255,255,255,0.07); border-radius:50%; }
-  .topbar-row { max-width: 720px; margin: 0 auto; display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
-  .topbar-logo { width: 40px; height: 40px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.25); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; }
-  .topbar-brand { flex: 1; }
-  .topbar-brand b { font-family: 'Poppins'; font-weight: 600; font-size: 16px; display: block; }
-  .topbar-brand span { font-size: 12px; opacity: 0.8; }
-  .step-pill { font-family: 'Poppins'; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); padding: 6px 12px; border-radius: 20px; white-space: nowrap; }
-  .greet { max-width: 720px; margin: 16px auto 0; position: relative; z-index: 1; }
-  .greet h1 { font-size: 20px; font-weight: 700; }
-  .greet p { font-size: 12.5px; opacity: 0.82; margin-top: 2px; }
-  .progress { max-width: 720px; margin: 14px auto 0; display: flex; gap: 6px; position: relative; z-index: 1; }
-  .progress span { flex: 1; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.22); transition: background 0.3s; }
-  .progress span.done { background: #fff; }
-  .progress span.cur { background: #9cc0ff; }
+  /* TOPBAR */
+  .topbar{background:var(--navy-grad);color:#fff;padding:20px 20px 26px;border-radius:0 0 28px 28px;position:sticky;top:0;z-index:40;overflow:hidden}
+  .topbar::before{content:'';position:absolute;top:-50px;right:-30px;width:150px;height:150px;background:rgba(255,255,255,.07);border-radius:50%}
+  .topbar-row{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+  .topbar-logo{width:40px;height:40px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center}
+  .topbar-brand{flex:1}.topbar-brand b{font-family:'Poppins';font-weight:600;font-size:16px;display:block}.topbar-brand span{font-size:12px;opacity:.8}
+  .step-pill{font-family:'Poppins';font-size:12px;font-weight:600;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);padding:6px 12px;border-radius:20px;white-space:nowrap}
+  .greet{max-width:720px;margin:16px auto 0;position:relative;z-index:1}
+  .greet h1{font-size:20px;font-weight:700}.greet p{font-size:12.5px;opacity:.82;margin-top:2px}
+  .progress{max-width:720px;margin:14px auto 0;display:flex;gap:5px;position:relative;z-index:1}
+  .progress span{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.22);transition:background .3s}
+  .progress span.done{background:#7ef0a8}.progress span.cur{background:#fff}
 
-  /* ===== STAGE / STEPS ===== */
-  .stage { max-width: 720px; margin: -14px auto 0; padding: 0 16px; position: relative; z-index: 2; }
-  .step { display: none; animation: fadeIn 0.32s ease; }
-  .step.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  /* STAGE */
+  .stage{max-width:720px;margin:-14px auto 0;padding:0 16px;position:relative;z-index:2}
+  .mod{display:none;animation:fadeIn .32s ease}.mod.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .card{background:var(--surface);border-radius:var(--r-xl);padding:22px;box-shadow:var(--sh-card)}
+  .card-head{display:flex;align-items:center;gap:13px;margin-bottom:20px}
+  .card-chip{width:46px;height:46px;background:var(--blue-soft);color:var(--navy);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card-head-text{flex:1;min-width:0}.card-title{font-family:'Poppins';font-size:16px;font-weight:600}.card-sub{font-size:12.5px;color:var(--muted);margin-top:1px}
+  .saved-badge{display:none;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--success);background:var(--success-soft);padding:5px 9px;border-radius:20px}
+  .saved-badge.on{display:inline-flex}
 
-  .card { background: var(--surface); border-radius: var(--r-xl); padding: 22px; box-shadow: var(--sh-card); }
-  .card-head { display: flex; align-items: center; gap: 13px; margin-bottom: 20px; }
-  .card-chip { width: 46px; height: 46px; background: var(--blue-soft); color: var(--navy); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .card-head-text { flex: 1; min-width: 0; }
-  .card-title { font-family: 'Poppins'; font-size: 16px; font-weight: 600; }
-  .card-sub { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+  /* FIELDS */
+  .field{margin-bottom:15px}.field:last-child{margin-bottom:0}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:7px}
+  .label-req::after{content:'*';color:var(--error);margin-left:3px}.label-hint{font-weight:400;color:var(--muted);margin-left:4px}
+  .input,.select,.textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line-strong);border-radius:var(--r-md);background:#fbfcfe;font-family:inherit;font-size:15px;color:var(--ink);transition:all .15s ease;min-height:48px}
+  .input::placeholder,.textarea::placeholder{color:var(--muted)}
+  .input:hover,.select:hover,.textarea:hover{border-color:#c2cbdc}
+  .input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 4px rgba(47,107,255,.12)}
+  .input:disabled,.select:disabled{background:#f1f3f8;cursor:not-allowed;color:var(--muted)}
+  .select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231b3b7a' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+  .textarea{min-height:82px;resize:vertical}
 
-  /* ===== FIELDS ===== */
-  .field { margin-bottom: 15px; } .field:last-child { margin-bottom: 0; }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
-  .label { display: block; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 7px; }
-  .label-req::after { content: '*'; color: var(--error); margin-left: 3px; }
-  .label-hint { font-weight: 400; color: var(--muted); margin-left: 4px; }
-  .input, .select, .textarea {
-    width: 100%; padding: 13px 15px; border: 1.5px solid var(--line-strong); border-radius: var(--r-md);
-    background: #fbfcfe; font-family: inherit; font-size: 15px; color: var(--ink); transition: all 0.15s ease; min-height: 48px;
-  }
-  .input::placeholder, .textarea::placeholder { color: var(--muted); }
-  .input:hover, .select:hover, .textarea:hover { border-color: #c2cbdc; }
-  .input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--blue); background: #fff; box-shadow: 0 0 0 4px rgba(47,107,255,0.12); }
-  .input:disabled, .select:disabled { background: #f1f3f8; cursor: not-allowed; color: var(--muted); }
-  .select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231b3b7a' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
-  .textarea { min-height: 82px; resize: vertical; }
+  /* OPTIONS */
+  .opt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:9px}.opt-grid-2{grid-template-columns:repeat(2,1fr)}
+  .opt{position:relative}.opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt label{display:flex;align-items:center;justify-content:center;gap:7px;padding:13px;background:#fbfcfe;border:1.5px solid var(--line-strong);border-radius:var(--r-md);cursor:pointer;font-size:14px;font-weight:600;color:var(--ink-soft);transition:all .15s ease;text-align:center;min-height:50px}
+  .opt label:hover{border-color:var(--blue);color:var(--navy)}
+  .opt input:checked+label{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:var(--sh-soft)}
+  .opt .chk{display:none}.opt input:checked+label .chk{display:inline-flex}
 
-  /* ===== OPTIONS ===== */
-  .opt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 9px; }
-  .opt-grid-2 { grid-template-columns: repeat(2, 1fr); }
-  .opt { position: relative; }
-  .opt input { position: absolute; opacity: 0; pointer-events: none; }
-  .opt label { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 13px; background: #fbfcfe; border: 1.5px solid var(--line-strong); border-radius: var(--r-md); cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink-soft); transition: all 0.15s ease; text-align: center; min-height: 50px; }
-  .opt label:hover { border-color: var(--blue); color: var(--navy); }
-  .opt input:checked + label { background: var(--navy); border-color: var(--navy); color: #fff; box-shadow: var(--sh-soft); }
-  .opt .chk { display: none; } .opt input:checked + label .chk { display: inline-flex; }
+  /* BUTTONS */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border:1.5px solid transparent;border-radius:var(--r-md);font-family:'Poppins',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer;transition:all .15s ease;min-height:48px;white-space:nowrap}
+  .btn-primary{background:var(--navy);color:#fff;box-shadow:var(--sh-soft)}.btn-primary:hover:not(:disabled){background:var(--navy-deep)}
+  .btn-soft{background:var(--blue-soft);color:var(--navy)}.btn-soft:hover{background:#dce6ff}
+  .btn-outline{background:#fff;color:var(--ink);border-color:var(--line-strong)}
+  .btn-success{background:var(--success);color:#fff}.btn-success:hover{background:#13954b}
+  .btn-danger{background:transparent;color:var(--error);border-color:var(--line-strong)}.btn-danger:hover{background:var(--error-soft);border-color:var(--error)}
+  .btn-block{width:100%}.btn-sm{padding:8px 13px;font-size:13px;min-height:38px}.btn-icon{padding:8px;min-height:38px;width:38px}
+  .save-row{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line-strong)}
 
-  /* ===== BUTTONS ===== */
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 20px; border: 1.5px solid transparent; border-radius: var(--r-md); font-family: 'Poppins', sans-serif; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; min-height: 48px; white-space: nowrap; }
-  .btn-primary { background: var(--navy); color: #fff; box-shadow: var(--sh-soft); }
-  .btn-primary:hover:not(:disabled) { background: var(--navy-deep); }
-  .btn-soft { background: var(--blue-soft); color: var(--navy); }
-  .btn-soft:hover { background: #dce6ff; }
-  .btn-outline { background: #fff; color: var(--ink); border-color: var(--line-strong); }
-  .btn-danger { background: transparent; color: var(--error); border-color: var(--line-strong); }
-  .btn-danger:hover { background: var(--error-soft); border-color: var(--error); }
-  .btn-block { width: 100%; } .btn-sm { padding: 8px 13px; font-size: 13px; min-height: 38px; } .btn-icon { padding: 8px; min-height: 38px; width: 38px; }
+  /* ALERTS */
+  .alert{display:flex;align-items:flex-start;gap:11px;padding:14px;border-radius:var(--r-md);font-size:13px;margin-bottom:16px;border:1.5px solid}
+  .alert-warn{background:var(--warn-soft);color:var(--warn);border-color:#f3dcae}.alert-error{background:var(--error-soft);color:var(--error);border-color:#f6c7cd}
+  .alert-actions{margin-top:9px;display:flex;gap:8px}
+  .shake{animation:shake .4s}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
-  /* ===== ALERTS ===== */
-  .alert { display: flex; align-items: flex-start; gap: 11px; padding: 14px; border-radius: var(--r-md); font-size: 13px; margin-bottom: 16px; border: 1.5px solid; }
-  .alert-warn { background: var(--warn-soft); color: var(--warn); border-color: #f3dcae; }
-  .alert-error { background: var(--error-soft); color: var(--error); border-color: #f6c7cd; }
-  .alert-actions { margin-top: 9px; display: flex; gap: 8px; }
-  .shake { animation: shake 0.4s; } @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  /* GPS LOCATION */
+  .loc-box{border:1.5px solid var(--line-strong);border-radius:var(--r-md);padding:15px;background:#fbfcfe;transition:.2s}
+  .loc-box.ok{border-color:var(--success);background:var(--success-soft)}
+  .loc-top{display:flex;align-items:center;gap:12px}
+  .loc-ic{width:42px;height:42px;border-radius:50%;background:var(--blue-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .loc-box.ok .loc-ic{background:#fff;color:var(--success)}
+  .loc-info{flex:1;min-width:0}.loc-info b{font-size:14px;font-family:'Poppins'}.loc-info span{display:block;font-size:12px;color:var(--ink-soft);margin-top:1px}
+  .loc-coords{margin-top:12px;font-size:12.5px;color:var(--ink-soft);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .loc-coords a{color:var(--navy);font-weight:600;text-decoration:none}
 
-  /* ===== SKU ===== */
-  .sku-wrap { position: relative; }
-  .sku-dd { position: absolute; top: calc(100% + 5px); left: 0; right: 0; background: #fff; border: 1.5px solid var(--line-strong); border-radius: var(--r-md); max-height: 240px; overflow-y: auto; z-index: 100; box-shadow: var(--sh-pop); display: none; }
-  .sku-dd.show { display: block; }
-  .sku-item { padding: 12px 15px; cursor: pointer; font-size: 14px; border-bottom: 1px solid var(--line); }
-  .sku-item:last-child { border: none; } .sku-item:hover { background: var(--blue-soft); color: var(--navy); }
-  .sku-empty { padding: 15px; text-align: center; color: var(--muted); font-size: 13px; }
+  /* SKU */
+  .sku-wrap{position:relative}
+  .sku-dd{position:absolute;top:calc(100% + 5px);left:0;right:0;background:#fff;border:1.5px solid var(--line-strong);border-radius:var(--r-md);max-height:240px;overflow-y:auto;z-index:100;box-shadow:var(--sh-pop);display:none}
+  .sku-dd.show{display:block}
+  .sku-item{padding:12px 15px;cursor:pointer;font-size:14px;border-bottom:1px solid var(--line)}.sku-item:last-child{border:none}.sku-item:hover{background:var(--blue-soft);color:var(--navy)}
+  .sku-empty{padding:15px;text-align:center;color:var(--muted);font-size:13px}
 
-  /* ===== PRODUCTS ===== */
-  .prod { background: #fbfcfe; border: 1.5px solid var(--line); border-radius: var(--r-lg); padding: 15px; margin-bottom: 11px; }
-  .prod-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
-  .prod-title { font-family: 'Poppins'; font-size: 13px; font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 8px; }
-  .prod-sub { font-size: 13px; color: var(--ink-soft); text-align: right; margin-top: 9px; }
-  .prod-sub strong { color: var(--ink); font-weight: 700; }
+  /* LIST ITEMS (pedido/agotados/fechas) */
+  .item{background:#fbfcfe;border:1.5px solid var(--line);border-radius:var(--r-lg);padding:15px;margin-bottom:11px}
+  .item-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+  .item-title{font-family:'Poppins';font-size:13px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:8px}
+  .item-sub{font-size:13px;color:var(--ink-soft);text-align:right;margin-top:9px}.item-sub strong{color:var(--ink);font-weight:700}
+  .empty-hint{text-align:center;color:var(--muted);font-size:13px;padding:6px 0 14px}
 
-  /* ===== TOTAL ===== */
-  .total-card { background: var(--navy-grad); color: #fff; border-radius: var(--r-lg); padding: 18px 20px; margin-top: 14px; position: relative; overflow: hidden; box-shadow: var(--sh-soft); }
-  .total-card::after { content:''; position:absolute; top:-30px; right:-20px; width:110px; height:110px; background:rgba(255,255,255,0.08); border-radius:50%; }
-  .total-row { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
-  .total-row + .total-row { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.16); }
-  .total-lbl { font-size: 13px; opacity: 0.85; } .total-val { font-family: 'Poppins'; font-size: 17px; font-weight: 600; }
-  .total-row.big .total-val { font-size: 24px; font-weight: 700; }
+  /* TOTAL */
+  .total-card{background:var(--navy-grad);color:#fff;border-radius:var(--r-lg);padding:18px 20px;margin-top:14px;position:relative;overflow:hidden;box-shadow:var(--sh-soft)}
+  .total-card::after{content:'';position:absolute;top:-30px;right:-20px;width:110px;height:110px;background:rgba(255,255,255,.08);border-radius:50%}
+  .total-row{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+  .total-row+.total-row{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.16)}
+  .total-lbl{font-size:13px;opacity:.85}.total-val{font-family:'Poppins';font-size:17px;font-weight:600}.total-row.big .total-val{font-size:24px;font-weight:700}
 
-  /* ===== UPLOAD ===== */
-  .upload { position: relative; border: 2px dashed var(--line-strong); border-radius: var(--r-lg); padding: 26px 16px; text-align: center; cursor: pointer; transition: all 0.15s; background: #fbfcfe; }
-  .upload:hover { border-color: var(--blue); background: var(--blue-soft); }
-  .upload.has { padding: 12px; border-style: solid; border-color: var(--success); background: var(--success-soft); }
-  .upload input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-  .upload-ic { width: 46px; height: 46px; background: var(--blue-soft); color: var(--navy); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 11px; }
-  .upload-t { font-size: 14px; font-weight: 600; } .upload-h { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .preview-img { max-width: 100%; max-height: 240px; border-radius: var(--r-md); display: block; margin: 0 auto; }
-  .preview-act { display: flex; gap: 8px; margin-top: 11px; justify-content: center; }
+  /* UPLOAD */
+  .upload{position:relative;border:2px dashed var(--line-strong);border-radius:var(--r-lg);padding:24px 16px;text-align:center;cursor:pointer;transition:all .15s;background:#fbfcfe}
+  .upload:hover{border-color:var(--blue);background:var(--blue-soft)}
+  .upload.has{padding:12px;border-style:solid;border-color:var(--success);background:var(--success-soft)}
+  .upload input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .upload-ic{width:44px;height:44px;background:var(--blue-soft);color:var(--navy);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px}
+  .upload-t{font-size:13.5px;font-weight:600}.upload-h{font-size:12px;color:var(--muted);margin-top:2px}
+  .preview-img{max-width:100%;max-height:200px;border-radius:var(--r-md);display:block;margin:0 auto}
+  .preview-act{display:flex;gap:8px;margin-top:11px;justify-content:center}
 
-  /* ===== BOTTOM NAV + FLOWER ===== */
-  .bottomnav {
-    position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
-    background: rgba(255,255,255,0.94); backdrop-filter: blur(10px); border-top: 1px solid var(--line);
-    padding: 12px 18px; padding-bottom: max(12px, env(safe-area-inset-bottom));
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  }
-  .bottomnav .nav-side { flex: 1; display: flex; }
-  .bottomnav .nav-side.right { justify-content: flex-end; }
-  .nav-btn { display: inline-flex; align-items: center; gap: 7px; padding: 11px 16px; border-radius: var(--r-md); border: 1.5px solid var(--line-strong); background: #fff; color: var(--ink); font-family: 'Poppins'; font-weight: 600; font-size: 13.5px; cursor: pointer; min-height: 46px; transition: all 0.15s; }
-  .nav-btn:hover { border-color: var(--muted); }
-  .nav-btn.primary { background: var(--navy); color: #fff; border-color: var(--navy); box-shadow: var(--sh-soft); }
-  .nav-btn[hidden] { visibility: hidden; }
+  /* SUMMARY */
+  .sum-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+  .sum-cell{background:#fbfcfe;border:1.5px solid var(--line);border-radius:var(--r-md);padding:13px}
+  .sum-cell .k{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+  .sum-cell .v{font-family:'Poppins';font-size:15px;font-weight:600;margin-top:3px;word-break:break-word}
+  .mod-state{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1.5px solid var(--line);border-radius:var(--r-md);margin-bottom:8px}
+  .mod-state .ms-ic{width:32px;height:32px;border-radius:9px;background:var(--blue-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .mod-state .ms-name{flex:1;font-weight:600;font-size:14px}
+  .ms-tag{font-size:11px;font-weight:700;padding:4px 9px;border-radius:20px}
+  .ms-tag.ok{background:var(--success-soft);color:var(--success)}.ms-tag.no{background:#f1f3f8;color:var(--muted)}
 
-  .fab-slot { position: relative; width: 64px; flex-shrink: 0; }
-  .fab {
-    position: absolute; left: 50%; bottom: 2px; transform: translateX(-50%);
-    width: 62px; height: 62px; border-radius: 50%; border: 4px solid var(--bg);
-    background: var(--navy-grad); color: #fff; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px -6px rgba(27,59,122,0.6);
-    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
-  }
-  .fab:hover { transform: translateX(-50%) scale(1.05); }
-  .fab .fab-ic { transition: transform 0.3s ease; }
-  .flower.open ~ .bottomnav .fab .fab-ic, .fab.spin .fab-ic { transform: rotate(135deg); }
+  /* BOTTOM NAV + FLOWER */
+  .bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px 18px;padding-bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .nav-side{flex:1;display:flex}.nav-side.right{justify-content:flex-end}
+  .nav-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 16px;border-radius:var(--r-md);border:1.5px solid var(--line-strong);background:#fff;color:var(--ink);font-family:'Poppins';font-weight:600;font-size:13.5px;cursor:pointer;min-height:46px;transition:all .15s}
+  .nav-btn:hover{border-color:var(--muted)}.nav-btn[hidden]{visibility:hidden}
+  .fab-slot{position:relative;width:64px;flex-shrink:0}
+  .fab{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);width:62px;height:62px;border-radius:50%;border:4px solid var(--bg);background:var(--navy-grad);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -6px rgba(27,59,122,.6);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+  .fab:hover{transform:translateX(-50%) scale(1.05)}
+  .fab .fab-ic{transition:transform .35s ease}.fab.spin .fab-ic{transform:rotate(135deg)}
 
-  .flower-bd { position: fixed; inset: 0; background: rgba(20,33,62,0.42); backdrop-filter: blur(2px); opacity: 0; pointer-events: none; transition: opacity 0.25s; z-index: 58; }
-  .flower-bd.open { opacity: 1; pointer-events: auto; }
-  .flower { position: fixed; left: 50%; bottom: 78px; width: 0; height: 0; z-index: 62; }
-  .petal {
-    position: absolute; left: 0; bottom: 0; width: 60px;
-    display: flex; flex-direction: column; align-items: center; gap: 5px;
-    transform: translate(-50%, 0) scale(0.3); opacity: 0; pointer-events: none;
-    transition: transform 0.34s cubic-bezier(.34,1.56,.64,1), opacity 0.25s;
-  }
-  .flower.open .petal { transform: translate(calc(-50% + var(--x)), var(--y)) scale(1); opacity: 1; pointer-events: auto; }
-  .flower.open .petal:nth-child(1){transition-delay:.02s} .flower.open .petal:nth-child(2){transition-delay:.05s} .flower.open .petal:nth-child(3){transition-delay:.08s} .flower.open .petal:nth-child(4){transition-delay:.11s} .flower.open .petal:nth-child(5){transition-delay:.14s} .flower.open .petal:nth-child(6){transition-delay:.17s}
-  .petal-ic { width: 52px; height: 52px; border-radius: 50%; background: #fff; color: var(--navy); display: flex; align-items: center; justify-content: center; box-shadow: var(--sh-pop); border: 2px solid transparent; transition: all 0.15s; }
-  .petal:hover .petal-ic { transform: translateY(-2px); }
-  .petal.active .petal-ic { background: var(--navy); color: #fff; }
-  .petal.done .petal-ic { border-color: var(--success); }
-  .petal.locked { pointer-events: none; }
-  .petal.locked .petal-ic { background: #eef1f7; color: var(--muted); box-shadow: none; }
-  .petal-lbl { font-size: 10px; font-weight: 600; color: #fff; background: rgba(20,33,62,0.55); padding: 2px 7px; border-radius: 8px; }
-  .petal.active .petal-lbl { background: var(--navy); }
+  .flower-bd{position:fixed;inset:0;background:rgba(20,33,62,.55);opacity:0;pointer-events:none;transition:opacity .25s;z-index:58}
+  .flower-bd.open{opacity:1;pointer-events:auto}
+  .flower{position:fixed;left:50%;bottom:80px;width:0;height:0;z-index:62}
+  /* PÉTALOS: solo icono, sin fondo */
+  .petal{position:absolute;left:0;bottom:0;width:62px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;cursor:pointer;transform:translate(-50%,0) scale(.3);opacity:0;pointer-events:none;transition:transform .36s cubic-bezier(.34,1.56,.64,1),opacity .25s}
+  .flower.open .petal{transform:translate(calc(-50% + var(--x)),var(--y)) scale(1);opacity:1;pointer-events:auto}
+  .flower.open .petal:nth-child(1){transition-delay:.02s}.flower.open .petal:nth-child(2){transition-delay:.05s}.flower.open .petal:nth-child(3){transition-delay:.08s}.flower.open .petal:nth-child(4){transition-delay:.11s}.flower.open .petal:nth-child(5){transition-delay:.14s}.flower.open .petal:nth-child(6){transition-delay:.17s}.flower.open .petal:nth-child(7){transition-delay:.2s}.flower.open .petal:nth-child(8){transition-delay:.23s}
+  .petal-ic{color:#fff;filter:drop-shadow(0 3px 7px rgba(0,0,0,.45));transition:all .15s ease}
+  .petal-ic svg{width:30px;height:30px;stroke-width:2}
+  .petal:hover .petal-ic{transform:translateY(-3px);color:#cfe0ff}
+  .petal.active .petal-ic{color:#9cc0ff}
+  .petal.saved .petal-ic{color:#7ef0a8}
+  .petal.locked{opacity:.35;pointer-events:none}
+  .petal-lbl{font-size:10.5px;color:#fff;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.55);letter-spacing:.2px}
 
-  /* ===== OVERLAYS ===== */
-  .overlay { position: fixed; inset: 0; background: rgba(20,33,62,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 20px; }
-  .overlay.show { display: flex; }
-  .modal { background: #fff; border-radius: var(--r-xl); padding: 30px 26px; max-width: 380px; width: 100%; text-align: center; box-shadow: var(--sh-pop); }
-  .spinner { width: 40px; height: 40px; border: 3.5px solid var(--blue-soft); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 16px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .modal-msg { font-size: 14px; color: var(--ink-soft); font-weight: 500; }
-  .ok-ic { width: 68px; height: 68px; background: var(--success-soft); color: var(--success); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 18px; }
-  .ok-title { font-family: 'Poppins'; font-size: 19px; font-weight: 700; margin-bottom: 6px; }
-  .ok-sub { font-size: 14px; color: var(--ink-soft); margin-bottom: 20px; }
-  .ok-info { background: var(--bg); border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 20px; font-size: 12px; color: var(--ink-soft); text-align: left; word-break: break-all; white-space: pre-line; }
+  /* TOAST */
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:var(--r-md);font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:9px;box-shadow:var(--sh-pop);opacity:0;pointer-events:none;transition:all .3s;z-index:9998}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast .icon{color:#7ef0a8}
 
-  @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } .card { padding: 18px; } }
+  /* OVERLAYS */
+  .overlay{position:fixed;inset:0;background:rgba(20,33,62,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}.overlay.show{display:flex}
+  .modal{background:#fff;border-radius:var(--r-xl);padding:30px 26px;max-width:380px;width:100%;text-align:center;box-shadow:var(--sh-pop)}
+  .spinner{width:40px;height:40px;border:3.5px solid var(--blue-soft);border-top-color:var(--navy);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px}@keyframes spin{to{transform:rotate(360deg)}}
+  .modal-msg{font-size:14px;color:var(--ink-soft);font-weight:500}
+  .ok-ic{width:68px;height:68px;background:var(--success-soft);color:var(--success);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .ok-title{font-family:'Poppins';font-size:19px;font-weight:700;margin-bottom:6px}.ok-sub{font-size:14px;color:var(--ink-soft);margin-bottom:20px}
+  .ok-info{background:var(--bg);border-radius:var(--r-md);padding:12px 14px;margin-bottom:20px;font-size:12px;color:var(--ink-soft);text-align:left;word-break:break-all;white-space:pre-line}
+  @media(max-width:480px){.field-row{grid-template-columns:1fr}.card{padding:18px}.sum-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
   <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/></symbol>
-  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
-  <symbol id="i-map" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-nav" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></symbol>
   <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
   <symbol id="i-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="i-xcircle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
   <symbol id="i-package" viewBox="0 0 24 24"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
-  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
   <symbol id="i-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></symbol>
@@ -243,170 +207,189 @@
 <header class="topbar">
   <div class="topbar-row">
     <div class="topbar-logo"><svg class="icon icon-lg"><use href="#i-clipboard"/></svg></div>
-    <div class="topbar-brand"><b>Captura PQP</b><span>Visita comercial en campo</span></div>
-    <div class="step-pill" id="stepPill">Paso 1 de 6</div>
+    <div class="topbar-brand"><b>Captura PQP</b><span>Gestión comercial en campo</span></div>
+    <div class="step-pill" id="stepPill">Inicio</div>
   </div>
-  <div class="greet">
-    <h1 id="heroGreet">Hola, mercaderista</h1>
-    <p id="heroDate"></p>
-  </div>
+  <div class="greet"><h1 id="heroGreet">Hola, mercaderista</h1><p id="heroDate"></p></div>
   <div class="progress" id="progress"></div>
 </header>
 
-<!-- STAGE -->
 <main class="stage" id="stage">
 
-  <!-- STEP 1 -->
-  <section class="step active" data-step="1">
+  <!-- INICIO -->
+  <section class="mod active" data-mod="inicio">
     <div class="card">
       <div class="card-head">
-        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-user"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Identificación</div><div class="card-sub">Datos del mercaderista</div></div>
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-pin"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Inicio de gestión</div><div class="card-sub">Mercaderista, punto de venta y ubicación</div></div>
+        <span class="saved-badge" id="badge-inicio"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
-      <div id="alertIdent" class="alert alert-warn" style="display:none;">
+      <div id="alertParam" class="alert alert-error" style="display:none">
         <svg class="icon"><use href="#i-alert"/></svg>
-        <div>Ingresa <strong>nombre y cédula</strong> para continuar a las demás secciones.</div>
-      </div>
-      <div class="field">
-        <label class="label label-req" for="nombreMercaderista">Nombre completo</label>
-        <input type="text" id="nombreMercaderista" class="input" placeholder="Nombres y apellidos" autocomplete="name">
-      </div>
-      <div class="field">
-        <label class="label label-req" for="cedulaMercaderista">Cédula</label>
-        <input type="tel" id="cedulaMercaderista" class="input" placeholder="Número de cédula" inputmode="numeric">
-      </div>
-    </div>
-  </section>
-
-  <!-- STEP 2 -->
-  <section class="step" data-step="2">
-    <div class="card">
-      <div class="card-head">
-        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-map"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Datos de la visita</div><div class="card-sub">Cliente, ubicación y horario</div></div>
-      </div>
-      <div id="alertParam" class="alert alert-error" style="display:none;">
-        <svg class="icon"><use href="#i-alert"/></svg>
-        <div style="flex:1;">
-          <strong>No se pudieron cargar ciudades y PDV.</strong>
-          <div id="alertParamMsg" style="margin-top:3px; font-size:12px; opacity:0.9;"></div>
-          <div style="margin-top:5px; font-size:12px;">Puedes escribirlos manualmente mientras tanto.</div>
+        <div style="flex:1"><strong>No se pudieron cargar ciudades y PDV.</strong>
+          <div id="alertParamMsg" style="margin-top:3px;font-size:12px;opacity:.9"></div>
+          <div style="margin-top:5px;font-size:12px">Puedes escribirlos manualmente.</div>
           <div class="alert-actions"><button type="button" class="btn btn-danger btn-sm" onclick="cargarParametrizacion()"><svg class="icon icon-sm"><use href="#i-refresh"/></svg> Reintentar</button></div>
         </div>
       </div>
-      <div class="field-row">
-        <div class="field"><label class="label label-req" for="fechaVisita">Fecha visita</label><input type="date" id="fechaVisita" class="input"></div>
-        <div class="field"><label class="label label-req" for="horaEntrada">Hora entrada</label><input type="time" id="horaEntrada" class="input"></div>
-      </div>
-      <div class="field"><label class="label" for="horaSalida">Hora salida <span class="label-hint">(opcional)</span></label><input type="time" id="horaSalida" class="input"></div>
+      <div class="field"><label class="label label-req" for="nombreMercaderista">Nombre del mercaderista</label><input type="text" id="nombreMercaderista" class="input" placeholder="Nombres y apellidos" autocomplete="name"></div>
+      <div class="field"><label class="label label-req" for="cedulaMercaderista">Cédula</label><input type="tel" id="cedulaMercaderista" class="input" placeholder="Número de cédula" inputmode="numeric"></div>
       <div class="field">
         <label class="label label-req" for="ciudad">Ciudad</label>
         <select id="ciudad" class="select"><option value="">Seleccionar ciudad</option></select>
-        <input type="text" id="ciudadTexto" class="input" placeholder="Escribe la ciudad" style="display:none;">
+        <input type="text" id="ciudadTexto" class="input" placeholder="Escribe la ciudad" style="display:none">
       </div>
       <div class="field">
         <label class="label label-req" for="puntoVenta">Punto de venta</label>
         <select id="puntoVenta" class="select" disabled><option value="">Selecciona una ciudad primero</option></select>
-        <input type="text" id="pdvTexto" class="input" placeholder="Escribe el punto de venta" style="display:none;">
-      </div>
-      <div class="field"><label class="label label-req" for="nombreNegocio">Negocio / Razón social</label><input type="text" id="nombreNegocio" class="input" placeholder="Ej: Tienda La Esquina"></div>
-      <div class="field-row">
-        <div class="field"><label class="label label-req" for="nitCliente">NIT / ID</label><input type="text" id="nitCliente" class="input" placeholder="Documento"></div>
-        <div class="field"><label class="label label-req" for="contactoPrincipal">Contacto</label><input type="text" id="contactoPrincipal" class="input" placeholder="Nombre"></div>
+        <input type="text" id="pdvTexto" class="input" placeholder="Escribe el punto de venta" style="display:none">
       </div>
       <div class="field">
-        <label class="label label-req" for="canalVentas">Canal de ventas</label>
-        <select id="canalVentas" class="select">
-          <option value="">Seleccionar canal</option>
-          <option value="Tienda barrio">Tienda barrio</option>
-          <option value="Supermercado independiente">Supermercado independiente</option>
-          <option value="Mayorista">Mayorista</option>
-          <option value="Institucional/Horeca">Institucional / Horeca</option>
-        </select>
+        <label class="label label-req">Ubicación GPS</label>
+        <div class="loc-box" id="locBox">
+          <div class="loc-top">
+            <div class="loc-ic"><svg class="icon icon-lg"><use href="#i-nav"/></svg></div>
+            <div class="loc-info"><b id="locTitle">Ubicación no capturada</b><span id="locDesc">Toca el botón para registrar tu posición</span></div>
+          </div>
+          <div class="loc-coords" id="locCoords" style="display:none"></div>
+          <button type="button" class="btn btn-soft btn-block" style="margin-top:12px" id="btnGPS" onclick="capturarUbicacion()"><svg class="icon icon-sm"><use href="#i-nav"/></svg>Capturar ubicación</button>
+        </div>
       </div>
+      <div class="field"><label class="label" for="nombreNegocio">Negocio / Razón social <span class="label-hint">(opcional)</span></label><input type="text" id="nombreNegocio" class="input" placeholder="Ej: Tienda La Esquina"></div>
+      <div class="field-row">
+        <div class="field"><label class="label" for="nitCliente">NIT / ID</label><input type="text" id="nitCliente" class="input" placeholder="Documento"></div>
+        <div class="field"><label class="label" for="contactoPrincipal">Contacto</label><input type="text" id="contactoPrincipal" class="input" placeholder="Nombre"></div>
+      </div>
+      <div class="field"><label class="label" for="canalVentas">Canal de ventas</label>
+        <select id="canalVentas" class="select"><option value="">Seleccionar canal</option><option>Tienda barrio</option><option>Supermercado independiente</option><option>Mayorista</option><option>Institucional/Horeca</option></select>
+      </div>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('inicio')"><svg class="icon"><use href="#i-save"/></svg>Guardar e iniciar gestión</button></div>
     </div>
   </section>
 
-  <!-- STEP 3 -->
-  <section class="step" data-step="3">
+  <!-- VENTAS -->
+  <section class="mod" data-mod="ventas">
     <div class="card">
       <div class="card-head">
         <div class="card-chip"><svg class="icon icon-lg"><use href="#i-cart"/></svg></div>
-        <div class="card-head-text"><div class="card-title">¿Hubo compra?</div><div class="card-sub">Resultado de la visita</div></div>
+        <div class="card-head-text"><div class="card-title">Ventas</div><div class="card-sub">Resultado comercial de la visita</div></div>
+        <span class="saved-badge" id="badge-ventas"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
-      <div class="field">
+      <div class="field"><label class="label label-req">¿Se realizó venta?</label>
         <div class="opt-grid opt-grid-2">
-          <div class="opt"><input type="radio" name="huboCompra" id="hcSi" value="Si"><label for="hcSi"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Sí</label></div>
-          <div class="opt"><input type="radio" name="huboCompra" id="hcNo" value="No"><label for="hcNo"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>No</label></div>
+          <div class="opt"><input type="radio" name="ventaRealizada" id="vrSi" value="Si"><label for="vrSi"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Sí</label></div>
+          <div class="opt"><input type="radio" name="ventaRealizada" id="vrNo" value="No"><label for="vrNo"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>No</label></div>
         </div>
       </div>
-      <div id="blockNoCompra" style="display:none;">
-        <div class="field">
-          <label class="label label-req" for="motivoNoCompra">Motivo de no compra</label>
-          <select id="motivoNoCompra" class="select">
-            <option value="">Seleccionar motivo</option>
-            <option value="Aún tiene inventario">Aún tiene inventario</option>
-            <option value="Local cerrado">Local cerrado</option>
-            <option value="Falta dinero">Falta dinero</option>
-            <option value="Dueño no está">Dueño no está</option>
-            <option value="Otro">Otro</option>
-          </select>
+      <div id="ventaNo" style="display:none">
+        <div class="field"><label class="label label-req" for="ventaMotivoNo">Motivo de no venta</label>
+          <select id="ventaMotivoNo" class="select"><option value="">Seleccionar</option><option>Aún tiene inventario</option><option>Local cerrado</option><option>Falta dinero</option><option>Dueño no está</option><option>Otro</option></select>
         </div>
-        <div class="field" id="groupMotivoOtro" style="display:none;"><label class="label" for="motivoOtro">Especifica el motivo</label><textarea id="motivoOtro" class="textarea" placeholder="Describe el motivo"></textarea></div>
       </div>
+      <div id="ventaSi" style="display:none">
+        <div class="field"><label class="label" for="ventaMetodoPago">Método de pago</label>
+          <select id="ventaMetodoPago" class="select"><option value="">Seleccionar</option><option>Efectivo</option><option>Tarjeta Movistar</option><option>Crédito</option></select>
+        </div>
+        <div class="field"><label class="label">Condición de venta</label>
+          <div class="opt-grid opt-grid-2">
+            <div class="opt"><input type="radio" name="ventaCondicion" id="vcCont" value="Contado"><label for="vcCont"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Contado</label></div>
+            <div class="opt"><input type="radio" name="ventaCondicion" id="vcCred" value="Credito"><label for="vcCred"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Crédito</label></div>
+          </div>
+        </div>
+        <div class="field" id="ventaPlazoG" style="display:none"><label class="label" for="ventaPlazo">Plazo en días</label><input type="number" id="ventaPlazo" class="input" min="1" max="365" placeholder="Ej: 30"></div>
+      </div>
+      <div class="field"><label class="label" for="ventaObservaciones">Observaciones</label><textarea id="ventaObservaciones" class="textarea" placeholder="Notas de la venta"></textarea></div>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('ventas')"><svg class="icon"><use href="#i-save"/></svg>Guardar Ventas</button></div>
     </div>
   </section>
 
-  <!-- STEP 4 -->
-  <section class="step" data-step="4">
+  <!-- INVENTARIOS -->
+  <section class="mod" data-mod="inventarios">
     <div class="card">
       <div class="card-head">
-        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Censo y estado del PDV</div><div class="card-sub">Inventario, competencia y foto</div></div>
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-box"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Inventarios</div><div class="card-sub">Estante, competencia y material POP</div></div>
+        <span class="saved-badge" id="badge-inventarios"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
-      <div class="field"><label class="label" for="inventarioPQP">Inventario PQP en estante</label><textarea id="inventarioPQP" class="textarea" placeholder="Referencias y cantidades"></textarea></div>
-      <div class="field"><label class="label" for="marcasCompetencia">Marcas de competencia</label><textarea id="marcasCompetencia" class="textarea" placeholder="Marcas y observaciones"></textarea></div>
-      <div class="field">
-        <label class="label label-req">Material POP en buen estado</label>
+      <div class="field"><label class="label" for="inventarioPQP">Inventario PQP en estante</label><textarea id="inventarioPQP" class="textarea" placeholder="Referencias y cantidades observadas"></textarea></div>
+      <div class="field"><label class="label" for="marcasCompetencia">Marcas de competencia</label><textarea id="marcasCompetencia" class="textarea" placeholder="Marcas presentes"></textarea></div>
+      <div class="field"><label class="label">Material POP en buen estado</label>
         <div class="opt-grid">
           <div class="opt"><input type="radio" name="materialPOP" id="popSi" value="Si"><label for="popSi"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Sí</label></div>
           <div class="opt"><input type="radio" name="materialPOP" id="popNo" value="No"><label for="popNo"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>No</label></div>
-          <div class="opt"><input type="radio" name="materialPOP" id="popParcial" value="Parcial"><label for="popParcial"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Parcial</label></div>
+          <div class="opt"><input type="radio" name="materialPOP" id="popPar" value="Parcial"><label for="popPar"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Parcial</label></div>
         </div>
       </div>
-      <div class="field">
-        <label class="label label-req">Fotografía del estante</label>
-        <div class="upload" id="uploadArea">
-          <input type="file" id="fotoEstante" accept="image/*" capture="environment">
-          <div id="uploadDefault">
-            <div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div>
-            <div class="upload-t">Tocar para tomar o cargar foto</div>
-            <div class="upload-h">JPG, PNG · máx 10 MB</div>
-          </div>
-          <div id="uploadPreview" style="display:none;">
-            <img id="previewFoto" class="preview-img">
-            <div class="preview-act">
-              <button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fotoEstante').click();"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button>
-              <button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();removerFoto();"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="field"><label class="label" for="observacionesPDV">Observaciones del PDV</label><textarea id="observacionesPDV" class="textarea" placeholder="Notas sobre el estado general"></textarea></div>
+      <div class="field"><label class="label" for="inventarioObs">Observaciones</label><textarea id="inventarioObs" class="textarea" placeholder="Notas del inventario"></textarea></div>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('inventarios')"><svg class="icon"><use href="#i-save"/></svg>Guardar Inventarios</button></div>
     </div>
   </section>
 
-  <!-- STEP 5 -->
-  <section class="step" data-step="5">
+  <!-- FOTOS -->
+  <section class="mod" data-mod="fotos">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Fotos: Antes y Después</div><div class="card-sub">Exhibición al llegar y tras la gestión</div></div>
+        <span class="saved-badge" id="badge-fotos"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
+      </div>
+      <div class="field"><label class="label label-req">Foto ANTES</label>
+        <div class="upload" id="uploadAntes">
+          <input type="file" id="fileAntes" accept="image/*" capture="environment">
+          <div id="defAntes"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Foto del estante al llegar</div><div class="upload-h">JPG, PNG · máx 10 MB</div></div>
+          <div id="prevAntes" style="display:none"><img id="imgAntes" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileAntes').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('antes')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
+        </div>
+      </div>
+      <div class="field"><label class="label">Foto DESPUÉS <span class="label-hint">(tras la gestión)</span></label>
+        <div class="upload" id="uploadDespues">
+          <input type="file" id="fileDespues" accept="image/*" capture="environment">
+          <div id="defDespues"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Foto del estante mejorado</div><div class="upload-h">JPG, PNG · máx 10 MB</div></div>
+          <div id="prevDespues" style="display:none"><img id="imgDespues" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileDespues').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('despues')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
+        </div>
+      </div>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('fotos')"><svg class="icon"><use href="#i-save"/></svg>Guardar Fotos</button></div>
+    </div>
+  </section>
+
+  <!-- AGOTADOS -->
+  <section class="mod" data-mod="agotados">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-xcircle"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Agotados</div><div class="card-sub">Productos sin existencia en el PDV</div></div>
+        <span class="saved-badge" id="badge-agotados"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
+      </div>
+      <div id="listaAgotados"></div>
+      <button type="button" class="btn btn-soft btn-block" onclick="agregarAgotado()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar agotado</button>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('agotados')"><svg class="icon"><use href="#i-save"/></svg>Guardar Agotados</button></div>
+    </div>
+  </section>
+
+  <!-- FECHAS CORTAS -->
+  <section class="mod" data-mod="fechas">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-clock"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Fechas cortas</div><div class="card-sub">Productos próximos a vencer</div></div>
+        <span class="saved-badge" id="badge-fechas"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
+      </div>
+      <div id="listaFechas"></div>
+      <button type="button" class="btn btn-soft btn-block" onclick="agregarFecha()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar producto</button>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('fechas')"><svg class="icon"><use href="#i-save"/></svg>Guardar Fechas cortas</button></div>
+    </div>
+  </section>
+
+  <!-- PEDIDO -->
+  <section class="mod" data-mod="pedido">
     <div class="card">
       <div class="card-head">
         <div class="card-chip"><svg class="icon icon-lg"><use href="#i-package"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Toma de pedido</div><div class="card-sub">Productos, totales y pago</div></div>
+        <div class="card-head-text"><div class="card-title">Generar pedido</div><div class="card-sub">Productos, totales y promociones</div></div>
+        <span class="saved-badge" id="badge-pedido"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
-      <div id="tablaProductos"></div>
+      <div id="listaPedido"></div>
       <button type="button" class="btn btn-soft btn-block" onclick="agregarProducto()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar producto</button>
-      <div class="field" style="margin-top:16px;">
-        <label class="label">Promociones aplicables</label>
+      <div class="field" style="margin-top:16px"><label class="label">Promociones</label>
         <div class="opt-grid">
           <div class="opt"><input type="checkbox" id="promo1" value="Combo 2x1"><label for="promo1"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Combo 2x1</label></div>
           <div class="opt"><input type="checkbox" id="promo2" value="Descuento volumen"><label for="promo2"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Desc. volumen</label></div>
@@ -419,320 +402,351 @@
         <div class="total-row"><span class="total-lbl">Subtotal</span><span class="total-val" id="totalPedido">$0</span></div>
         <div class="total-row big"><span class="total-lbl">Total final</span><span class="total-val" id="totalFinal">$0</span></div>
       </div>
-      <div class="field" style="margin-top:16px;">
-        <label class="label label-req" for="metodoPago">Método de pago</label>
-        <select id="metodoPago" class="select"><option value="">Seleccionar método</option><option value="Efectivo">Efectivo</option><option value="Tarjeta Movistar">Tarjeta Movistar</option><option value="Crédito">Crédito</option></select>
-      </div>
-      <div class="field">
-        <label class="label label-req">Condición de venta</label>
-        <div class="opt-grid opt-grid-2">
-          <div class="opt"><input type="radio" name="condicionVenta" id="condContado" value="Contado"><label for="condContado"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Contado</label></div>
-          <div class="opt"><input type="radio" name="condicionVenta" id="condCredito" value="Credito"><label for="condCredito"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Crédito</label></div>
-        </div>
-      </div>
-      <div class="field" id="groupPlazo" style="display:none;"><label class="label" for="plazoCredito">Plazo en días</label><input type="number" id="plazoCredito" class="input" min="1" max="365" placeholder="Ej: 30"></div>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('pedido')"><svg class="icon"><use href="#i-save"/></svg>Guardar Pedido</button></div>
     </div>
   </section>
 
-  <!-- STEP 6 -->
-  <section class="step" data-step="6">
+  <!-- RESUMEN -->
+  <section class="mod" data-mod="resumen">
     <div class="card">
       <div class="card-head">
-        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-flag"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Compromisos y cierre</div><div class="card-sub">Notas finales y próxima visita</div></div>
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-list"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Resumen de la gestión</div><div class="card-sub">Revisa antes de finalizar</div></div>
       </div>
-      <div class="field"><label class="label" for="observacionesFinales">Observaciones finales</label><textarea id="observacionesFinales" class="textarea" placeholder="Compromisos y notas adicionales"></textarea></div>
-      <div class="field"><label class="label label-req" for="proximaVisita">Próxima visita programada</label><input type="date" id="proximaVisita" class="input"></div>
+      <div id="resumenContenido"></div>
+      <div class="field" style="margin-top:8px"><label class="label" for="proximaVisita">Próxima visita programada</label><input type="date" id="proximaVisita" class="input"></div>
+      <div class="field"><label class="label" for="observacionesGenerales">Observaciones finales</label><textarea id="observacionesGenerales" class="textarea" placeholder="Compromisos y notas"></textarea></div>
+      <div class="save-row"><button class="btn btn-success btn-block" onclick="guardarModulo('resumen', true)"><svg class="icon"><use href="#i-check"/></svg>Finalizar gestión</button></div>
     </div>
   </section>
 
 </main>
 
-<!-- FLOWER NAV -->
+<!-- FLOWER -->
 <div class="flower-bd" id="flowerBd" onclick="closeFlower()"></div>
 <div class="flower" id="flower">
-  <button class="petal" data-step="1" style="--x:-112px;--y:-65px"><span class="petal-ic"><svg class="icon icon-lg"><use href="#i-user"/></svg></span><span class="petal-lbl">ID</span></button>
-  <button class="petal" data-step="2" style="--x:-76px;--y:-105px"><span class="petal-ic"><svg class="icon icon-lg"><use href="#i-map"/></svg></span><span class="petal-lbl">Visita</span></button>
-  <button class="petal" data-step="3" style="--x:-27px;--y:-127px"><span class="petal-ic"><svg class="icon icon-lg"><use href="#i-cart"/></svg></span><span class="petal-lbl">Compra</span></button>
-  <button class="petal" data-step="4" style="--x:27px;--y:-127px"><span class="petal-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></span><span class="petal-lbl">PDV</span></button>
-  <button class="petal" data-step="5" style="--x:76px;--y:-105px"><span class="petal-ic"><svg class="icon icon-lg"><use href="#i-package"/></svg></span><span class="petal-lbl">Pedido</span></button>
-  <button class="petal" data-step="6" style="--x:112px;--y:-65px"><span class="petal-ic"><svg class="icon icon-lg"><use href="#i-flag"/></svg></span><span class="petal-lbl">Cierre</span></button>
+  <button class="petal" data-mod="inicio"      style="--x:-148px;--y:-26px"><span class="petal-ic"><svg><use href="#i-pin"/></svg></span><span class="petal-lbl">Inicio</span></button>
+  <button class="petal" data-mod="ventas"      style="--x:-126px;--y:-81px"><span class="petal-ic"><svg><use href="#i-cart"/></svg></span><span class="petal-lbl">Ventas</span></button>
+  <button class="petal" data-mod="inventarios" style="--x:-85px;--y:-124px"><span class="petal-ic"><svg><use href="#i-box"/></svg></span><span class="petal-lbl">Inventario</span></button>
+  <button class="petal" data-mod="fotos"        style="--x:-30px;--y:-147px"><span class="petal-ic"><svg><use href="#i-camera"/></svg></span><span class="petal-lbl">Fotos</span></button>
+  <button class="petal" data-mod="agotados"     style="--x:30px;--y:-147px"><span class="petal-ic"><svg><use href="#i-xcircle"/></svg></span><span class="petal-lbl">Agotados</span></button>
+  <button class="petal" data-mod="fechas"       style="--x:85px;--y:-124px"><span class="petal-ic"><svg><use href="#i-clock"/></svg></span><span class="petal-lbl">Fechas</span></button>
+  <button class="petal" data-mod="pedido"       style="--x:126px;--y:-81px"><span class="petal-ic"><svg><use href="#i-package"/></svg></span><span class="petal-lbl">Pedido</span></button>
+  <button class="petal" data-mod="resumen"      style="--x:148px;--y:-26px"><span class="petal-ic"><svg><use href="#i-list"/></svg></span><span class="petal-lbl">Resumen</span></button>
 </div>
 
 <!-- BOTTOM NAV -->
 <nav class="bottomnav">
-  <div class="nav-side left">
-    <button class="nav-btn" id="btnPrev" onclick="prevStep()"><svg class="icon icon-sm"><use href="#i-chevL"/></svg>Atrás</button>
-  </div>
-  <div class="fab-slot">
-    <button class="fab" id="fab" onclick="toggleFlower()" aria-label="Navegar secciones"><span class="fab-ic"><svg class="icon icon-lg"><use href="#i-grid"/></svg></span></button>
-  </div>
-  <div class="nav-side right">
-    <button class="nav-btn primary" id="btnNext" onclick="nextStep()">Siguiente<svg class="icon icon-sm"><use href="#i-chevR"/></svg></button>
-  </div>
+  <div class="nav-side left"><button class="nav-btn" id="btnPrev" onclick="prevMod()"><svg class="icon icon-sm"><use href="#i-chevL"/></svg>Atrás</button></div>
+  <div class="fab-slot"><button class="fab" id="fab" onclick="toggleFlower()" aria-label="Navegar módulos"><span class="fab-ic"><svg class="icon icon-lg"><use href="#i-grid"/></svg></span></button></div>
+  <div class="nav-side right"><button class="nav-btn" id="btnNext" onclick="nextMod()">Siguiente<svg class="icon icon-sm"><use href="#i-chevR"/></svg></button></div>
 </nav>
 
+<!-- TOAST -->
+<div class="toast" id="toast"><svg class="icon icon-sm"><use href="#i-check"/></svg><span id="toastMsg"></span></div>
+
 <!-- OVERLAYS -->
-<div class="overlay" id="loadingOverlay"><div class="modal"><div class="spinner"></div><div class="modal-msg" id="loadingMsg">Procesando...</div></div></div>
-<div class="overlay" id="successModal">
-  <div class="modal">
-    <div class="ok-ic"><svg class="icon icon-xl"><use href="#i-check"/></svg></div>
-    <div class="ok-title">Captura guardada</div>
-    <div class="ok-sub">La información se registró correctamente.</div>
-    <div class="ok-info" id="successInfo"></div>
-    <button class="btn btn-primary btn-block" onclick="nuevaCaptura()"><svg class="icon"><use href="#i-plus"/></svg>Nueva captura</button>
-  </div>
-</div>
+<div class="overlay" id="loadingOverlay"><div class="modal"><div class="spinner"></div><div class="modal-msg" id="loadingMsg">Guardando...</div></div></div>
+<div class="overlay" id="successModal"><div class="modal">
+  <div class="ok-ic"><svg class="icon icon-xl"><use href="#i-check"/></svg></div>
+  <div class="ok-title">Gestión finalizada</div>
+  <div class="ok-sub">Toda la información quedó registrada.</div>
+  <div class="ok-info" id="successInfo"></div>
+  <button class="btn btn-primary btn-block" onclick="nuevaGestion()"><svg class="icon"><use href="#i-plus"/></svg>Nueva gestión</button>
+</div></div>
 
 <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzuKQ5lVt0JFZhu7j8uR3Wk7K9M7kzyZ3PdR_U847vKDskpyRt9OExIMZBTrknocrkNbg/exec';
 
-let parametrizacion = { ciudadesPDV: {}, skus: [] };
-let productosPedido = [];
-let fotoEstanteBase64 = '';
+const MODS = [
+  {id:'inicio', icon:'i-pin', label:'Inicio'},
+  {id:'ventas', icon:'i-cart', label:'Ventas'},
+  {id:'inventarios', icon:'i-box', label:'Inventarios'},
+  {id:'fotos', icon:'i-camera', label:'Fotos'},
+  {id:'agotados', icon:'i-xcircle', label:'Agotados'},
+  {id:'fechas', icon:'i-clock', label:'Fechas cortas'},
+  {id:'pedido', icon:'i-package', label:'Pedido'},
+  {id:'resumen', icon:'i-list', label:'Resumen'}
+];
+
+let parametrizacion = { ciudadesPDV:{}, skus:[] };
 let modoManual = false;
-
-// ===== NAVEGACIÓN POR SECCIONES =====
-const STEPS = [1,2,3,4,5,6];
-let current = 1;
+let sheetName = '';
+let saved = {};
+let current = 'inicio';
 let flowerOpen = false;
-
-function identDone(){ return !!(val('nombreMercaderista') && val('cedulaMercaderista')); }
-function huboCompraVal(){ const r=document.querySelector('input[name="huboCompra"]:checked'); return r?r.value:''; }
-function stepAvailable(n){
-  if (n===1) return true;
-  if (!identDone()) return false;
-  if (n===5) return huboCompraVal()==='Si';
-  return true;
-}
-function availableSteps(){ return STEPS.filter(stepAvailable); }
-
-function goTo(n){
-  if (!stepAvailable(n)) {
-    if (n!==1 && !identDone()) { current=1; renderStep(); flashIdent(); closeFlower(); }
-    return;
-  }
-  current = n; renderStep(); closeFlower();
-}
-function nextStep(){ const a=availableSteps(); const i=a.indexOf(current); if(i<a.length-1) goTo(a[i+1]); }
-function prevStep(){ const a=availableSteps(); const i=a.indexOf(current); if(i>0) goTo(a[i-1]); }
-function isLast(){ const a=availableSteps(); return a[a.length-1]===current; }
-
-function renderStep(){
-  document.querySelectorAll('.step').forEach(el => el.classList.toggle('active', +el.dataset.step===current));
-  const a = availableSteps();
-  const pos = a.indexOf(current)+1;
-  document.getElementById('stepPill').textContent = 'Paso ' + pos + ' de ' + a.length;
-  // progreso segmentado
-  const prog = document.getElementById('progress');
-  prog.innerHTML = a.map((n,i) => '<span class="' + (n===current?'cur':(i<pos-1?'done':'')) + '"></span>').join('');
-  // atrás
-  document.getElementById('btnPrev').hidden = (a.indexOf(current)===0);
-  // siguiente / guardar
-  const nb = document.getElementById('btnNext');
-  if (isLast()) { nb.innerHTML = '<svg class="icon icon-sm"><use href="#i-save"/></svg>Guardar'; nb.onclick = enviarCaptura; }
-  else { nb.innerHTML = 'Siguiente<svg class="icon icon-sm"><use href="#i-chevR"/></svg>'; nb.onclick = nextStep; }
-  renderPetals();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function renderPetals(){
-  const a = availableSteps();
-  document.querySelectorAll('.petal').forEach(p => {
-    const n = +p.dataset.step;
-    p.classList.toggle('active', n===current);
-    p.classList.toggle('locked', !stepAvailable(n));
-    p.classList.toggle('done', a.indexOf(n) < a.indexOf(current) && a.indexOf(n)!==-1);
-    p.onclick = () => goTo(n);
-  });
-}
-
-function toggleFlower(){ flowerOpen ? closeFlower() : openFlower(); }
-function openFlower(){ flowerOpen=true; document.getElementById('flower').classList.add('open'); document.getElementById('flowerBd').classList.add('open'); document.getElementById('fab').classList.add('spin'); renderPetals(); }
-function closeFlower(){ flowerOpen=false; document.getElementById('flower').classList.remove('open'); document.getElementById('flowerBd').classList.remove('open'); document.getElementById('fab').classList.remove('spin'); }
-
-function flashIdent(){ const a=document.getElementById('alertIdent'); a.style.display='flex'; a.classList.remove('shake'); void a.offsetWidth; a.classList.add('shake'); }
+let ubicacion = { lat:null, lng:null, acc:null };
+let fotoAntes = '', fotoDespues = '', fotoAntesURL = '', fotoDespuesURL = '';
+let productosPedido = [], agotadosList = [], fechasList = [];
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
-  const hoy = new Date().toISOString().split('T')[0];
-  document.getElementById('fechaVisita').value = hoy;
   const ahora = new Date();
-  document.getElementById('horaEntrada').value = String(ahora.getHours()).padStart(2,'0')+':'+String(ahora.getMinutes()).padStart(2,'0');
+  document.getElementById('proximaVisita').value = '';
   document.getElementById('heroDate').textContent = ahora.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long'});
-
   cargarParametrizacion();
 
   document.getElementById('nombreMercaderista').addEventListener('input', onIdentChange);
   document.getElementById('cedulaMercaderista').addEventListener('input', onIdentChange);
   document.getElementById('ciudad').addEventListener('change', actualizarPDV);
-  document.querySelectorAll('input[name="huboCompra"]').forEach(r => r.addEventListener('change', manejarHuboCompra));
-  document.getElementById('motivoNoCompra').addEventListener('change', e => { document.getElementById('groupMotivoOtro').style.display = e.target.value==='Otro'?'block':'none'; });
-  document.getElementById('fotoEstante').addEventListener('change', manejarFoto);
-  document.querySelectorAll('input[name="condicionVenta"]').forEach(r => r.addEventListener('change', () => {
-    const s=document.querySelector('input[name="condicionVenta"]:checked');
-    document.getElementById('groupPlazo').style.display = (s&&s.value==='Credito')?'block':'none';
+  document.querySelectorAll('input[name="ventaRealizada"]').forEach(r => r.addEventListener('change', onVentaChange));
+  document.querySelectorAll('input[name="ventaCondicion"]').forEach(r => r.addEventListener('change', () => {
+    const s=document.querySelector('input[name="ventaCondicion"]:checked'); document.getElementById('ventaPlazoG').style.display=(s&&s.value==='Credito')?'block':'none';
   }));
+  document.getElementById('fileAntes').addEventListener('change', e => leerFoto(e,'antes'));
+  document.getElementById('fileDespues').addEventListener('change', e => leerFoto(e,'despues'));
   document.getElementById('descuento').addEventListener('input', calcularTotalFinal);
 
-  renderStep();
+  renderNav();
 });
 
-function onIdentChange(){
-  const n = val('nombreMercaderista');
-  document.getElementById('heroGreet').textContent = n ? ('Hola, ' + n.split(' ')[0]) : 'Hola, mercaderista';
-  if (identDone()) document.getElementById('alertIdent').style.display='none';
+// ===== NAV =====
+function identDone(){ return !!(val('nombreMercaderista') && val('cedulaMercaderista')); }
+function modAvailable(id){ if(id==='inicio') return true; return !!saved.inicio; }
+function availableMods(){ return MODS.filter(m => modAvailable(m.id)); }
+
+function goTo(id){
+  if(!modAvailable(id)){ current='inicio'; renderNav(); toast('Guarda primero el módulo Inicio', true); closeFlower(); return; }
+  current=id; renderNav(); closeFlower();
+  if(id==='resumen') renderResumen();
+}
+function nextMod(){ const a=availableMods().map(m=>m.id); const i=a.indexOf(current); if(i<a.length-1) goTo(a[i+1]); }
+function prevMod(){ const a=availableMods().map(m=>m.id); const i=a.indexOf(current); if(i>0) goTo(a[i-1]); }
+
+function renderNav(){
+  document.querySelectorAll('.mod').forEach(el => el.classList.toggle('active', el.dataset.mod===current));
+  const a = availableMods().map(m=>m.id);
+  const pos = a.indexOf(current)+1;
+  const meta = MODS.find(m=>m.id===current);
+  document.getElementById('stepPill').textContent = meta ? meta.label : '';
+  document.getElementById('progress').innerHTML = a.map(id => '<span class="' + (id===current?'cur':(saved[id]?'done':'')) + '"></span>').join('');
+  document.getElementById('btnPrev').hidden = (pos<=1);
+  document.getElementById('btnNext').hidden = (pos>=a.length);
+  // badges
+  MODS.forEach(m => { const b=document.getElementById('badge-'+m.id); if(b) b.classList.toggle('on', !!saved[m.id]); });
   renderPetals();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+function renderPetals(){
+  document.querySelectorAll('.petal').forEach(p => {
+    const id=p.dataset.mod;
+    p.classList.toggle('active', id===current);
+    p.classList.toggle('saved', !!saved[id]);
+    p.classList.toggle('locked', !modAvailable(id));
+    p.onclick=()=>goTo(id);
+  });
+}
+function toggleFlower(){ flowerOpen?closeFlower():openFlower(); }
+function openFlower(){ flowerOpen=true; document.getElementById('flower').classList.add('open'); document.getElementById('flowerBd').classList.add('open'); document.getElementById('fab').classList.add('spin'); renderPetals(); }
+function closeFlower(){ flowerOpen=false; document.getElementById('flower').classList.remove('open'); document.getElementById('flowerBd').classList.remove('open'); document.getElementById('fab').classList.remove('spin'); }
+
+function onIdentChange(){
+  const n=val('nombreMercaderista');
+  document.getElementById('heroGreet').textContent = n ? ('Hola, '+n.split(' ')[0]) : 'Hola, mercaderista';
+}
+
+// ===== UBICACIÓN GPS =====
+function capturarUbicacion(){
+  const t=document.getElementById('locTitle'), d=document.getElementById('locDesc'), btn=document.getElementById('btnGPS');
+  if(!navigator.geolocation){ d.textContent='Tu dispositivo no soporta geolocalización.'; return; }
+  t.textContent='Obteniendo ubicación...'; d.textContent='Permite el acceso a tu ubicación'; btn.disabled=true;
+  navigator.geolocation.getCurrentPosition(pos => {
+    ubicacion.lat=+pos.coords.latitude.toFixed(6); ubicacion.lng=+pos.coords.longitude.toFixed(6); ubicacion.acc=Math.round(pos.coords.accuracy);
+    document.getElementById('locBox').classList.add('ok');
+    t.textContent='Ubicación capturada';
+    d.textContent='Precisión aproximada: '+ubicacion.acc+' m';
+    const c=document.getElementById('locCoords'); c.style.display='flex';
+    c.innerHTML = '<span>'+ubicacion.lat+', '+ubicacion.lng+'</span> · <a href="https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'" target="_blank">Ver en Maps</a>';
+    btn.disabled=false; btn.innerHTML='<svg class="icon icon-sm"><use href="#i-refresh"/></svg>Volver a capturar';
+  }, err => {
+    btn.disabled=false; t.textContent='No se pudo obtener la ubicación';
+    d.textContent = err.code===1 ? 'Permiso denegado. Actívalo en el navegador.' : 'Intenta de nuevo en un lugar abierto.';
+  }, { enableHighAccuracy:true, timeout:12000, maximumAge:0 });
 }
 
 // ===== PARAMETRIZACIÓN =====
-async function cargarParametrizacion() {
+async function cargarParametrizacion(){
   ocultarAlertaParam();
-  try {
-    const res = await fetch(GAS_URL + '?action=parametrizacion', { redirect:'follow' });
-    const data = await res.json();
-    if (data && data.success && data.ciudadesPDV && Object.keys(data.ciudadesPDV).length>0) {
-      parametrizacion = data; modoManual=false; activarModoSelect(); cargarCiudades();
-    } else {
-      activarModoManual((data&&data.error) ? data.error : 'La hoja respondió sin ciudades. Revisa la hoja "PDV ciudad" (A=ciudad, B=PDV).');
-    }
-  } catch (err) {
-    activarModoManual('No hay conexión con el servidor o el despliegue no responde. (' + err.message + ')');
-  }
+  try{
+    const res=await fetch(GAS_URL+'?action=parametrizacion',{redirect:'follow'});
+    const data=await res.json();
+    if(data&&data.success&&data.ciudadesPDV&&Object.keys(data.ciudadesPDV).length>0){ parametrizacion=data; modoManual=false; activarModoSelect(); cargarCiudades(); }
+    else activarModoManual((data&&data.error)?data.error:'La hoja respondió sin ciudades. Revisa la hoja "PDV ciudad".');
+  }catch(err){ activarModoManual('No hay conexión con el servidor. ('+err.message+')'); }
 }
-function activarModoSelect(){ document.getElementById('ciudad').style.display=''; document.getElementById('puntoVenta').style.display=''; document.getElementById('ciudadTexto').style.display='none'; document.getElementById('pdvTexto').style.display='none'; }
-function activarModoManual(msg){ modoManual=true; document.getElementById('ciudad').style.display='none'; document.getElementById('puntoVenta').style.display='none'; document.getElementById('ciudadTexto').style.display=''; document.getElementById('pdvTexto').style.display=''; document.getElementById('alertParamMsg').textContent=msg; document.getElementById('alertParam').style.display='flex'; }
+function activarModoSelect(){ ['ciudad','puntoVenta'].forEach(i=>document.getElementById(i).style.display=''); ['ciudadTexto','pdvTexto'].forEach(i=>document.getElementById(i).style.display='none'); }
+function activarModoManual(msg){ modoManual=true; ['ciudad','puntoVenta'].forEach(i=>document.getElementById(i).style.display='none'); ['ciudadTexto','pdvTexto'].forEach(i=>document.getElementById(i).style.display=''); document.getElementById('alertParamMsg').textContent=msg; document.getElementById('alertParam').style.display='flex'; }
 function ocultarAlertaParam(){ document.getElementById('alertParam').style.display='none'; }
-function cargarCiudades(){ const s=document.getElementById('ciudad'); s.innerHTML='<option value="">Seleccionar ciudad</option>'; Object.keys(parametrizacion.ciudadesPDV).sort().forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; s.appendChild(o); }); }
-function actualizarPDV(){ const c=document.getElementById('ciudad').value; const s=document.getElementById('puntoVenta'); s.innerHTML='<option value="">Seleccionar PDV</option>'; if(c&&parametrizacion.ciudadesPDV[c]){ parametrizacion.ciudadesPDV[c].slice().sort().forEach(p=>{ const o=document.createElement('option'); o.value=p; o.textContent=p; s.appendChild(o); }); s.disabled=false; } else { s.disabled=true; } }
-function getCiudad(){ return modoManual ? document.getElementById('ciudadTexto').value.trim() : document.getElementById('ciudad').value.trim(); }
-function getPDV(){ return modoManual ? document.getElementById('pdvTexto').value.trim() : document.getElementById('puntoVenta').value.trim(); }
+function cargarCiudades(){ const s=document.getElementById('ciudad'); s.innerHTML='<option value="">Seleccionar ciudad</option>'; Object.keys(parametrizacion.ciudadesPDV).sort().forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;s.appendChild(o);}); }
+function actualizarPDV(){ const c=document.getElementById('ciudad').value; const s=document.getElementById('puntoVenta'); s.innerHTML='<option value="">Seleccionar PDV</option>'; if(c&&parametrizacion.ciudadesPDV[c]){ parametrizacion.ciudadesPDV[c].slice().sort().forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p;s.appendChild(o);}); s.disabled=false; } else s.disabled=true; }
+function getCiudad(){ return modoManual?document.getElementById('ciudadTexto').value.trim():document.getElementById('ciudad').value.trim(); }
+function getPDV(){ return modoManual?document.getElementById('pdvTexto').value.trim():document.getElementById('puntoVenta').value.trim(); }
 
-// ===== HUBO COMPRA =====
-function manejarHuboCompra(){
-  const v = huboCompraVal();
-  document.getElementById('blockNoCompra').style.display = v==='No'?'block':'none';
-  if (v==='Si' && productosPedido.length===0) agregarProducto();
-  renderStep(); // refresca disponibilidad del paso 5 + petalos
-}
+// ===== VENTAS =====
+function onVentaChange(){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; document.getElementById('ventaNo').style.display=v==='No'?'block':'none'; document.getElementById('ventaSi').style.display=v==='Si'?'block':'none'; }
 
-// ===== PRODUCTOS =====
-function agregarProducto(){ productosPedido.push({ id:'p_'+Date.now()+'_'+Math.random().toString(36).slice(2,6), sku:'', cantidad:1, precio:0, subtotal:0 }); renderProductos(); }
-function eliminarProducto(id){ productosPedido=productosPedido.filter(p=>p.id!==id); renderProductos(); calcularTotalPedido(); }
-function renderProductos(){
-  const cont=document.getElementById('tablaProductos'); cont.innerHTML='';
-  productosPedido.forEach((p,idx)=>{
-    const div=document.createElement('div'); div.className='prod';
-    div.innerHTML = `
-      <div class="prod-head"><div class="prod-title"><svg class="icon icon-sm"><use href="#i-package"/></svg>Producto ${idx+1}</div>
-        <button type="button" class="btn btn-danger btn-icon" onclick="eliminarProducto('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
-      <div class="field"><label class="label label-req">SKU</label>
-        <div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escapeAttr(p.sku)}" autocomplete="off"
-          oninput="filtrarSKU('${p.id}', this.value)" onfocus="filtrarSKU('${p.id}', this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)">
-          <div class="sku-dd" id="dropdown_${p.id}"></div></div></div>
-      <div class="field-row" style="margin-bottom:0;">
-        <div class="field" style="margin-bottom:0;"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="actualizarCantidad('${p.id}', this.value)"></div>
-        <div class="field" style="margin-bottom:0;"><label class="label">Precio unitario</label><input type="number" class="input" min="0" value="${p.precio}" oninput="actualizarPrecio('${p.id}', this.value)"></div></div>
-      <div class="prod-sub">Subtotal: <strong>$${formatNum(p.subtotal)}</strong></div>`;
-    cont.appendChild(div);
-  });
+// ===== LISTAS (pedido / agotados / fechas) =====
+function findItem(id){ return productosPedido.find(x=>x.id===id) || agotadosList.find(x=>x.id===id) || fechasList.find(x=>x.id===id); }
+
+function agregarProducto(){ productosPedido.push({id:uid('p'),sku:'',cantidad:1,precio:0,subtotal:0}); renderPedido(); }
+function eliminarProducto(id){ productosPedido=productosPedido.filter(p=>p.id!==id); renderPedido(); calcularTotalPedido(); }
+function renderPedido(){
+  const cont=document.getElementById('listaPedido'); cont.innerHTML='';
+  if(productosPedido.length===0){ cont.innerHTML='<div class="empty-hint">Sin productos. Agrega el primero.</div>'; calcularTotalPedido(); return; }
+  productosPedido.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-package"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarProducto('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    <div class="field-row" style="margin-bottom:0"><div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setCant('${p.id}',this.value)"></div><div class="field" style="margin-bottom:0"><label class="label">Precio unit.</label><input type="number" class="input" min="0" value="${p.precio}" oninput="setPrecio('${p.id}',this.value)"></div></div>
+    <div class="item-sub">Subtotal: <strong>$${fmt(p.subtotal)}</strong></div>`; cont.appendChild(d); });
 }
-function escapeAttr(s){ return String(s).replace(/"/g,'&quot;'); }
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function filtrarSKU(id,valor){ const dd=document.getElementById('dropdown_'+id); if(!dd)return; const f=valor.toLowerCase().trim(); const r=parametrizacion.skus.filter(s=>s.completo.toLowerCase().includes(f)).slice(0,30);
-  if(r.length===0){ dd.innerHTML = parametrizacion.skus.length===0?'<div class="sku-empty">No hay SKU cargados</div>':'<div class="sku-empty">Sin resultados</div>'; }
-  else { dd.innerHTML = r.map(s=>{ const safe=escapeHtml(s.completo); const attr=String(s.completo).replace(/'/g,"\\'"); return `<div class="sku-item" onmousedown="seleccionarSKU('${id}', '${attr}', ${s.precio||0})">${safe}</div>`; }).join(''); }
+function setCant(id,v){ const p=findItem(id); if(!p)return; p.cantidad=parseFloat(v)||0; if('subtotal'in p){p.subtotal=p.cantidad*p.precio;} calcularTotalPedido(); subDOM('listaPedido',productosPedido,p); }
+function setPrecio(id,v){ const p=findItem(id); if(!p)return; p.precio=parseFloat(v)||0; p.subtotal=p.cantidad*p.precio; calcularTotalPedido(); subDOM('listaPedido',productosPedido,p); }
+function subDOM(contId,list,p){ const i=list.indexOf(p); const row=document.querySelectorAll('#'+contId+' .item')[i]; if(row){const s=row.querySelector('.item-sub'); if(s)s.innerHTML=`Subtotal: <strong>$${fmt(p.subtotal)}</strong>`;} }
+function calcularTotalPedido(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); document.getElementById('totalPedido').textContent='$'+fmt(t); calcularTotalFinal(); }
+function calcularTotalFinal(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); const d=parseFloat(document.getElementById('descuento').value)||0; document.getElementById('totalFinal').textContent='$'+fmt(Math.max(0,t-d)); }
+
+function agregarAgotado(){ agotadosList.push({id:uid('a'),sku:'',obs:''}); renderAgotados(); }
+function eliminarAgotado(id){ agotadosList=agotadosList.filter(x=>x.id!==id); renderAgotados(); }
+function renderAgotados(){
+  const cont=document.getElementById('listaAgotados'); cont.innerHTML='';
+  if(agotadosList.length===0){ cont.innerHTML='<div class="empty-hint">Sin agotados registrados.</div>'; return; }
+  agotadosList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-xcircle"/></svg>Agotado ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarAgotado('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    <div class="field" style="margin-bottom:0"><label class="label">Observación</label><input type="text" class="input" value="${escAttr(p.obs)}" oninput="setObs('${p.id}',this.value)" placeholder="Días sin producto, etc."></div>`; cont.appendChild(d); });
+}
+function setObs(id,v){ const p=findItem(id); if(p)p.obs=v; }
+
+function agregarFecha(){ fechasList.push({id:uid('f'),sku:'',lote:'',vence:'',cantidad:1}); renderFechas(); }
+function eliminarFecha(id){ fechasList=fechasList.filter(x=>x.id!==id); renderFechas(); }
+function renderFechas(){
+  const cont=document.getElementById('listaFechas'); cont.innerHTML='';
+  if(fechasList.length===0){ cont.innerHTML='<div class="empty-hint">Sin productos próximos a vencer.</div>'; return; }
+  fechasList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-clock"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarFecha('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    <div class="field-row"><div class="field" style="margin-bottom:0"><label class="label label-req">Vence</label><input type="date" class="input" value="${escAttr(p.vence)}" oninput="setFld('${p.id}','vence',this.value)"></div><div class="field" style="margin-bottom:0"><label class="label">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div></div>
+    <div class="field" style="margin-bottom:0;margin-top:11px"><label class="label">Lote</label><input type="text" class="input" value="${escAttr(p.lote)}" oninput="setFld('${p.id}','lote',this.value)" placeholder="Lote (opcional)"></div>`; cont.appendChild(d); });
+}
+function setFld(id,campo,v){ const p=findItem(id); if(p)p[campo]= (campo==='cantidad'?(parseFloat(v)||0):v); }
+
+// SKU buscador (compartido)
+function filtrarSKU(id,valor){ const dd=document.getElementById('dd_'+id); if(!dd)return; const f=valor.toLowerCase().trim(); const r=parametrizacion.skus.filter(s=>s.completo.toLowerCase().includes(f)).slice(0,30);
+  dd.innerHTML = r.length===0 ? (parametrizacion.skus.length===0?'<div class="sku-empty">No hay SKU cargados</div>':'<div class="sku-empty">Sin resultados</div>')
+    : r.map(s=>{const safe=escHtml(s.completo);const attr=String(s.completo).replace(/'/g,"\\'");return `<div class="sku-item" onmousedown="seleccionarSKU('${id}','${attr}',${s.precio||0})">${safe}</div>`;}).join('');
   dd.classList.add('show'); }
-function cerrarSKU(id){ const d=document.getElementById('dropdown_'+id); if(d) d.classList.remove('show'); }
-function seleccionarSKU(id,sku,precio){ const p=productosPedido.find(x=>x.id===id); if(!p)return; p.sku=sku; p.precio=parseFloat(precio)||0; p.subtotal=p.cantidad*p.precio; cerrarSKU(id); renderProductos(); calcularTotalPedido(); }
-function actualizarCantidad(id,v){ const p=productosPedido.find(x=>x.id===id); if(!p)return; p.cantidad=parseFloat(v)||0; p.subtotal=p.cantidad*p.precio; subDOM(p); calcularTotalPedido(); }
-function actualizarPrecio(id,v){ const p=productosPedido.find(x=>x.id===id); if(!p)return; p.precio=parseFloat(v)||0; p.subtotal=p.cantidad*p.precio; subDOM(p); calcularTotalPedido(); }
-function subDOM(p){ const i=productosPedido.indexOf(p); const row=document.querySelectorAll('#tablaProductos .prod')[i]; if(row){ const s=row.querySelector('.prod-sub'); if(s) s.innerHTML=`Subtotal: <strong>$${formatNum(p.subtotal)}</strong>`; } }
-function calcularTotalPedido(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); document.getElementById('totalPedido').textContent='$'+formatNum(t); calcularTotalFinal(); }
-function calcularTotalFinal(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); const d=parseFloat(document.getElementById('descuento').value)||0; document.getElementById('totalFinal').textContent='$'+formatNum(Math.max(0,t-d)); }
-function formatNum(n){ return Number(n||0).toLocaleString('es-CO',{maximumFractionDigits:2}); }
+function cerrarSKU(id){ const d=document.getElementById('dd_'+id); if(d)d.classList.remove('show'); }
+function seleccionarSKU(id,sku,precio){ const p=findItem(id); if(!p)return; p.sku=sku; if('precio'in p){p.precio=parseFloat(precio)||0; p.subtotal=p.cantidad*p.precio;} cerrarSKU(id); renderPedido(); renderAgotados(); renderFechas(); calcularTotalPedido(); }
 
-// ===== FOTO =====
-function manejarFoto(e){ const file=e.target.files[0]; if(!file)return; if(file.size>10*1024*1024){ alert('La imagen supera 10 MB.'); e.target.value=''; return; }
-  const r=new FileReader(); r.onload=ev=>{ fotoEstanteBase64=ev.target.result; document.getElementById('previewFoto').src=fotoEstanteBase64; document.getElementById('uploadDefault').style.display='none'; document.getElementById('uploadPreview').style.display='block'; document.getElementById('uploadArea').classList.add('has'); }; r.readAsDataURL(file); }
-function removerFoto(){ fotoEstanteBase64=''; document.getElementById('fotoEstante').value=''; document.getElementById('uploadDefault').style.display='block'; document.getElementById('uploadPreview').style.display='none'; document.getElementById('uploadArea').classList.remove('has'); }
+function uid(pfx){ return pfx+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
+function escAttr(s){ return String(s==null?'':s).replace(/"/g,'&quot;'); }
+function escHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmt(n){ return Number(n||0).toLocaleString('es-CO',{maximumFractionDigits:2}); }
 
-// ===== VALIDACIÓN / ENVÍO =====
-function firstInvalidStep(){
-  if(!val('nombreMercaderista')||!val('cedulaMercaderista')) return 1;
-  if(!val('fechaVisita')||!val('horaEntrada')||!getCiudad()||!getPDV()||!val('nombreNegocio')||!val('nitCliente')||!val('contactoPrincipal')||!val('canalVentas')) return 2;
-  const hubo=huboCompraVal();
-  if(!hubo) return 3;
-  if(hubo==='No' && !val('motivoNoCompra')) return 3;
-  if(!document.querySelector('input[name="materialPOP"]:checked')||!fotoEstanteBase64) return 4;
-  if(hubo==='Si'){
-    if(productosPedido.length===0) return 5;
-    for(const p of productosPedido){ if(!p.sku||!p.cantidad||p.cantidad<1) return 5; }
-    if(!val('metodoPago')||!document.querySelector('input[name="condicionVenta"]:checked')) return 5;
-  }
-  if(!val('proximaVisita')) return 6;
-  return 0;
+// ===== FOTOS =====
+function leerFoto(e,tipo){ const file=e.target.files[0]; if(!file)return; if(file.size>10*1024*1024){ alert('La imagen supera 10 MB.'); e.target.value=''; return; }
+  const r=new FileReader(); r.onload=ev=>{ const data=ev.target.result;
+    if(tipo==='antes'){ fotoAntes=data; fotoAntesURL=''; document.getElementById('imgAntes').src=data; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has'); }
+    else{ fotoDespues=data; fotoDespuesURL=''; document.getElementById('imgDespues').src=data; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has'); }
+  }; r.readAsDataURL(file); }
+function quitarFoto(tipo){ if(tipo==='antes'){ fotoAntes=''; fotoAntesURL=''; document.getElementById('fileAntes').value=''; document.getElementById('defAntes').style.display='block'; document.getElementById('prevAntes').style.display='none'; document.getElementById('uploadAntes').classList.remove('has'); } else { fotoDespues=''; fotoDespuesURL=''; document.getElementById('fileDespues').value=''; document.getElementById('defDespues').style.display='block'; document.getElementById('prevDespues').style.display='none'; document.getElementById('uploadDespues').classList.remove('has'); } }
+
+// ===== RESUMEN =====
+function renderResumen(){
+  const totalPed = productosPedido.reduce((s,p)=>s+p.subtotal,0);
+  const desc = parseFloat(document.getElementById('descuento').value)||0;
+  const cont = document.getElementById('resumenContenido');
+  const venta = (document.querySelector('input[name="ventaRealizada"]:checked')||{}).value || '—';
+  const ubic = (ubicacion.lat&&ubicacion.lng) ? '<a href="https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'" target="_blank">Ver en Maps</a>' : '—';
+  cont.innerHTML =
+    '<div class="sum-grid">'+
+      cell('Mercaderista', val('nombreMercaderista')||'—')+
+      cell('Ciudad / PDV', (getCiudad()||'—')+' · '+(getPDV()||'—'))+
+      cell('Ubicación', ubic)+
+      cell('Venta', venta)+
+      cell('Agotados', agotadosList.length)+
+      cell('Fechas cortas', fechasList.length)+
+      cell('Productos pedido', productosPedido.length)+
+      cell('Total pedido', '$'+fmt(Math.max(0,totalPed-desc)))+
+    '</div>'+
+    '<div style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin:6px 0 10px">Estado de módulos</div>'+
+    MODS.filter(m=>m.id!=='resumen').map(m =>
+      '<div class="mod-state"><div class="ms-ic"><svg class="icon icon-sm"><use href="#'+m.icon+'"/></svg></div><div class="ms-name">'+m.label+'</div><span class="ms-tag '+(saved[m.id]?'ok':'no')+'">'+(saved[m.id]?'Guardado':'Pendiente')+'</span></div>'
+    ).join('');
 }
-function listaErrores(){
+function cell(k,v){ return '<div class="sum-cell"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'; }
+
+// ===== GUARDADO POR MÓDULO =====
+function validarModulo(id){
   const e=[];
-  if(!val('nombreMercaderista')) e.push('Nombre mercaderista');
-  if(!val('cedulaMercaderista')) e.push('Cédula mercaderista');
-  if(!val('fechaVisita')) e.push('Fecha de visita');
-  if(!val('horaEntrada')) e.push('Hora de entrada');
-  if(!getCiudad()) e.push('Ciudad');
-  if(!getPDV()) e.push('Punto de venta');
-  if(!val('nombreNegocio')) e.push('Negocio');
-  if(!val('nitCliente')) e.push('NIT');
-  if(!val('contactoPrincipal')) e.push('Contacto');
-  if(!val('canalVentas')) e.push('Canal de ventas');
-  const hubo=huboCompraVal();
-  if(!hubo) e.push('¿Hubo compra?');
-  if(!document.querySelector('input[name="materialPOP"]:checked')) e.push('Material POP');
-  if(!fotoEstanteBase64) e.push('Foto del estante');
-  if(hubo==='Si'){ if(productosPedido.length===0) e.push('Un producto'); if(!val('metodoPago')) e.push('Método de pago'); if(!document.querySelector('input[name="condicionVenta"]:checked')) e.push('Condición de venta'); }
-  if(hubo==='No' && !val('motivoNoCompra')) e.push('Motivo de no compra');
-  if(!val('proximaVisita')) e.push('Próxima visita');
+  if(id==='inicio'){
+    if(!val('nombreMercaderista')) e.push('Nombre del mercaderista');
+    if(!val('cedulaMercaderista')) e.push('Cédula');
+    if(!getCiudad()) e.push('Ciudad');
+    if(!getPDV()) e.push('Punto de venta');
+    if(!(ubicacion.lat&&ubicacion.lng)) e.push('Ubicación GPS (toca "Capturar ubicación")');
+  }
+  if(id==='ventas'){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; if(!v) e.push('¿Se realizó venta?'); if(v==='No'&&!val('ventaMotivoNo')) e.push('Motivo de no venta'); }
+  if(id==='fotos'){ if(!fotoAntes&&!fotoAntesURL) e.push('Foto ANTES'); }
+  if(id==='agotados'){ agotadosList.forEach((p,i)=>{ if(!p.sku) e.push('SKU del agotado '+(i+1)); }); }
+  if(id==='fechas'){ fechasList.forEach((p,i)=>{ if(!p.sku) e.push('SKU del producto '+(i+1)); if(!p.vence) e.push('Fecha de vencimiento '+(i+1)); }); }
+  if(id==='pedido'){ productosPedido.forEach((p,i)=>{ if(!p.sku) e.push('SKU producto '+(i+1)); if(!p.cantidad||p.cantidad<1) e.push('Cantidad producto '+(i+1)); }); }
   return e;
 }
-function val(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
 
-function recolectarDatos(){
-  const hubo=document.querySelector('input[name="huboCompra"]:checked');
-  const pop=document.querySelector('input[name="materialPOP"]:checked');
-  const cond=document.querySelector('input[name="condicionVenta"]:checked');
+function recolectarGestion(){
+  const totalPed=productosPedido.reduce((s,p)=>s+p.subtotal,0);
+  const desc=parseFloat(document.getElementById('descuento').value)||0;
+  const cond=(document.querySelector('input[name="ventaCondicion"]:checked')||{}).value||'';
+  const pop=(document.querySelector('input[name="materialPOP"]:checked')||{}).value||'';
   const promos=Array.from(document.querySelectorAll('input[id^="promo"]:checked')).map(c=>c.value);
-  const totalPedido=productosPedido.reduce((s,p)=>s+p.subtotal,0);
-  const descuento=parseFloat(document.getElementById('descuento').value)||0;
-  return { nombreMercaderista:val('nombreMercaderista'), cedulaMercaderista:val('cedulaMercaderista'), fechaVisita:val('fechaVisita'), horaEntrada:val('horaEntrada'), horaSalida:val('horaSalida'), ciudad:getCiudad(), puntoVenta:getPDV(), nombreNegocio:val('nombreNegocio'), nitCliente:val('nitCliente'), contactoPrincipal:val('contactoPrincipal'), canalVentas:val('canalVentas'), huboCompra:hubo?hubo.value:'', motivoNoCompra:val('motivoNoCompra'), motivoOtro:val('motivoOtro'), inventarioPQP:val('inventarioPQP'), marcasCompetencia:val('marcasCompetencia'), materialPOP:pop?pop.value:'', fotoEstante:fotoEstanteBase64, observacionesPDV:val('observacionesPDV'), productos:productosPedido, totalPedido:totalPedido, promociones:promos, descuento:descuento, totalFinal:Math.max(0,totalPedido-descuento), metodoPago:val('metodoPago'), condicionVenta:cond?cond.value:'', plazoCredito:val('plazoCredito'), observacionesFinales:val('observacionesFinales'), proximaVisita:val('proximaVisita') };
+  return {
+    sheetName: sheetName,
+    nombreMercaderista: val('nombreMercaderista'), cedulaMercaderista: val('cedulaMercaderista'),
+    ciudad: getCiudad(), puntoVenta: getPDV(),
+    latitud: ubicacion.lat||'', longitud: ubicacion.lng||'', precisionGPS: ubicacion.acc||'',
+    nombreNegocio: val('nombreNegocio'), nitCliente: val('nitCliente'), contactoPrincipal: val('contactoPrincipal'), canalVentas: val('canalVentas'),
+    ventaRealizada: (document.querySelector('input[name="ventaRealizada"]:checked')||{}).value||'',
+    ventaMotivoNo: val('ventaMotivoNo'), ventaMetodoPago: val('ventaMetodoPago'), ventaCondicion: cond, ventaPlazo: val('ventaPlazo'), ventaObservaciones: val('ventaObservaciones'),
+    inventarioPQP: val('inventarioPQP'), marcasCompetencia: val('marcasCompetencia'), materialPOP: pop, inventarioObs: val('inventarioObs'),
+    fotoAntes: fotoAntes, fotoDespues: fotoDespues, fotoAntesURL: fotoAntesURL, fotoDespuesURL: fotoDespuesURL,
+    agotados: agotadosList.map(a=>({sku:a.sku,obs:a.obs})),
+    fechasCortas: fechasList.map(f=>({sku:f.sku,lote:f.lote,vence:f.vence,cantidad:f.cantidad})),
+    pedidoProductos: productosPedido.map(p=>({sku:p.sku,cantidad:p.cantidad,precio:p.precio,subtotal:p.subtotal})),
+    pedidoTotal: totalPed, pedidoPromos: promos.join(', '), pedidoDescuento: desc, pedidoTotalFinal: Math.max(0,totalPed-desc),
+    observacionesGenerales: val('observacionesGenerales'), proximaVisita: val('proximaVisita'),
+    modulosGuardados: ''
+  };
 }
 
-async function enviarCaptura(){
-  const bad=firstInvalidStep();
-  if(bad){ goTo(bad); setTimeout(()=>alert('Faltan campos requeridos:\n\n• ' + listaErrores().join('\n• ')), 200); return; }
-  const datos=recolectarDatos();
-  mostrarLoading('Guardando captura...');
-  try {
-    const res=await fetch(GAS_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(datos), redirect:'follow' });
+async function guardarModulo(id, finalizar){
+  const errs=validarModulo(id);
+  if(errs.length>0){ alert('Completa antes de guardar:\n\n• '+errs.join('\n• ')); return; }
+  const gestion=recolectarGestion();
+  saved[id]=true;
+  gestion.modulosGuardados=Object.keys(saved).filter(k=>saved[k]).join(', ');
+  mostrarLoading(finalizar?'Finalizando gestión...':'Guardando '+(MODS.find(m=>m.id===id)||{}).label+'...');
+  try{
+    const res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({sheetName:sheetName,gestion:gestion}),redirect:'follow'});
     const data=await res.json(); ocultarLoading();
-    if(data && data.success) mostrarExito(data);
-    else alert('Error: ' + (data&&data.error?data.error:'desconocido'));
-  } catch(err){ ocultarLoading(); alert('Error de red: ' + err.message); }
+    if(data&&data.success){
+      sheetName=data.sheetName||sheetName;
+      if(data.fotoAntesURL){ fotoAntesURL=data.fotoAntesURL; fotoAntes=''; }
+      if(data.fotoDespuesURL){ fotoDespuesURL=data.fotoDespuesURL; fotoDespues=''; }
+      renderNav();
+      if(finalizar){ mostrarExito(data); }
+      else { toast((MODS.find(m=>m.id===id)||{}).label+' guardado'); }
+    } else { saved[id]=false; alert('Error: '+(data&&data.error?data.error:'desconocido')); }
+  }catch(err){ saved[id]=false; ocultarLoading(); alert('Error de red: '+err.message); }
 }
+
+function toast(msg, warn){ const t=document.getElementById('toast'); document.getElementById('toastMsg').textContent=msg; t.querySelector('.icon use').setAttribute('href', warn?'#i-alert':'#i-check'); t.style.setProperty('--c', warn?'#f3b04b':'#7ef0a8'); t.classList.add('show'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('show'),2200); }
 function mostrarLoading(m){ document.getElementById('loadingMsg').textContent=m; document.getElementById('loadingOverlay').classList.add('show'); }
 function ocultarLoading(){ document.getElementById('loadingOverlay').classList.remove('show'); }
-function mostrarExito(d){ let i='Hoja creada: '+d.sheetName; if(d.fotoUrl) i+='\n\nFoto: '+d.fotoUrl; document.getElementById('successInfo').textContent=i; document.getElementById('successModal').classList.add('show'); }
+function mostrarExito(d){ let i='Hoja: '+d.sheetName; document.getElementById('successInfo').textContent=i; document.getElementById('successModal').classList.add('show'); }
 
-function nuevaCaptura(){
-  document.getElementById('successModal').classList.remove('show');
-  ['fechaVisita','horaEntrada','horaSalida','ciudad','ciudadTexto','puntoVenta','pdvTexto','nombreNegocio','nitCliente','contactoPrincipal','canalVentas','motivoNoCompra','motivoOtro','inventarioPQP','marcasCompetencia','observacionesPDV','descuento','metodoPago','plazoCredito','observacionesFinales','proximaVisita'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value = id==='descuento'?'0':''; });
-  document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(i=>i.checked=false);
-  productosPedido=[]; renderProductos(); removerFoto();
-  document.getElementById('blockNoCompra').style.display='none';
-  if(!modoManual){ document.getElementById('puntoVenta').innerHTML='<option value="">Selecciona una ciudad primero</option>'; document.getElementById('puntoVenta').disabled=true; }
-  document.getElementById('fechaVisita').value=new Date().toISOString().split('T')[0];
-  document.getElementById('totalPedido').textContent='$0'; document.getElementById('totalFinal').textContent='$0';
-  current=1; renderStep();
-}
+function nuevaGestion(){ location.reload(); }
+function val(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
 </script>
 </body>
 </html>
