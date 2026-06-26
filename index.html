@@ -138,7 +138,7 @@
   .ms-tag.ok{background:var(--success-soft);color:var(--success)}.ms-tag.no{background:#f1f3f8;color:var(--muted)}
 
   /* BOTTOM NAV + FLOWER */
-  .bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px 18px;padding-bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding:12px 18px;padding-bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:12px}
   .nav-side{flex:1;display:flex}.nav-side.right{justify-content:flex-end}
   .nav-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 16px;border-radius:var(--r-md);border:1.5px solid var(--line-strong);background:#fff;color:var(--ink);font-family:'Poppins';font-weight:600;font-size:13.5px;cursor:pointer;min-height:46px;transition:all .15s}
   .nav-btn:hover{border-color:var(--muted)}.nav-btn[hidden]{visibility:hidden}
@@ -247,6 +247,13 @@
   .res-line:last-child{border:none}.res-line .rk{color:var(--ink-soft)}.res-line .rv{font-weight:600;text-align:right;word-break:break-word}
   .res-mini{font-size:12.5px;color:var(--ink-soft);padding:5px 0}
   .res-mini b{color:var(--ink)}
+
+  /* ===== FOTO DE PERFIL (panel persona) ===== */
+  .persona-foto{display:block;width:96px;height:96px;border-radius:50%;margin:0 auto 6px;position:relative;cursor:pointer}
+  .persona-foto-img{width:96px;height:96px;border-radius:50%;object-fit:cover;display:none;border:3px solid var(--blue-soft)}
+  .persona-foto-ph{width:96px;height:96px;border-radius:50%;background:var(--navy-grad);color:#fff;display:flex;align-items:center;justify-content:center}
+  .persona-foto-edit{position:absolute;right:2px;bottom:2px;width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;border:3px solid #fff}
+  .persona-foto-hint{text-align:center;font-size:12px;color:var(--muted);margin:0 0 16px}
 </style>
 </head>
 <body>
@@ -408,14 +415,6 @@
           <button type="button" class="btn btn-soft btn-block" style="margin-top:12px" id="btnGPS" onclick="capturarUbicacion()"><svg class="icon icon-sm"><use href="#i-refresh"/></svg>Actualizar ubicación</button>
         </div>
       </div>
-      <div class="field"><label class="label" for="nombreNegocio">Negocio / Razón social <span class="label-hint">(opcional)</span></label><input type="text" id="nombreNegocio" class="input" placeholder="Ej: Tienda La Esquina"></div>
-      <div class="field-row">
-        <div class="field"><label class="label" for="nitCliente">NIT / ID</label><input type="text" id="nitCliente" class="input" placeholder="Documento"></div>
-        <div class="field"><label class="label" for="contactoPrincipal">Contacto</label><input type="text" id="contactoPrincipal" class="input" placeholder="Nombre"></div>
-      </div>
-      <div class="field"><label class="label" for="canalVentas">Canal de ventas</label>
-        <select id="canalVentas" class="select"><option value="">Seleccionar canal</option><option>Tienda barrio</option><option>Supermercado independiente</option><option>Mayorista</option><option>Institucional/Horeca</option></select>
-      </div>
       <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('inicio')"><svg class="icon"><use href="#i-save"/></svg>Guardar e iniciar gestión</button></div>
     </div>
   </section>
@@ -486,9 +485,9 @@
         <div class="card-head-text"><div class="card-title">Fotos: ingreso y salida</div><div class="card-sub">Estante al llegar y al terminar</div></div>
         <span class="saved-badge" id="badge-fotos"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
-      <div class="field"><label class="label label-req">Foto de ingreso</label>
+      <div class="field"><label class="label label-req">Foto de ingreso (selfie)</label>
         <div class="upload" id="uploadAntes">
-          <input type="file" id="fileAntes" accept="image/*" capture="environment">
+          <input type="file" id="fileAntes" accept="image/*" capture="user">
           <div id="defAntes"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Toca para tomar la foto al llegar</div><div class="upload-h">Obligatoria · JPG, PNG</div></div>
           <div id="prevAntes" style="display:none"><img id="imgAntes" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileAntes').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('antes')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
         </div>
@@ -609,6 +608,13 @@
     <button class="modal-close" onclick="cerrarPersona()"><svg class="icon icon-sm"><use href="#i-x"/></svg></button>
     <div class="modal-h"><svg class="icon"><use href="#i-user"/></svg>Mi información</div>
     <div class="modal-p">Datos del mercaderista registrado</div>
+    <label class="persona-foto" id="personaFotoBox">
+      <input type="file" id="filePerfil" accept="image/*" capture="user" style="display:none">
+      <img class="persona-foto-img" id="personaFotoImg" alt="">
+      <span class="persona-foto-ph" id="personaFotoPh"><svg class="icon icon-xl"><use href="#i-user"/></svg></span>
+      <span class="persona-foto-edit"><svg class="icon icon-sm"><use href="#i-camera"/></svg></span>
+    </label>
+    <div class="persona-foto-hint">Toca para tomar tu selfie de nuevo</div>
     <div class="field"><label class="label">Nombre</label><input type="text" id="pNombre" class="input"></div>
     <div class="field"><label class="label">Documento</label><input type="tel" id="pDoc" class="input" inputmode="numeric"></div>
     <div class="field"><label class="label">Teléfono</label><input type="tel" id="pTel" class="input" inputmode="tel" placeholder="Teléfono"></div>
@@ -639,6 +645,7 @@ const AYUDAS = {
   videos: 'https://drive.google.com/drive/folders/1THDU2CZIMfJn2qdHB-PcbhNW7ZCeywMt?usp=sharing'
 };
 const LS_KEY = 'pqp_session_v1';
+const LS_FOTOS = 'pqp_fotos_v1';
 
 const MODS = [
   {id:'inicio', icon:'i-pin', label:'Inicio'},
@@ -682,6 +689,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }));
   document.getElementById('fileIngreso').addEventListener('change', e => leerFoto(e,'antes'));
   document.getElementById('fileAntes').addEventListener('change', e => leerFoto(e,'antes'));
+  document.getElementById('filePerfil').addEventListener('change', e => leerFoto(e,'antes'));
   document.getElementById('fileDespues').addEventListener('change', e => leerFoto(e,'despues'));
   document.getElementById('descuento').addEventListener('input', calcularTotalFinal);
 
@@ -717,7 +725,7 @@ function renderNav(){
   // badges
   MODS.forEach(m => { const b=document.getElementById('badge-'+m.id); if(b) b.classList.toggle('on', !!saved[m.id]); });
   renderPetals();
-  window.scrollTo({ top:0, behavior:'smooth' });
+  window.scrollTo(0, 0);
 }
 function renderPetals(){
   document.querySelectorAll('.petal').forEach(p => {
@@ -755,7 +763,7 @@ function comenzar(){
   const p=document.getElementById('portada');
   p.classList.add('hide');
   window._portadaTimer = setTimeout(()=>{ p.style.display='none'; }, 650);
-  persistir();
+  persistir(); persistirFotos();
   guardarSilencioso(); // crea el registro y sube la foto de ingreso al Drive
 }
 function reabrirPortada(){
@@ -782,7 +790,7 @@ function aplicarFoto(tipo, data){
     document.getElementById('imgAntes').src=data; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has');
     const fp=document.getElementById('fotoIngresoPrev');
     if(fp){ fp.src=data; fp.style.display='block'; document.getElementById('fiIcon').style.display='none'; document.getElementById('fotoIngresoBox').classList.add('has'); document.getElementById('fiTitle').textContent='Foto lista'; document.getElementById('fiSub').textContent='Toca para volver a tomar'; }
-    setAvatar(data);
+    setAvatar(data); setPersonaFoto(data);
   } else {
     fotoDespues=data; fotoDespuesURL='';
     document.getElementById('imgDespues').src=data; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has');
@@ -795,6 +803,12 @@ function setAvatar(src){
 function resetAvatar(){
   ['avatarImg','navAvatarImg'].forEach(id=>{ const im=document.getElementById(id); if(im){ im.removeAttribute('src'); im.style.display='none'; } });
   ['avatarIcon','navAvatarIcon'].forEach(id=>{ const ic=document.getElementById(id); if(ic) ic.style.display=''; });
+  setPersonaFoto('');
+}
+function setPersonaFoto(src){
+  const img=document.getElementById('personaFotoImg'), ph=document.getElementById('personaFotoPh');
+  if(src){ if(img){ img.src=src; img.style.display='block'; } if(ph) ph.style.display='none'; }
+  else { if(img){ img.removeAttribute('src'); img.style.display='none'; } if(ph) ph.style.display='flex'; }
 }
 
 // ===== PANEL PERSONA =====
@@ -803,6 +817,7 @@ function abrirPersona(){
   document.getElementById('pDoc').value = val('cedulaMercaderista');
   document.getElementById('pTel').value = val('telefono');
   document.getElementById('pPdvActual').textContent = (getCiudad()||'—') + ' · ' + (getPDV()||'—');
+  setPersonaFoto(fotoAntes || fotoAntesURL || '');
   document.getElementById('personaModal').classList.add('show');
 }
 function cerrarPersona(){ document.getElementById('personaModal').classList.remove('show'); }
@@ -826,17 +841,13 @@ function closeAyudas(){ ayudasOpen=false; document.getElementById('ayudas').clas
 function persistir(){
   if(restaurando) return;
   try{
-    const data={
-      loggedIn:true, registroId, saved, current, ubicacion,
-      fotoAntesURL, fotoDespuesURL,
-      campos:recolectarGestion(),
-      listas:{ productosPedido, agotadosList, fechasList },
-      portadaOculta: document.getElementById('portada').classList.contains('hide')
-    };
-    try{ localStorage.setItem(LS_KEY, JSON.stringify(Object.assign({}, data, { fotoAntes, fotoDespues }))); }
-    catch(e){ localStorage.setItem(LS_KEY, JSON.stringify(data)); } // sin base64 si excede cuota
+    const campos=recolectarGestion(); campos.fotoAntes=''; campos.fotoDespues=''; // sin base64 (ligero y rápido)
+    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotoAntesURL, fotoDespuesURL, campos, listas:{ productosPedido, agotadosList, fechasList } };
+    localStorage.setItem(LS_KEY, JSON.stringify(data));
   }catch(e){}
 }
+// Las fotos base64 se guardan aparte y SOLO cuando cambian (evita lag en cada tecla/click)
+function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotoAntes, fotoDespues })); }catch(e){} }
 function restaurarSesion(){
   let raw; try{ raw=localStorage.getItem(LS_KEY); }catch(e){ return false; }
   if(!raw) return false;
@@ -871,11 +882,12 @@ function restaurarSesion(){
     const c=document.getElementById('locCoords'); c.style.display='flex';
     c.innerHTML='<span>'+ubicacion.lat+', '+ubicacion.lng+'</span> · <a href="https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'" target="_blank">Ver en Maps</a>';
   }
-  // Fotos
+  // Fotos (clave separada)
+  let fotos={}; try{ fotos=JSON.parse(localStorage.getItem(LS_FOTOS)||'{}'); }catch(e){}
   fotoAntesURL=d.fotoAntesURL||''; fotoDespuesURL=d.fotoDespuesURL||'';
-  if(d.fotoAntes){ aplicarFoto('antes', d.fotoAntes); }
+  if(fotos.fotoAntes){ aplicarFoto('antes', fotos.fotoAntes); }
   else if(fotoAntesURL){ setAvatar(fotoAntesURL); document.getElementById('imgAntes').src=fotoAntesURL; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has'); }
-  if(d.fotoDespues){ aplicarFoto('despues', d.fotoDespues); }
+  if(fotos.fotoDespues){ aplicarFoto('despues', fotos.fotoDespues); }
   else if(fotoDespuesURL){ document.getElementById('imgDespues').src=fotoDespuesURL; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has'); }
   // Estado
   saved=d.saved||{}; registroId=d.registroId||''; current=d.current||'inicio';
@@ -993,7 +1005,7 @@ function fmt(n){ return Number(n||0).toLocaleString('es-CO',{maximumFractionDigi
 
 // ===== FOTOS =====
 function leerFoto(e,tipo){ const file=e.target.files[0]; if(!file)return; if(file.size>10*1024*1024){ alert('La imagen supera 10 MB.'); e.target.value=''; return; }
-  const r=new FileReader(); r.onload=ev=>{ aplicarFoto(tipo, ev.target.result); persistir(); }; r.readAsDataURL(file); }
+  const r=new FileReader(); r.onload=ev=>{ aplicarFoto(tipo, ev.target.result); persistir(); persistirFotos(); }; r.readAsDataURL(file); }
 function quitarFoto(tipo){
   if(tipo==='antes'){
     fotoAntes=''; fotoAntesURL='';
@@ -1005,7 +1017,7 @@ function quitarFoto(tipo){
     fotoDespues=''; fotoDespuesURL=''; document.getElementById('fileDespues').value='';
     document.getElementById('defDespues').style.display='block'; document.getElementById('prevDespues').style.display='none'; document.getElementById('uploadDespues').classList.remove('has');
   }
-  persistir();
+  persistir(); persistirFotos();
 }
 
 // ===== RESUMEN =====
@@ -1021,7 +1033,7 @@ function renderResumen(){
 
   let h='';
   h+=sec('i-user','Mercaderista',[ ln('Nombre',escHtml(val('nombreMercaderista'))||'—'), ln('Documento',escHtml(val('cedulaMercaderista'))||'—'), ln('Teléfono',escHtml(val('telefono'))||'—') ]);
-  h+=sec('i-pin','Punto de venta',[ ln('Ciudad',escHtml(getCiudad())||'—'), ln('PDV',escHtml(getPDV())||'—'), ln('Negocio',escHtml(val('nombreNegocio'))||'—'), ln('Ubicación',ubic) ]);
+  h+=sec('i-pin','Punto de venta',[ ln('Ciudad',escHtml(getCiudad())||'—'), ln('PDV',escHtml(getPDV())||'—'), ln('Ubicación',ubic) ]);
 
   let lv=[ ln('¿Se realizó venta?', ventaR||'—') ];
   if(ventaR==='No') lv.push(ln('Motivo', escHtml(val('ventaMotivoNo'))||'—'));
@@ -1126,7 +1138,7 @@ function mostrarLoading(m){ document.getElementById('loadingMsg').textContent=m;
 function ocultarLoading(){ document.getElementById('loadingOverlay').classList.remove('show'); }
 function mostrarExito(d){ document.getElementById('successInfo').textContent='Registro: '+d.registroId; document.getElementById('successModal').classList.add('show'); }
 
-function nuevaGestion(){ try{ localStorage.removeItem(LS_KEY); }catch(e){} location.reload(); }
+function nuevaGestion(){ try{ localStorage.removeItem(LS_KEY); localStorage.removeItem(LS_FOTOS); }catch(e){} location.reload(); }
 function val(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
 </script>
 </body>
