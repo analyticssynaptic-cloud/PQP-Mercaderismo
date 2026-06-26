@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<title>Captura PQP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #dbeafe;
+    --primary-soft: #eff6ff;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --text: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --error: #dc2626;
+    --error-light: #fee2e2;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --radius: 10px;
+    --radius-sm: 8px;
+    --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+    --shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .icon { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .icon-lg { width: 22px; height: 22px; }
+  .icon-sm { width: 14px; height: 14px; }
+  .icon-xl { width: 32px; height: 32px; }
+
+  .app-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .app-header-content {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .app-logo {
+    width: 38px;
+    height: 38px;
+    background: var(--primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .app-title { font-size: 16px; font-weight: 700; color: var(--text); }
+  .app-subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 1px; }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 100px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-header-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-header-text { flex: 1; min-width: 0; }
+  .card-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .card-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+  .card-step {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--primary-soft);
+    padding: 4px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .label-required::after {
+    content: '*';
+    color: var(--error);
+    margin-left: 3px;
+  }
+  .label-hint { font-size: 12px; color: var(--text-muted); font-weight: 400; margin-left: 4px; }
+
+  .input, .select, .textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--text);
+    transition: all 0.15s ease;
+    min-height: 44px;
+  }
+  .input::placeholder, .textarea::placeholder { color: var(--text-muted); }
+  .input:hover, .select:hover, .textarea:hover { border-color: #94a3b8; }
+  .input:focus, .select:focus, .textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+  .input:disabled, .select:disabled {
+    background: #f1f5f9;
+    cursor: not-allowed;
+    color: var(--text-muted);
+  }
+
+  .select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 38px;
+  }
+
+  .textarea { min-height: 80px; resize: vertical; }
+
+  .option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+  }
+  .option-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .option { position: relative; }
+  .option input { position: absolute; opacity: 0; pointer-events: none; }
+  .option label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.15s ease;
+    text-align: center;
+    min-height: 44px;
+  }
+  .option label:hover { border-color: var(--primary); color: var(--primary); }
+  .option input:checked + label {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+  .option .check-mark { display: none; }
+  .option input:checked + label .check-mark { display: inline-flex; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-height: 44px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
+  .btn-primary:disabled { background: var(--text-muted); cursor: not-allowed; }
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .btn-secondary:hover { background: var(--bg); border-color: var(--text-muted); }
+  .btn-ghost { background: transparent; color: var(--primary); }
+  .btn-ghost:hover { background: var(--primary-soft); }
+  .btn-danger-ghost {
+    background: transparent;
+    color: var(--error);
+    border-color: var(--border);
+  }
+  .btn-danger-ghost:hover { background: var(--error-light); border-color: var(--error); }
+  .btn-block { width: 100%; }
+  .btn-sm { padding: 7px 12px; font-size: 13px; min-height: 36px; }
+
+  .alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    margin-bottom: 16px;
+    border: 1px solid;
+  }
+  .alert-warning { background: var(--warning-light); color: var(--warning); border-color: #fde68a; }
+  .alert-success { background: var(--success-light); color: var(--success); border-color: #bbf7d0; }
+  .alert-error { background: var(--error-light); color: var(--error); border-color: #fecaca; }
+
+  .blocked {
+    opacity: 0.45;
+    pointer-events: none;
+    user-select: none;
+    filter: saturate(0.6);
+  }
+
+  .sku-wrapper { position: relative; }
+  .sku-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    max-height: 240px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: var(--shadow-lg);
+    display: none;
+  }
+  .sku-dropdown.show { display: block; }
+  .sku-item {
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  .sku-item:last-child { border: none; }
+  .sku-item:hover { background: var(--primary-soft); color: var(--primary); }
+  .sku-empty { padding: 14px; text-align: center; color: var(--text-muted); font-size: 13px; }
+
+  .product-row {
+    background: #fbfcfe;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .product-row-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .product-row-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .product-subtotal {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-align: right;
+    margin-top: 8px;
+  }
+  .product-subtotal strong { color: var(--text); font-weight: 600; }
+
+  .total-box {
+    background: var(--primary-soft);
+    border: 1px solid var(--primary-light);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+  .total-label { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+  .total-value { font-size: 18px; font-weight: 700; color: var(--primary); }
+  .total-box.final { background: var(--primary); border-color: var(--primary); }
+  .total-box.final .total-label, .total-box.final .total-value { color: white; }
+
+  .upload-area {
+    position: relative;
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 28px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background: #fbfcfe;
+  }
+  .upload-area:hover { border-color: var(--primary); background: var(--primary-soft); }
+  .upload-area.has-file {
+    padding: 12px;
+    border-style: solid;
+    border-color: var(--success);
+    background: var(--success-light);
+  }
+  .upload-area input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+  }
+  .upload-icon {
+    width: 40px; height: 40px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .upload-text { font-size: 14px; font-weight: 500; color: var(--text); }
+  .upload-hint { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .preview-img {
+    max-width: 100%;
+    max-height: 240px;
+    border-radius: var(--radius-sm);
+    display: block;
+    margin: 0 auto;
+  }
+  .preview-actions {
+    display: flex; gap: 8px; margin-top: 10px; justify-content: center;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 50;
+  }
+  .footer-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  .loading-overlay.show { display: flex; }
+  .loading-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 28px 36px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    min-width: 220px;
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--primary-light);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto 14px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 14px; color: var(--text-secondary); font-weight: 500; }
+
+  .success-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+  }
+  .success-modal.show { display: flex; }
+  .success-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .success-icon {
+    width: 64px; height: 64px;
+    background: var(--success-light);
+    color: var(--success);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .success-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .success-msg { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
+  .success-info {
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: left;
+    word-break: break-all;
+    white-space: pre-line;
+  }
+
+  @media (max-width: 480px) {
+    .field-row { grid-template-columns: 1fr; }
+    .card { padding: 16px; }
+    .container { padding: 16px 12px 100px; }
+  }
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></symbol>
+</svg>
+
+<header class="app-header">
+  <div class="app-header-content">
+    <div class="app-logo">
+      <svg class="icon icon-lg"><use href="#i-clipboard"/></svg>
+    </div>
+    <div>
+      <div class="app-title">Captura PQP</div>
+      <div class="app-subtitle">Sistema de visita comercial</div>
+    </div>
+  </div>
+</header>
+
+<div class="container" id="container">
+
+  <div id="alertIdent" class="alert alert-warning" style="display:none;">
+    <svg class="icon"><use href="#i-alert"/></svg>
+    <div>Ingresa nombre y cédula del mercaderista para habilitar el formulario.</div>
+  </div>
+
+  <section class="card">
+    <div class="card-header">
+      <div class="card-header-icon"><svg class="icon"><use href="#i-user"/></svg></div>
+      <div class="card-header-text">
+        <div class="card-title">Identificación del mercaderista</div>
+        <div class="card-subtitle">Datos obligatorios para iniciar</div>
+      </div>
+      <span class="card-step">01</span>
+    </div>
+    <div class="field">
+      <label class="label label-required" for="nombreMercaderista">Nombre completo</label>
+      <input type="text" id="nombreMercaderista" class="input" placeholder="Nombres y apellidos" autocomplete="name">
+    </div>
+    <div class="field">
+      <label class="label label-required" for="cedulaMercaderista">Cédula</label>
+      <input type="tel" id="cedulaMercaderista" class="input" placeholder="Número de cédula" inputmode="numeric">
+    </div>
+  </section>
+
+  <div id="formMain" class="blocked">
+
+    <section class="card">
+      <div class="card-header">
+        <div class="card-header-icon"><svg class="icon"><use href="#i-map"/></svg></div>
+        <div class="card-header-text">
+          <div class="card-title">Datos de la visita</div>
+          <div class="card-subtitle">Cliente, ubicación y horario</div>
+        </div>
+        <span class="card-step">02</span>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label class="label label-required" for="fechaVisita">Fecha visita</label>
+          <input type="date" id="fechaVisita" class="input">
+        </div>
+        <div class="field">
+          <label class="label label-required" for="horaEntrada">Hora entrada</label>
+          <input type="time" id="horaEntrada" class="input">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" for="horaSalida">Hora salida <span class="label-hint">(opcional)</span></label>
+        <input type="time" id="horaSalida" class="input">
+      </div>
+      <div class="field">
+        <label class="label label-required" for="ciudad">Ciudad</label>
+        <select id="ciudad" class="select">
+          <option value="">Seleccionar ciudad</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="label label-required" for="puntoVenta">Punto de venta</label>
+        <select id="puntoVenta" class="select" disabled>
+          <option value="">Selecciona una ciudad primero</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="label label-required" for="nombreNegocio">Nombre del negocio / Razón social</label>
+        <input type="text" id="nombreNegocio" class="input" placeholder="Ej: Tienda La Esquina">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label class="label label-required" for="nitCliente">NIT / Identificación</label>
+          <input type="text" id="nitCliente" class="input" placeholder="Documento">
+        </div>
+        <div class="field">
+          <label class="label label-required" for="contactoPrincipal">Contacto principal</label>
+          <input type="text" id="contactoPrincipal" class="input" placeholder="Nombre">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label label-required" for="canalVentas">Canal de ventas</label>
+        <select id="canalVentas" class="select">
+          <option value="">Seleccionar canal</option>
+          <option value="Tienda barrio">Tienda barrio</option>
+          <option value="Supermercado independiente">Supermercado independiente</option>
+          <option value="Mayorista">Mayorista</option>
+          <option value="Institucional/Horeca">Institucional / Horeca</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <div class="card-header-icon"><svg class="icon"><use href="#i-cart"/></svg></div>
+        <div class="card-header-text">
+          <div class="card-title">¿Hubo compra?</div>
+          <div class="card-subtitle">Resultado de la visita</div>
+        </div>
+        <span class="card-step">03</span>
+      </div>
+      <div class="field">
+        <div class="option-grid option-grid-2">
+          <div class="option">
+            <input type="radio" name="huboCompra" id="hcSi" value="Si">
+            <label for="hcSi"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>Sí</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="huboCompra" id="hcNo" value="No">
+            <label for="hcNo"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>No</label>
+          </div>
+        </div>
+      </div>
+      <div id="blockNoCompra" style="display:none;">
+        <div class="field">
+          <label class="label label-required" for="motivoNoCompra">Motivo de no compra</label>
+          <select id="motivoNoCompra" class="select">
+            <option value="">Seleccionar motivo</option>
+            <option value="Aún tiene inventario">Aún tiene inventario</option>
+            <option value="Local cerrado">Local cerrado</option>
+            <option value="Falta dinero">Falta dinero</option>
+            <option value="Dueño no está">Dueño no está</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <div class="field" id="groupMotivoOtro" style="display:none;">
+          <label class="label" for="motivoOtro">Especifica el motivo</label>
+          <textarea id="motivoOtro" class="textarea" placeholder="Describe el motivo"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <div class="card-header-icon"><svg class="icon"><use href="#i-camera"/></svg></div>
+        <div class="card-header-text">
+          <div class="card-title">Censo y estado del PDV</div>
+          <div class="card-subtitle">Inventario, competencia y exhibición</div>
+        </div>
+        <span class="card-step">04</span>
+      </div>
+      <div class="field">
+        <label class="label" for="inventarioPQP">Inventario PQP actual en estante</label>
+        <textarea id="inventarioPQP" class="textarea" placeholder="Referencias y cantidades observadas"></textarea>
+      </div>
+      <div class="field">
+        <label class="label" for="marcasCompetencia">Marcas de competencia presentes</label>
+        <textarea id="marcasCompetencia" class="textarea" placeholder="Marcas y observaciones"></textarea>
+      </div>
+      <div class="field">
+        <label class="label label-required">Material POP instalado y en buen estado</label>
+        <div class="option-grid">
+          <div class="option">
+            <input type="radio" name="materialPOP" id="popSi" value="Si">
+            <label for="popSi"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>Sí</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="materialPOP" id="popNo" value="No">
+            <label for="popNo"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>No</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="materialPOP" id="popParcial" value="Parcial">
+            <label for="popParcial"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>Parcial</label>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label label-required">Fotografía del estante / exhibición</label>
+        <div class="upload-area" id="uploadArea">
+          <input type="file" id="fotoEstante" accept="image/*" capture="environment">
+          <div id="uploadDefault">
+            <div class="upload-icon"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div>
+            <div class="upload-text">Tocar para tomar o cargar foto</div>
+            <div class="upload-hint">JPG, PNG · máx 10 MB</div>
+          </div>
+          <div id="uploadPreview" style="display:none;">
+            <img id="previewFoto" class="preview-img">
+            <div class="preview-actions">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation();document.getElementById('fotoEstante').click();">
+                <svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar
+              </button>
+              <button type="button" class="btn btn-danger-ghost btn-sm" onclick="event.stopPropagation();removerFoto();">
+                <svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" for="observacionesPDV">Observaciones del PDV</label>
+        <textarea id="observacionesPDV" class="textarea" placeholder="Notas sobre el estado general"></textarea>
+      </div>
+    </section>
+
+    <section class="card" id="cardPedido" style="display:none;">
+      <div class="card-header">
+        <div class="card-header-icon"><svg class="icon"><use href="#i-package"/></svg></div>
+        <div class="card-header-text">
+          <div class="card-title">Toma de pedido</div>
+          <div class="card-subtitle">Productos, totales y forma de pago</div>
+        </div>
+        <span class="card-step">05</span>
+      </div>
+      <div id="tablaProductos"></div>
+      <button type="button" class="btn btn-secondary btn-block" onclick="agregarProducto()">
+        <svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar producto
+      </button>
+      <div class="total-box">
+        <span class="total-label">Subtotal</span>
+        <span class="total-value" id="totalPedido">$0</span>
+      </div>
+      <div class="field" style="margin-top:16px;">
+        <label class="label">Promociones aplicables</label>
+        <div class="option-grid">
+          <div class="option">
+            <input type="checkbox" id="promo1" value="Combo 2x1">
+            <label for="promo1"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>Combo 2x1</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" id="promo2" value="Descuento volumen">
+            <label for="promo2"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>Desc. volumen</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" id="promo3" value="Promo del mes">
+            <label for="promo3"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>Promo del mes</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" id="promo4" value="Bonificación">
+            <label for="promo4"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>Bonificación</label>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" for="descuento">Descuento aplicado ($)</label>
+        <input type="number" id="descuento" class="input" min="0" value="0">
+      </div>
+      <div class="total-box final">
+        <span class="total-label">Total final</span>
+        <span class="total-value" id="totalFinal">$0</span>
+      </div>
+      <div class="field" style="margin-top:16px;">
+        <label class="label label-required" for="metodoPago">Método de pago</label>
+        <select id="metodoPago" class="select">
+          <option value="">Seleccionar método</option>
+          <option value="Efectivo">Efectivo</option>
+          <option value="Tarjeta Movistar">Tarjeta Movistar</option>
+          <option value="Crédito">Crédito</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="label label-required">Condición de venta</label>
+        <div class="option-grid option-grid-2">
+          <div class="option">
+            <input type="radio" name="condicionVenta" id="condContado" value="Contado">
+            <label for="condContado"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>Contado</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="condicionVenta" id="condCredito" value="Credito">
+            <label for="condCredito"><svg class="icon icon-sm check-mark"><use href="#i-check"/></svg>Crédito</label>
+          </div>
+        </div>
+      </div>
+      <div class="field" id="groupPlazo" style="display:none;">
+        <label class="label" for="plazoCredito">Plazo en días</label>
+        <input type="number" id="plazoCredito" class="input" min="1" max="365" placeholder="Ej: 30">
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <div class="card-header-icon"><svg class="icon"><use href="#i-check-circle"/></svg></div>
+        <div class="card-header-text">
+          <div class="card-title">Compromisos y cierre</div>
+          <div class="card-subtitle">Observaciones finales y próxima visita</div>
+        </div>
+        <span class="card-step">06</span>
+      </div>
+      <div class="field">
+        <label class="label" for="observacionesFinales">Observaciones finales</label>
+        <textarea id="observacionesFinales" class="textarea" placeholder="Compromisos y notas adicionales"></textarea>
+      </div>
+      <div class="field">
+        <label class="label label-required" for="proximaVisita">Próxima visita programada</label>
+        <input type="date" id="proximaVisita" class="input">
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-content">
+    <button type="button" class="btn btn-primary btn-block" id="btnGuardar" onclick="enviarCaptura()">
+      <svg class="icon"><use href="#i-save"/></svg>Guardar captura
+    </button>
+  </div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-card">
+    <div class="spinner"></div>
+    <div class="loading-text" id="loadingMsg">Procesando...</div>
+  </div>
+</div>
+
+<div class="success-modal" id="successModal">
+  <div class="success-card">
+    <div class="success-icon"><svg class="icon icon-xl"><use href="#i-check"/></svg></div>
+    <div class="success-title">Captura guardada</div>
+    <div class="success-msg">La información se registró correctamente.</div>
+    <div class="success-info" id="successInfo"></div>
+    <button class="btn btn-primary btn-block" onclick="nuevaCaptura()">
+      <svg class="icon"><use href="#i-plus"/></svg>Nueva captura
+    </button>
+  </div>
+</div>
+
+<script>
+// URL del backend Google Apps Script (actualizar si re-despliegas)
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyfmBunsrZt3xu3yCzu7OxThQs8v0Qm-e3yVoQpHVn1bk_GhysCsrLIps8Lwg9Nd5ZIWw/exec';
+
+let parametrizacion = { ciudadesPDV: {}, skus: [] };
+let productosPedido = [];
+let fotoEstanteBase64 = '';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('fechaVisita').value = hoy;
+  const ahora = new Date();
+  document.getElementById('horaEntrada').value =
+    String(ahora.getHours()).padStart(2, '0') + ':' + String(ahora.getMinutes()).padStart(2, '0');
+
+  cargarParametrizacion();
+
+  document.getElementById('nombreMercaderista').addEventListener('input', validarBloqueo);
+  document.getElementById('cedulaMercaderista').addEventListener('input', validarBloqueo);
+  document.getElementById('ciudad').addEventListener('change', actualizarPDV);
+  document.querySelectorAll('input[name="huboCompra"]').forEach(r => r.addEventListener('change', manejarHuboCompra));
+  document.getElementById('motivoNoCompra').addEventListener('change', (e) => {
+    document.getElementById('groupMotivoOtro').style.display = e.target.value === 'Otro' ? 'block' : 'none';
+  });
+  document.getElementById('fotoEstante').addEventListener('change', manejarFoto);
+  document.querySelectorAll('input[name="condicionVenta"]').forEach(r => r.addEventListener('change', () => {
+    const sel = document.querySelector('input[name="condicionVenta"]:checked');
+    document.getElementById('groupPlazo').style.display = (sel && sel.value === 'Credito') ? 'block' : 'none';
+  }));
+  document.getElementById('descuento').addEventListener('input', calcularTotalFinal);
+
+  validarBloqueo();
+});
+
+function validarBloqueo() {
+  const nombre = document.getElementById('nombreMercaderista').value.trim();
+  const cedula = document.getElementById('cedulaMercaderista').value.trim();
+  const form = document.getElementById('formMain');
+  const alerta = document.getElementById('alertIdent');
+  if (nombre && cedula) {
+    form.classList.remove('blocked');
+    alerta.style.display = 'none';
+  } else {
+    form.classList.add('blocked');
+    alerta.style.display = 'flex';
+  }
+}
+
+async function cargarParametrizacion() {
+  try {
+    const res = await fetch(GAS_URL + '?action=parametrizacion');
+    const data = await res.json();
+    if (data && data.success) {
+      parametrizacion = data;
+      cargarCiudades();
+    } else {
+      console.warn('Sin parametrización:', data);
+    }
+  } catch (err) {
+    console.error('Error parametrización:', err);
+  }
+}
+
+function cargarCiudades() {
+  const select = document.getElementById('ciudad');
+  select.innerHTML = '<option value="">Seleccionar ciudad</option>';
+  Object.keys(parametrizacion.ciudadesPDV).sort().forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    select.appendChild(opt);
+  });
+}
+
+function actualizarPDV() {
+  const ciudad = document.getElementById('ciudad').value;
+  const select = document.getElementById('puntoVenta');
+  select.innerHTML = '<option value="">Seleccionar PDV</option>';
+  if (ciudad && parametrizacion.ciudadesPDV[ciudad]) {
+    parametrizacion.ciudadesPDV[ciudad].sort().forEach(pdv => {
+      const opt = document.createElement('option');
+      opt.value = pdv; opt.textContent = pdv;
+      select.appendChild(opt);
+    });
+    select.disabled = false;
+  } else {
+    select.disabled = true;
+  }
+}
+
+function manejarHuboCompra() {
+  const v = document.querySelector('input[name="huboCompra"]:checked');
+  const valor = v ? v.value : '';
+  document.getElementById('blockNoCompra').style.display = valor === 'No' ? 'block' : 'none';
+  document.getElementById('cardPedido').style.display = valor === 'Si' ? 'block' : 'none';
+  if (valor === 'Si' && productosPedido.length === 0) agregarProducto();
+}
+
+function agregarProducto() {
+  productosPedido.push({
+    id: 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+    sku: '', cantidad: 1, precio: 0, subtotal: 0
+  });
+  renderProductos();
+}
+
+function eliminarProducto(id) {
+  productosPedido = productosPedido.filter(p => p.id !== id);
+  renderProductos();
+  calcularTotalPedido();
+}
+
+function renderProductos() {
+  const cont = document.getElementById('tablaProductos');
+  cont.innerHTML = '';
+  productosPedido.forEach((p, idx) => {
+    const div = document.createElement('div');
+    div.className = 'product-row';
+    div.innerHTML = `
+      <div class="product-row-header">
+        <div class="product-row-title">
+          <svg class="icon icon-sm"><use href="#i-package"/></svg>Producto ${idx + 1}
+        </div>
+        <button type="button" class="btn btn-danger-ghost btn-sm" onclick="eliminarProducto('${p.id}')">
+          <svg class="icon icon-sm"><use href="#i-trash"/></svg>
+        </button>
+      </div>
+      <div class="field">
+        <label class="label label-required">SKU</label>
+        <div class="sku-wrapper">
+          <input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto"
+                 value="${escapeAttr(p.sku)}" autocomplete="off"
+                 oninput="filtrarSKU('${p.id}', this.value)"
+                 onfocus="filtrarSKU('${p.id}', this.value)"
+                 onblur="setTimeout(()=>cerrarSKU('${p.id}'), 180)">
+          <div class="sku-dropdown" id="dropdown_${p.id}"></div>
+        </div>
+      </div>
+      <div class="field-row" style="margin-bottom:0;">
+        <div class="field" style="margin-bottom:0;">
+          <label class="label label-required">Cantidad</label>
+          <input type="number" class="input" min="1" value="${p.cantidad}" oninput="actualizarCantidad('${p.id}', this.value)">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label class="label">Precio unitario</label>
+          <input type="number" class="input" min="0" value="${p.precio}" oninput="actualizarPrecio('${p.id}', this.value)">
+        </div>
+      </div>
+      <div class="product-subtotal">Subtotal: <strong>$${formatNum(p.subtotal)}</strong></div>
+    `;
+    cont.appendChild(div);
+  });
+}
+
+function escapeAttr(s) { return String(s).replace(/"/g, '&quot;'); }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function filtrarSKU(id, valor) {
+  const dropdown = document.getElementById('dropdown_' + id);
+  if (!dropdown) return;
+  const filtro = valor.toLowerCase().trim();
+  const filtrados = parametrizacion.skus.filter(s => s.completo.toLowerCase().includes(filtro)).slice(0, 30);
+
+  if (filtrados.length === 0) {
+    dropdown.innerHTML = '<div class="sku-empty">Sin resultados</div>';
+  } else {
+    dropdown.innerHTML = filtrados.map(s => {
+      const safeName = escapeHtml(s.completo);
+      const safeAttr = String(s.completo).replace(/'/g, "\\'");
+      return `<div class="sku-item" onmousedown="seleccionarSKU('${id}', '${safeAttr}', ${s.precio || 0})">${safeName}</div>`;
+    }).join('');
+  }
+  dropdown.classList.add('show');
+}
+
+function cerrarSKU(id) {
+  const d = document.getElementById('dropdown_' + id);
+  if (d) d.classList.remove('show');
+}
+
+function seleccionarSKU(id, sku, precio) {
+  const prod = productosPedido.find(p => p.id === id);
+  if (!prod) return;
+  prod.sku = sku;
+  prod.precio = parseFloat(precio) || 0;
+  prod.subtotal = prod.cantidad * prod.precio;
+  cerrarSKU(id);
+  renderProductos();
+  calcularTotalPedido();
+}
+
+function actualizarCantidad(id, valor) {
+  const prod = productosPedido.find(p => p.id === id);
+  if (!prod) return;
+  prod.cantidad = parseFloat(valor) || 0;
+  prod.subtotal = prod.cantidad * prod.precio;
+  actualizarSubtotalDOM(prod);
+  calcularTotalPedido();
+}
+
+function actualizarPrecio(id, valor) {
+  const prod = productosPedido.find(p => p.id === id);
+  if (!prod) return;
+  prod.precio = parseFloat(valor) || 0;
+  prod.subtotal = prod.cantidad * prod.precio;
+  actualizarSubtotalDOM(prod);
+  calcularTotalPedido();
+}
+
+function actualizarSubtotalDOM(prod) {
+  const idx = productosPedido.indexOf(prod);
+  const row = document.querySelectorAll('#tablaProductos .product-row')[idx];
+  if (row) {
+    const sub = row.querySelector('.product-subtotal');
+    if (sub) sub.innerHTML = `Subtotal: <strong>$${formatNum(prod.subtotal)}</strong>`;
+  }
+}
+
+function calcularTotalPedido() {
+  const total = productosPedido.reduce((s, p) => s + p.subtotal, 0);
+  document.getElementById('totalPedido').textContent = '$' + formatNum(total);
+  calcularTotalFinal();
+}
+
+function calcularTotalFinal() {
+  const total = productosPedido.reduce((s, p) => s + p.subtotal, 0);
+  const desc = parseFloat(document.getElementById('descuento').value) || 0;
+  const final = Math.max(0, total - desc);
+  document.getElementById('totalFinal').textContent = '$' + formatNum(final);
+}
+
+function formatNum(n) {
+  return Number(n || 0).toLocaleString('es-CO', { maximumFractionDigits: 2 });
+}
+
+function manejarFoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 10 * 1024 * 1024) {
+    alert('La imagen supera 10 MB. Selecciona una más liviana.');
+    e.target.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    fotoEstanteBase64 = ev.target.result;
+    document.getElementById('previewFoto').src = fotoEstanteBase64;
+    document.getElementById('uploadDefault').style.display = 'none';
+    document.getElementById('uploadPreview').style.display = 'block';
+    document.getElementById('uploadArea').classList.add('has-file');
+  };
+  reader.readAsDataURL(file);
+}
+
+function removerFoto() {
+  fotoEstanteBase64 = '';
+  document.getElementById('fotoEstante').value = '';
+  document.getElementById('uploadDefault').style.display = 'block';
+  document.getElementById('uploadPreview').style.display = 'none';
+  document.getElementById('uploadArea').classList.remove('has-file');
+}
+
+function validarFormulario() {
+  const e = [];
+  if (!val('nombreMercaderista')) e.push('Nombre mercaderista');
+  if (!val('cedulaMercaderista')) e.push('Cédula mercaderista');
+  if (!val('fechaVisita')) e.push('Fecha de visita');
+  if (!val('horaEntrada')) e.push('Hora de entrada');
+  if (!val('ciudad')) e.push('Ciudad');
+  if (!val('puntoVenta')) e.push('Punto de venta');
+  if (!val('nombreNegocio')) e.push('Nombre del negocio');
+  if (!val('nitCliente')) e.push('NIT cliente');
+  if (!val('contactoPrincipal')) e.push('Contacto principal');
+  if (!val('canalVentas')) e.push('Canal de ventas');
+  const hubo = document.querySelector('input[name="huboCompra"]:checked');
+  if (!hubo) e.push('¿Hubo compra?');
+  const pop = document.querySelector('input[name="materialPOP"]:checked');
+  if (!pop) e.push('Material POP');
+  if (!fotoEstanteBase64) e.push('Foto del estante');
+  if (hubo && hubo.value === 'Si') {
+    if (productosPedido.length === 0) e.push('Al menos un producto en pedido');
+    productosPedido.forEach((p, i) => {
+      if (!p.sku) e.push(`SKU producto ${i + 1}`);
+      if (!p.cantidad || p.cantidad < 1) e.push(`Cantidad producto ${i + 1}`);
+    });
+    if (!val('metodoPago')) e.push('Método de pago');
+    if (!document.querySelector('input[name="condicionVenta"]:checked')) e.push('Condición de venta');
+  }
+  if (hubo && hubo.value === 'No' && !val('motivoNoCompra')) e.push('Motivo de no compra');
+  if (!val('proximaVisita')) e.push('Próxima visita');
+  return e;
+}
+
+function val(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function recolectarDatos() {
+  const hubo = document.querySelector('input[name="huboCompra"]:checked');
+  const pop = document.querySelector('input[name="materialPOP"]:checked');
+  const cond = document.querySelector('input[name="condicionVenta"]:checked');
+  const promos = Array.from(document.querySelectorAll('input[id^="promo"]:checked')).map(c => c.value);
+  const totalPedido = productosPedido.reduce((s, p) => s + p.subtotal, 0);
+  const descuento = parseFloat(document.getElementById('descuento').value) || 0;
+  const totalFinal = Math.max(0, totalPedido - descuento);
+
+  return {
+    nombreMercaderista: val('nombreMercaderista'),
+    cedulaMercaderista: val('cedulaMercaderista'),
+    fechaVisita: val('fechaVisita'),
+    horaEntrada: val('horaEntrada'),
+    horaSalida: val('horaSalida'),
+    ciudad: val('ciudad'),
+    puntoVenta: val('puntoVenta'),
+    nombreNegocio: val('nombreNegocio'),
+    nitCliente: val('nitCliente'),
+    contactoPrincipal: val('contactoPrincipal'),
+    canalVentas: val('canalVentas'),
+    huboCompra: hubo ? hubo.value : '',
+    motivoNoCompra: val('motivoNoCompra'),
+    motivoOtro: val('motivoOtro'),
+    inventarioPQP: val('inventarioPQP'),
+    marcasCompetencia: val('marcasCompetencia'),
+    materialPOP: pop ? pop.value : '',
+    fotoEstante: fotoEstanteBase64,
+    observacionesPDV: val('observacionesPDV'),
+    productos: productosPedido,
+    totalPedido: totalPedido,
+    promociones: promos,
+    descuento: descuento,
+    totalFinal: totalFinal,
+    metodoPago: val('metodoPago'),
+    condicionVenta: cond ? cond.value : '',
+    plazoCredito: val('plazoCredito'),
+    observacionesFinales: val('observacionesFinales'),
+    proximaVisita: val('proximaVisita')
+  };
+}
+
+async function enviarCaptura() {
+  const errores = validarFormulario();
+  if (errores.length > 0) {
+    alert('Faltan campos requeridos:\n\n• ' + errores.join('\n• '));
+    return;
+  }
+
+  const datos = recolectarDatos();
+  mostrarLoading('Guardando captura...');
+
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(datos),
+      redirect: 'follow'
+    });
+    const data = await res.json();
+    ocultarLoading();
+
+    if (data && data.success) {
+      mostrarExito(data);
+    } else {
+      alert('Error: ' + (data && data.error ? data.error : 'desconocido'));
+    }
+  } catch (err) {
+    ocultarLoading();
+    alert('Error de red: ' + err.message);
+  }
+}
+
+function mostrarLoading(msg) {
+  document.getElementById('loadingMsg').textContent = msg;
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+
+function ocultarLoading() {
+  document.getElementById('loadingOverlay').classList.remove('show');
+}
+
+function mostrarExito(data) {
+  let info = 'Hoja creada: ' + data.sheetName;
+  if (data.fotoUrl) info += '\n\nFoto: ' + data.fotoUrl;
+  document.getElementById('successInfo').textContent = info;
+  document.getElementById('successModal').classList.add('show');
+}
+
+function nuevaCaptura() {
+  document.getElementById('successModal').classList.remove('show');
+  ['fechaVisita','horaEntrada','horaSalida','ciudad','puntoVenta','nombreNegocio',
+   'nitCliente','contactoPrincipal','canalVentas','motivoNoCompra','motivoOtro',
+   'inventarioPQP','marcasCompetencia','observacionesPDV','descuento','metodoPago',
+   'plazoCredito','observacionesFinales','proximaVisita'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = id === 'descuento' ? '0' : '';
+  });
+  document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(i => i.checked = false);
+  productosPedido = [];
+  renderProductos();
+  removerFoto();
+  document.getElementById('cardPedido').style.display = 'none';
+  document.getElementById('blockNoCompra').style.display = 'none';
+  document.getElementById('puntoVenta').innerHTML = '<option value="">Selecciona una ciudad primero</option>';
+  document.getElementById('puntoVenta').disabled = true;
+  const hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('fechaVisita').value = hoy;
+  document.getElementById('totalPedido').textContent = '$0';
+  document.getElementById('totalFinal').textContent = '$0';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
