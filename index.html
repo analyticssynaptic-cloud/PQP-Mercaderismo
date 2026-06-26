@@ -176,6 +176,34 @@
   .ok-title{font-family:'Poppins';font-size:19px;font-weight:700;margin-bottom:6px}.ok-sub{font-size:14px;color:var(--ink-soft);margin-bottom:20px}
   .ok-info{background:var(--bg);border-radius:var(--r-md);padding:12px 14px;margin-bottom:20px;font-size:12px;color:var(--ink-soft);text-align:left;word-break:break-all;white-space:pre-line}
   @media(max-width:480px){.field-row{grid-template-columns:1fr}.card{padding:18px}.sum-grid{grid-template-columns:1fr}}
+
+  /* ===== PORTADA / BIENVENIDA ===== */
+  .portada{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;overflow:hidden;background:#3f8fb0;transition:transform .6s cubic-bezier(.7,0,.25,1),opacity .55s ease}
+  .portada.hide{transform:translateY(-101%);opacity:0;pointer-events:none}
+  .portada-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+  .portada-content{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;padding:max(38px,env(safe-area-inset-top)) 26px max(30px,env(safe-area-inset-bottom));max-width:460px;width:100%;margin:0 auto}
+  .portada-brand{display:inline-flex;align-items:center;gap:8px;color:#fff;font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:2px;opacity:.92;text-transform:uppercase}
+  .portada-hero{margin-top:30px}
+  .portada-hero h1{color:#fff;font-size:38px;font-weight:700;line-height:1.04;text-shadow:0 2px 20px rgba(0,40,60,.25)}
+  .portada-hero p{color:rgba(255,255,255,.9);font-size:15px;margin-top:9px;max-width:260px;text-shadow:0 1px 10px rgba(0,40,60,.2)}
+  .portada-form{margin-top:auto}
+  .portada-err{display:none;color:#fff;background:rgba(226,59,78,.9);border-radius:13px;padding:11px 15px;font-size:13px;margin-bottom:13px;text-align:center;font-weight:500}
+  .pinput{position:relative;margin-bottom:13px}
+  .pinput .pic{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.85);display:flex}
+  .pinput input{width:100%;padding:17px 18px 17px 50px;border-radius:30px;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-family:inherit;font-size:15px;transition:.2s}
+  .pinput input::placeholder{color:rgba(255,255,255,.72)}
+  .pinput input:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.26);box-shadow:0 0 0 4px rgba(255,255,255,.14)}
+  .btn-portada{width:100%;margin-top:6px;padding:17px;border:none;border-radius:30px;background:#fff;color:#15506b;font-family:'Poppins';font-weight:700;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 16px 34px -12px rgba(0,30,50,.55);transition:transform .2s,box-shadow .2s}
+  .btn-portada:hover{transform:translateY(-2px);box-shadow:0 20px 40px -12px rgba(0,30,50,.6)}
+  .btn-portada:active{transform:translateY(0)}
+  .portada-foot{margin-top:18px;text-align:center;color:rgba(255,255,255,.82);font-size:12px}
+  .bird{animation:fly 7s ease-in-out infinite}
+  @keyframes fly{0%,100%{transform:translate(0,0)}50%{transform:translate(12px,-7px)}}
+
+  /* Chip mercaderista en módulo Inicio */
+  .merc-chip{display:flex;align-items:center;gap:12px;padding:13px;border:1.5px solid var(--line-strong);border-radius:var(--r-md);background:var(--blue-soft);margin-bottom:16px}
+  .merc-ava{width:44px;height:44px;border-radius:50%;background:var(--navy-grad);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .merc-info{flex:1;min-width:0}.merc-info b{font-family:'Poppins';font-size:14.5px;display:block;color:var(--ink)}.merc-info span{font-size:12.5px;color:var(--ink-soft)}
 </style>
 </head>
 <body>
@@ -201,7 +229,67 @@
   <symbol id="i-chevL" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
   <symbol id="i-chevR" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
   <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.2"/><line x1="14" y1="10" x2="18" y2="10"/><line x1="14" y1="14" x2="18" y2="14"/></symbol>
+  <symbol id="i-arrowr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
 </svg>
+
+<!-- PORTADA / BIENVENIDA -->
+<div class="portada" id="portada">
+  <svg class="portada-bg" viewBox="0 0 390 844" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#b3e4e6"/><stop offset=".4" stop-color="#74c2cd"/><stop offset="1" stop-color="#3f8fb0"/>
+      </linearGradient>
+      <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67b0c2"/><stop offset="1" stop-color="#4f99af"/></linearGradient>
+      <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f819c"/><stop offset="1" stop-color="#306d89"/></linearGradient>
+      <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#255f7d"/><stop offset="1" stop-color="#184c67"/></linearGradient>
+      <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#123f5a"/><stop offset="1" stop-color="#0c2c44"/></linearGradient>
+    </defs>
+    <rect width="390" height="844" fill="url(#sky)"/>
+    <circle cx="298" cy="158" r="58" fill="#eafaf8" opacity=".30"/>
+    <circle cx="298" cy="158" r="38" fill="#f4fcfb" opacity=".40"/>
+    <g fill="none" stroke="#1c5470" stroke-width="2" stroke-linecap="round" opacity=".5">
+      <path class="bird" d="M58 122 l11 -7 l11 7"/>
+      <path class="bird" d="M96 142 l8 -5 l8 5" style="animation-delay:1.2s"/>
+      <path class="bird" d="M124 110 l7 -5 l7 5" style="animation-delay:2.4s"/>
+    </g>
+    <!-- montañas lejanas -->
+    <path fill="url(#m1)" d="M0 520 L70 432 L150 508 L232 420 L312 500 L390 442 L390 560 L0 560 Z"/>
+    <rect x="0" y="540" width="390" height="44" fill="#ffffff" opacity=".10"/>
+    <!-- montañas medias -->
+    <path fill="url(#m2)" d="M0 602 L92 500 L182 590 L262 510 L342 580 L390 540 L390 668 L0 668 Z"/>
+    <rect x="0" y="632" width="390" height="44" fill="#ffffff" opacity=".08"/>
+    <!-- montañas cercanas -->
+    <path fill="url(#m3)" d="M0 694 L82 600 L172 680 L252 612 L332 676 L390 632 L390 768 L0 768 Z"/>
+    <!-- bosque base -->
+    <path fill="url(#fg)" d="M0 770 C60 750 120 782 182 763 C244 746 300 780 390 758 L390 844 L0 844 Z"/>
+    <!-- abetos silueta -->
+    <g fill="#0a2740">
+      <path d="M28 752 L16 802 L40 802 Z"/><path d="M28 740 L18 770 L38 770 Z"/>
+      <path d="M70 768 L60 806 L80 806 Z"/>
+      <path d="M120 758 L106 806 L134 806 Z"/><path d="M120 746 L109 776 L131 776 Z"/>
+      <path d="M180 772 L170 808 L190 808 Z"/>
+      <path d="M240 760 L226 806 L254 806 Z"/><path d="M240 748 L229 778 L251 778 Z"/>
+      <path d="M300 770 L290 806 L310 806 Z"/>
+      <path d="M348 758 L334 806 L362 806 Z"/><path d="M348 746 L337 776 L359 776 Z"/>
+    </g>
+  </svg>
+  <div class="portada-content">
+    <div class="portada-brand"><svg class="icon icon-sm"><use href="#i-clipboard"/></svg> Captura PQP</div>
+    <div class="portada-hero">
+      <h1>Comencemos,</h1>
+      <p>Registra tu jornada en campo, paso a paso.</p>
+    </div>
+    <div class="portada-form" id="portadaForm">
+      <div class="portada-err" id="portadaErr">Ingresa tu nombre y documento para continuar.</div>
+      <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-user"/></svg></span><input type="text" id="nombreMercaderista" placeholder="Nombre completo" autocomplete="name"></div>
+      <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-id"/></svg></span><input type="tel" id="cedulaMercaderista" placeholder="Documento / Cédula" inputmode="numeric"></div>
+      <button class="btn-portada" onclick="comenzar()">Comenzar <svg class="icon"><use href="#i-arrowr"/></svg></button>
+      <div class="portada-foot">Tus datos quedan asociados a esta gestión</div>
+    </div>
+  </div>
+</div>
 
 <!-- TOPBAR -->
 <header class="topbar">
@@ -232,8 +320,11 @@
           <div class="alert-actions"><button type="button" class="btn btn-danger btn-sm" onclick="cargarParametrizacion()"><svg class="icon icon-sm"><use href="#i-refresh"/></svg> Reintentar</button></div>
         </div>
       </div>
-      <div class="field"><label class="label label-req" for="nombreMercaderista">Nombre del mercaderista</label><input type="text" id="nombreMercaderista" class="input" placeholder="Nombres y apellidos" autocomplete="name"></div>
-      <div class="field"><label class="label label-req" for="cedulaMercaderista">Cédula</label><input type="tel" id="cedulaMercaderista" class="input" placeholder="Número de cédula" inputmode="numeric"></div>
+      <div class="merc-chip">
+        <div class="merc-ava"><svg class="icon icon-lg"><use href="#i-user"/></svg></div>
+        <div class="merc-info"><b id="mercNombre">—</b><span id="mercDoc">—</span></div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="reabrirPortada()"><svg class="icon icon-sm"><use href="#i-edit"/></svg>Cambiar</button>
+      </div>
       <div class="field">
         <label class="label label-req" for="ciudad">Ciudad</label>
         <select id="ciudad" class="select"><option value="">Seleccionar ciudad</option></select>
@@ -541,8 +632,33 @@ function openFlower(){ flowerOpen=true; document.getElementById('flower').classL
 function closeFlower(){ flowerOpen=false; document.getElementById('flower').classList.remove('open'); document.getElementById('flowerBd').classList.remove('open'); document.getElementById('fab').classList.remove('spin'); }
 
 function onIdentChange(){
-  const n=val('nombreMercaderista');
+  const n=val('nombreMercaderista'), c=val('cedulaMercaderista');
   document.getElementById('heroGreet').textContent = n ? ('Hola, '+n.split(' ')[0]) : 'Hola, mercaderista';
+  const mn=document.getElementById('mercNombre'), md=document.getElementById('mercDoc');
+  if(mn) mn.textContent = n || '—';
+  if(md) md.textContent = c ? ('Documento '+c) : '—';
+}
+
+// ===== PORTADA =====
+function comenzar(){
+  const n=val('nombreMercaderista'), c=val('cedulaMercaderista');
+  if(!n || !c){
+    const f=document.getElementById('portadaForm');
+    f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake');
+    document.getElementById('portadaErr').style.display='block';
+    return;
+  }
+  document.getElementById('portadaErr').style.display='none';
+  onIdentChange();
+  const p=document.getElementById('portada');
+  p.classList.add('hide');
+  window._portadaTimer = setTimeout(()=>{ p.style.display='none'; }, 650);
+}
+function reabrirPortada(){
+  clearTimeout(window._portadaTimer);
+  const p=document.getElementById('portada');
+  p.style.display='flex';
+  requestAnimationFrame(()=>p.classList.remove('hide'));
 }
 
 // ===== UBICACIÓN GPS =====
