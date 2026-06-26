@@ -155,7 +155,7 @@
   .flower.open .petal{transform:translate(calc(-50% + var(--x)),var(--y)) scale(1);opacity:1;pointer-events:auto}
   .flower.open .petal:nth-child(1){transition-delay:.02s}.flower.open .petal:nth-child(2){transition-delay:.05s}.flower.open .petal:nth-child(3){transition-delay:.08s}.flower.open .petal:nth-child(4){transition-delay:.11s}.flower.open .petal:nth-child(5){transition-delay:.14s}.flower.open .petal:nth-child(6){transition-delay:.17s}.flower.open .petal:nth-child(7){transition-delay:.2s}.flower.open .petal:nth-child(8){transition-delay:.23s}
   .petal-ic{color:#fff;filter:drop-shadow(0 3px 7px rgba(0,0,0,.45));transition:all .15s ease}
-  .petal-ic svg{width:30px;height:30px;stroke-width:2}
+  .petal-ic svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .petal:hover .petal-ic{transform:translateY(-3px);color:#cfe0ff}
   .petal.active .petal-ic{color:#9cc0ff}
   .petal.saved .petal-ic{color:#7ef0a8}
@@ -343,7 +343,7 @@
             <div class="loc-info"><b id="locTitle">Ubicación no capturada</b><span id="locDesc">Toca el botón para registrar tu posición</span></div>
           </div>
           <div class="loc-coords" id="locCoords" style="display:none"></div>
-          <button type="button" class="btn btn-soft btn-block" style="margin-top:12px" id="btnGPS" onclick="capturarUbicacion()"><svg class="icon icon-sm"><use href="#i-nav"/></svg>Capturar ubicación</button>
+          <button type="button" class="btn btn-soft btn-block" style="margin-top:12px" id="btnGPS" onclick="capturarUbicacion()"><svg class="icon icon-sm"><use href="#i-refresh"/></svg>Actualizar ubicación</button>
         </div>
       </div>
       <div class="field"><label class="label" for="nombreNegocio">Negocio / Razón social <span class="label-hint">(opcional)</span></label><input type="text" id="nombreNegocio" class="input" placeholder="Ej: Tienda La Esquina"></div>
@@ -421,20 +421,20 @@
     <div class="card">
       <div class="card-head">
         <div class="card-chip"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Fotos: Antes y Después</div><div class="card-sub">Exhibición al llegar y tras la gestión</div></div>
+        <div class="card-head-text"><div class="card-title">Fotos: ingreso y salida</div><div class="card-sub">Estante al llegar y al terminar</div></div>
         <span class="saved-badge" id="badge-fotos"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
-      <div class="field"><label class="label label-req">Foto ANTES</label>
+      <div class="field"><label class="label label-req">Foto de ingreso</label>
         <div class="upload" id="uploadAntes">
           <input type="file" id="fileAntes" accept="image/*" capture="environment">
-          <div id="defAntes"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Foto del estante al llegar</div><div class="upload-h">JPG, PNG · máx 10 MB</div></div>
+          <div id="defAntes"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Toca para tomar la foto al llegar</div><div class="upload-h">Obligatoria · JPG, PNG</div></div>
           <div id="prevAntes" style="display:none"><img id="imgAntes" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileAntes').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('antes')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
         </div>
       </div>
-      <div class="field"><label class="label">Foto DESPUÉS <span class="label-hint">(tras la gestión)</span></label>
+      <div class="field"><label class="label">Foto de salida <span class="label-hint">(opcional)</span></label>
         <div class="upload" id="uploadDespues">
           <input type="file" id="fileDespues" accept="image/*" capture="environment">
-          <div id="defDespues"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Foto del estante mejorado</div><div class="upload-h">JPG, PNG · máx 10 MB</div></div>
+          <div id="defDespues"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Toca para tomar la foto al terminar</div><div class="upload-h">Opcional · JPG, PNG</div></div>
           <div id="prevDespues" style="display:none"><img id="imgDespues" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileDespues').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('despues')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
         </div>
       </div>
@@ -562,7 +562,7 @@ const MODS = [
 
 let parametrizacion = { ciudadesPDV:{}, skus:[] };
 let modoManual = false;
-let sheetName = '';
+let registroId = '';
 let saved = {};
 let current = 'inicio';
 let flowerOpen = false;
@@ -650,6 +650,7 @@ function comenzar(){
   }
   document.getElementById('portadaErr').style.display='none';
   onIdentChange();
+  capturarUbicacion(); // captura GPS automática al entrar (este click habilita el permiso)
   const p=document.getElementById('portada');
   p.classList.add('hide');
   window._portadaTimer = setTimeout(()=>{ p.style.display='none'; }, 650);
@@ -803,7 +804,7 @@ function validarModulo(id){
     if(!(ubicacion.lat&&ubicacion.lng)) e.push('Ubicación GPS (toca "Capturar ubicación")');
   }
   if(id==='ventas'){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; if(!v) e.push('¿Se realizó venta?'); if(v==='No'&&!val('ventaMotivoNo')) e.push('Motivo de no venta'); }
-  if(id==='fotos'){ if(!fotoAntes&&!fotoAntesURL) e.push('Foto ANTES'); }
+  if(id==='fotos'){ if(!fotoAntes&&!fotoAntesURL) e.push('Foto de ingreso'); }
   if(id==='agotados'){ agotadosList.forEach((p,i)=>{ if(!p.sku) e.push('SKU del agotado '+(i+1)); }); }
   if(id==='fechas'){ fechasList.forEach((p,i)=>{ if(!p.sku) e.push('SKU del producto '+(i+1)); if(!p.vence) e.push('Fecha de vencimiento '+(i+1)); }); }
   if(id==='pedido'){ productosPedido.forEach((p,i)=>{ if(!p.sku) e.push('SKU producto '+(i+1)); if(!p.cantidad||p.cantidad<1) e.push('Cantidad producto '+(i+1)); }); }
@@ -817,7 +818,7 @@ function recolectarGestion(){
   const pop=(document.querySelector('input[name="materialPOP"]:checked')||{}).value||'';
   const promos=Array.from(document.querySelectorAll('input[id^="promo"]:checked')).map(c=>c.value);
   return {
-    sheetName: sheetName,
+    registroId: registroId,
     nombreMercaderista: val('nombreMercaderista'), cedulaMercaderista: val('cedulaMercaderista'),
     ciudad: getCiudad(), puntoVenta: getPDV(),
     latitud: ubicacion.lat||'', longitud: ubicacion.lng||'', precisionGPS: ubicacion.acc||'',
@@ -843,10 +844,10 @@ async function guardarModulo(id, finalizar){
   gestion.modulosGuardados=Object.keys(saved).filter(k=>saved[k]).join(', ');
   mostrarLoading(finalizar?'Finalizando gestión...':'Guardando '+(MODS.find(m=>m.id===id)||{}).label+'...');
   try{
-    const res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({sheetName:sheetName,gestion:gestion}),redirect:'follow'});
+    const res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({registroId:registroId,gestion:gestion}),redirect:'follow'});
     const data=await res.json(); ocultarLoading();
     if(data&&data.success){
-      sheetName=data.sheetName||sheetName;
+      registroId=data.registroId||registroId;
       if(data.fotoAntesURL){ fotoAntesURL=data.fotoAntesURL; fotoAntes=''; }
       if(data.fotoDespuesURL){ fotoDespuesURL=data.fotoDespuesURL; fotoDespues=''; }
       renderNav();
@@ -859,7 +860,7 @@ async function guardarModulo(id, finalizar){
 function toast(msg, warn){ const t=document.getElementById('toast'); document.getElementById('toastMsg').textContent=msg; t.querySelector('.icon use').setAttribute('href', warn?'#i-alert':'#i-check'); t.style.setProperty('--c', warn?'#f3b04b':'#7ef0a8'); t.classList.add('show'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('show'),2200); }
 function mostrarLoading(m){ document.getElementById('loadingMsg').textContent=m; document.getElementById('loadingOverlay').classList.add('show'); }
 function ocultarLoading(){ document.getElementById('loadingOverlay').classList.remove('show'); }
-function mostrarExito(d){ let i='Hoja: '+d.sheetName; document.getElementById('successInfo').textContent=i; document.getElementById('successModal').classList.add('show'); }
+function mostrarExito(d){ document.getElementById('successInfo').textContent='Registro: '+d.registroId; document.getElementById('successModal').classList.add('show'); }
 
 function nuevaGestion(){ location.reload(); }
 function val(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
