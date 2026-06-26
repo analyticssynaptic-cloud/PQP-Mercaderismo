@@ -204,6 +204,49 @@
   .merc-chip{display:flex;align-items:center;gap:12px;padding:13px;border:1.5px solid var(--line-strong);border-radius:var(--r-md);background:var(--blue-soft);margin-bottom:16px}
   .merc-ava{width:44px;height:44px;border-radius:50%;background:var(--navy-grad);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
   .merc-info{flex:1;min-width:0}.merc-info b{font-family:'Poppins';font-size:14.5px;display:block;color:var(--ink)}.merc-info span{font-size:12.5px;color:var(--ink-soft)}
+
+  /* ===== AVATAR BURBUJA (topbar) ===== */
+  .avatar-bubble{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.55);overflow:hidden;flex-shrink:0;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;transition:.15s}
+  .avatar-bubble:hover{border-color:#fff}
+  .avatar-bubble img{width:100%;height:100%;object-fit:cover;display:block}
+  .progress-wrap{max-width:720px;margin:14px auto 0;position:relative;z-index:1}
+  .progress-wrap .step-pill{display:inline-block;margin-bottom:9px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22)}
+  .progress-wrap .progress{margin-top:0}
+
+  /* ===== FOTO DE INGRESO (portada) ===== */
+  .foto-ingreso{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:24px;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;cursor:pointer;margin-bottom:13px;transition:.2s}
+  .foto-ingreso:hover{background:rgba(255,255,255,.25)}
+  .foto-ingreso.has{border-color:#7ef0a8}
+  .fi-ic{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .fi-prev{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.6)}
+  .fi-txt b{font-size:14px;font-weight:600;display:block}.fi-txt span{font-size:11.5px;opacity:.82}
+
+  /* ===== BOTONES LATERALES ===== */
+  .nav-icon{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line-strong);background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;position:relative;overflow:hidden}
+  .nav-icon:hover{background:var(--blue-soft);border-color:var(--blue)}
+  .nav-icon img{width:100%;height:100%;object-fit:cover}
+
+  /* ===== MENÚ AYUDAS (expandible) ===== */
+  .ayudas-bd{position:fixed;inset:0;background:rgba(20,33,62,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:58}
+  .ayudas-bd.open{opacity:1;pointer-events:auto}
+  .ayudas{position:fixed;right:16px;bottom:86px;z-index:62;display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+  .ayuda-item{display:flex;align-items:center;gap:11px;background:#fff;color:var(--ink);padding:11px 16px 11px 12px;border-radius:30px;text-decoration:none;font-family:'Poppins';font-weight:600;font-size:14px;box-shadow:var(--sh-pop);transform:translateY(18px) scale(.85);opacity:0;pointer-events:none;transition:transform .32s cubic-bezier(.34,1.56,.64,1),opacity .22s}
+  .ayudas.open .ayuda-item{transform:none;opacity:1;pointer-events:auto}
+  .ayudas.open .ayuda-item:nth-child(1){transition-delay:.16s}.ayudas.open .ayuda-item:nth-child(2){transition-delay:.09s}.ayudas.open .ayuda-item:nth-child(3){transition-delay:.02s}
+  .ayuda-ic{width:38px;height:38px;border-radius:50%;background:var(--blue-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+  /* ===== MODAL PERSONA / RESUMEN DETALLE ===== */
+  .modal.left{text-align:left;max-width:400px}
+  .modal-h{font-family:'Poppins';font-size:18px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:9px}
+  .modal-p{font-size:13px;color:var(--ink-soft);margin-bottom:18px}
+  .modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:none;background:var(--bg);color:var(--ink-soft);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .modal{position:relative}
+  .res-sec{margin-bottom:16px}
+  .res-sec-h{display:flex;align-items:center;gap:8px;font-family:'Poppins';font-size:13px;font-weight:600;color:var(--navy);margin-bottom:9px}
+  .res-line{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .res-line:last-child{border:none}.res-line .rk{color:var(--ink-soft)}.res-line .rv{font-weight:600;text-align:right;word-break:break-word}
+  .res-mini{font-size:12.5px;color:var(--ink-soft);padding:5px 0}
+  .res-mini b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -232,6 +275,12 @@
   <symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.2"/><line x1="14" y1="10" x2="18" y2="10"/><line x1="14" y1="14" x2="18" y2="14"/></symbol>
   <symbol id="i-arrowr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
   <symbol id="i-edit" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+  <symbol id="i-slides" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></symbol>
 </svg>
 
 <!-- PORTADA / BIENVENIDA -->
@@ -282,9 +331,16 @@
       <p>Registra tu jornada en campo, paso a paso.</p>
     </div>
     <div class="portada-form" id="portadaForm">
-      <div class="portada-err" id="portadaErr">Ingresa tu nombre y documento para continuar.</div>
+      <div class="portada-err" id="portadaErr">Completa tu nombre, documento y foto de ingreso.</div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-user"/></svg></span><input type="text" id="nombreMercaderista" placeholder="Nombre completo" autocomplete="name"></div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-id"/></svg></span><input type="tel" id="cedulaMercaderista" placeholder="Documento / Cédula" inputmode="numeric"></div>
+      <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-phone"/></svg></span><input type="tel" id="telefono" placeholder="Teléfono" inputmode="tel"></div>
+      <label class="foto-ingreso" id="fotoIngresoBox">
+        <input type="file" id="fileIngreso" accept="image/*" capture="user" style="display:none">
+        <span class="fi-ic" id="fiIcon"><svg class="icon icon-lg"><use href="#i-camera"/></svg></span>
+        <img class="fi-prev" id="fotoIngresoPrev" style="display:none" alt="">
+        <span class="fi-txt"><b id="fiTitle">Foto de ingreso</b><span id="fiSub">Toca para tomar la foto</span></span>
+      </label>
       <button class="btn-portada" onclick="comenzar()">Comenzar <svg class="icon"><use href="#i-arrowr"/></svg></button>
       <div class="portada-foot">Tus datos quedan asociados a esta gestión</div>
     </div>
@@ -296,10 +352,16 @@
   <div class="topbar-row">
     <div class="topbar-logo"><svg class="icon icon-lg"><use href="#i-clipboard"/></svg></div>
     <div class="topbar-brand"><b>Captura PQP</b><span>Gestión comercial en campo</span></div>
-    <div class="step-pill" id="stepPill">Inicio</div>
+    <div class="avatar-bubble" id="avatarBubble" onclick="abrirPersona()" title="Mi información">
+      <img id="avatarImg" alt="" style="display:none">
+      <svg class="icon icon-lg" id="avatarIcon"><use href="#i-user"/></svg>
+    </div>
   </div>
   <div class="greet"><h1 id="heroGreet">Hola, mercaderista</h1><p id="heroDate"></p></div>
-  <div class="progress" id="progress"></div>
+  <div class="progress-wrap">
+    <span class="step-pill" id="stepPill">Inicio</span>
+    <div class="progress" id="progress"></div>
+  </div>
 </header>
 
 <main class="stage" id="stage">
@@ -528,10 +590,32 @@
 
 <!-- BOTTOM NAV -->
 <nav class="bottomnav">
-  <div class="nav-side left"><button class="nav-btn" id="btnPrev" onclick="prevMod()"><svg class="icon icon-sm"><use href="#i-chevL"/></svg>Atrás</button></div>
+  <div class="nav-side left"><button class="nav-icon" id="btnPersona" onclick="abrirPersona()" aria-label="Mi información"><img id="navAvatarImg" alt="" style="display:none"><svg class="icon" id="navAvatarIcon"><use href="#i-user"/></svg></button></div>
   <div class="fab-slot"><button class="fab" id="fab" onclick="toggleFlower()" aria-label="Navegar módulos"><span class="fab-ic"><svg class="icon icon-lg"><use href="#i-grid"/></svg></span></button></div>
-  <div class="nav-side right"><button class="nav-btn" id="btnNext" onclick="nextMod()">Siguiente<svg class="icon icon-sm"><use href="#i-chevR"/></svg></button></div>
+  <div class="nav-side right"><button class="nav-icon" id="btnAyudas" onclick="toggleAyudas()" aria-label="Ayudas"><svg class="icon"><use href="#i-help"/></svg></button></div>
 </nav>
+
+<!-- MENÚ AYUDAS -->
+<div class="ayudas-bd" id="ayudasBd" onclick="closeAyudas()"></div>
+<div class="ayudas" id="ayudas">
+  <a class="ayuda-item" id="ayudaImagenes" target="_blank" rel="noopener" onclick="closeAyudas()"><span class="ayuda-ic"><svg class="icon icon-lg"><use href="#i-image"/></svg></span>Imágenes</a>
+  <a class="ayuda-item" id="ayudaPresentaciones" target="_blank" rel="noopener" onclick="closeAyudas()"><span class="ayuda-ic"><svg class="icon icon-lg"><use href="#i-slides"/></svg></span>Presentaciones</a>
+  <a class="ayuda-item" id="ayudaVideos" target="_blank" rel="noopener" onclick="closeAyudas()"><span class="ayuda-ic"><svg class="icon icon-lg"><use href="#i-video"/></svg></span>Videos</a>
+</div>
+
+<!-- MODAL PERSONA -->
+<div class="overlay" id="personaModal">
+  <div class="modal left">
+    <button class="modal-close" onclick="cerrarPersona()"><svg class="icon icon-sm"><use href="#i-x"/></svg></button>
+    <div class="modal-h"><svg class="icon"><use href="#i-user"/></svg>Mi información</div>
+    <div class="modal-p">Datos del mercaderista registrado</div>
+    <div class="field"><label class="label">Nombre</label><input type="text" id="pNombre" class="input"></div>
+    <div class="field"><label class="label">Documento</label><input type="tel" id="pDoc" class="input" inputmode="numeric"></div>
+    <div class="field"><label class="label">Teléfono</label><input type="tel" id="pTel" class="input" inputmode="tel" placeholder="Teléfono"></div>
+    <div class="merc-chip" style="margin:4px 0 16px"><div class="merc-ava"><svg class="icon"><use href="#i-pin"/></svg></div><div class="merc-info"><b>Ciudad / PDV</b><span id="pPdvActual">—</span></div><button type="button" class="btn btn-outline btn-sm" onclick="cerrarPersona();goTo('inicio')"><svg class="icon icon-sm"><use href="#i-edit"/></svg>Cambiar</button></div>
+    <button class="btn btn-primary btn-block" onclick="guardarPersona()"><svg class="icon"><use href="#i-save"/></svg>Guardar cambios</button>
+  </div>
+</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"><svg class="icon icon-sm"><use href="#i-check"/></svg><span id="toastMsg"></span></div>
@@ -548,6 +632,13 @@
 
 <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzuKQ5lVt0JFZhu7j8uR3Wk7K9M7kzyZ3PdR_U847vKDskpyRt9OExIMZBTrknocrkNbg/exec';
+// Carpeta(s) de ayudas en Drive. Si tienes subcarpetas por tipo, reemplaza cada URL.
+const AYUDAS = {
+  imagenes: 'https://drive.google.com/drive/folders/1THDU2CZIMfJn2qdHB-PcbhNW7ZCeywMt?usp=sharing',
+  presentaciones: 'https://drive.google.com/drive/folders/1THDU2CZIMfJn2qdHB-PcbhNW7ZCeywMt?usp=sharing',
+  videos: 'https://drive.google.com/drive/folders/1THDU2CZIMfJn2qdHB-PcbhNW7ZCeywMt?usp=sharing'
+};
+const LS_KEY = 'pqp_session_v1';
 
 const MODS = [
   {id:'inicio', icon:'i-pin', label:'Inicio'},
@@ -569,12 +660,17 @@ let flowerOpen = false;
 let ubicacion = { lat:null, lng:null, acc:null };
 let fotoAntes = '', fotoDespues = '', fotoAntesURL = '', fotoDespuesURL = '';
 let productosPedido = [], agotadosList = [], fechasList = [];
+let pendCiudad = null, pendPDV = null, ayudasOpen = false, restaurando = false;
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   const ahora = new Date();
-  document.getElementById('proximaVisita').value = '';
   document.getElementById('heroDate').textContent = ahora.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long'});
+  // URLs de ayudas
+  document.getElementById('ayudaImagenes').href = AYUDAS.imagenes;
+  document.getElementById('ayudaPresentaciones').href = AYUDAS.presentaciones;
+  document.getElementById('ayudaVideos').href = AYUDAS.videos;
+
   cargarParametrizacion();
 
   document.getElementById('nombreMercaderista').addEventListener('input', onIdentChange);
@@ -584,11 +680,18 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input[name="ventaCondicion"]').forEach(r => r.addEventListener('change', () => {
     const s=document.querySelector('input[name="ventaCondicion"]:checked'); document.getElementById('ventaPlazoG').style.display=(s&&s.value==='Credito')?'block':'none';
   }));
+  document.getElementById('fileIngreso').addEventListener('change', e => leerFoto(e,'antes'));
   document.getElementById('fileAntes').addEventListener('change', e => leerFoto(e,'antes'));
   document.getElementById('fileDespues').addEventListener('change', e => leerFoto(e,'despues'));
   document.getElementById('descuento').addEventListener('input', calcularTotalFinal);
 
-  renderNav();
+  // Persistencia automática ante cualquier cambio (debounced)
+  let pt; const persistDeb = () => { clearTimeout(pt); pt=setTimeout(persistir, 600); };
+  document.addEventListener('input', persistDeb);
+  document.addEventListener('change', persistDeb);
+
+  // Restaurar sesión previa (tras caída de red, cierre, etc.)
+  if (!restaurarSesion()) renderNav();
 });
 
 // ===== NAV =====
@@ -611,8 +714,6 @@ function renderNav(){
   const meta = MODS.find(m=>m.id===current);
   document.getElementById('stepPill').textContent = meta ? meta.label : '';
   document.getElementById('progress').innerHTML = a.map(id => '<span class="' + (id===current?'cur':(saved[id]?'done':'')) + '"></span>').join('');
-  document.getElementById('btnPrev').hidden = (pos<=1);
-  document.getElementById('btnNext').hidden = (pos>=a.length);
   // badges
   MODS.forEach(m => { const b=document.getElementById('badge-'+m.id); if(b) b.classList.toggle('on', !!saved[m.id]); });
   renderPetals();
@@ -642,7 +743,7 @@ function onIdentChange(){
 // ===== PORTADA =====
 function comenzar(){
   const n=val('nombreMercaderista'), c=val('cedulaMercaderista');
-  if(!n || !c){
+  if(!n || !c || !(fotoAntes||fotoAntesURL)){
     const f=document.getElementById('portadaForm');
     f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake');
     document.getElementById('portadaErr').style.display='block';
@@ -654,12 +755,142 @@ function comenzar(){
   const p=document.getElementById('portada');
   p.classList.add('hide');
   window._portadaTimer = setTimeout(()=>{ p.style.display='none'; }, 650);
+  persistir();
+  guardarSilencioso(); // crea el registro y sube la foto de ingreso al Drive
 }
 function reabrirPortada(){
   clearTimeout(window._portadaTimer);
   const p=document.getElementById('portada');
   p.style.display='flex';
   requestAnimationFrame(()=>p.classList.remove('hide'));
+}
+
+// Guardado inicial/silencioso (sin overlay ni validación de módulo)
+async function guardarSilencioso(){
+  try{
+    const gestion=recolectarGestion();
+    const res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({registroId:registroId,gestion:gestion}),redirect:'follow'});
+    const data=await res.json();
+    if(data&&data.success){ registroId=data.registroId||registroId; if(data.fotoAntesURL){fotoAntesURL=data.fotoAntesURL;fotoAntes='';} persistir(); }
+  }catch(e){ /* offline: se guardará al guardar un módulo */ }
+}
+
+// ===== FOTO + AVATAR =====
+function aplicarFoto(tipo, data){
+  if(tipo==='antes'){
+    fotoAntes=data; fotoAntesURL='';
+    document.getElementById('imgAntes').src=data; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has');
+    const fp=document.getElementById('fotoIngresoPrev');
+    if(fp){ fp.src=data; fp.style.display='block'; document.getElementById('fiIcon').style.display='none'; document.getElementById('fotoIngresoBox').classList.add('has'); document.getElementById('fiTitle').textContent='Foto lista'; document.getElementById('fiSub').textContent='Toca para volver a tomar'; }
+    setAvatar(data);
+  } else {
+    fotoDespues=data; fotoDespuesURL='';
+    document.getElementById('imgDespues').src=data; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has');
+  }
+}
+function setAvatar(src){
+  ['avatarImg','navAvatarImg'].forEach(id=>{ const im=document.getElementById(id); if(im){ im.src=src; im.style.display='block'; } });
+  ['avatarIcon','navAvatarIcon'].forEach(id=>{ const ic=document.getElementById(id); if(ic) ic.style.display='none'; });
+}
+function resetAvatar(){
+  ['avatarImg','navAvatarImg'].forEach(id=>{ const im=document.getElementById(id); if(im){ im.removeAttribute('src'); im.style.display='none'; } });
+  ['avatarIcon','navAvatarIcon'].forEach(id=>{ const ic=document.getElementById(id); if(ic) ic.style.display=''; });
+}
+
+// ===== PANEL PERSONA =====
+function abrirPersona(){
+  document.getElementById('pNombre').value = val('nombreMercaderista');
+  document.getElementById('pDoc').value = val('cedulaMercaderista');
+  document.getElementById('pTel').value = val('telefono');
+  document.getElementById('pPdvActual').textContent = (getCiudad()||'—') + ' · ' + (getPDV()||'—');
+  document.getElementById('personaModal').classList.add('show');
+}
+function cerrarPersona(){ document.getElementById('personaModal').classList.remove('show'); }
+function guardarPersona(){
+  document.getElementById('nombreMercaderista').value = document.getElementById('pNombre').value.trim();
+  document.getElementById('cedulaMercaderista').value = document.getElementById('pDoc').value.trim();
+  document.getElementById('telefono').value = document.getElementById('pTel').value.trim();
+  onIdentChange();
+  cerrarPersona();
+  persistir();
+  toast('Información actualizada');
+  if(registroId) guardarSilencioso(); // refleja el cambio en la nube
+}
+
+// ===== MENÚ AYUDAS =====
+function toggleAyudas(){ ayudasOpen?closeAyudas():openAyudas(); }
+function openAyudas(){ ayudasOpen=true; document.getElementById('ayudas').classList.add('open'); document.getElementById('ayudasBd').classList.add('open'); }
+function closeAyudas(){ ayudasOpen=false; document.getElementById('ayudas').classList.remove('open'); document.getElementById('ayudasBd').classList.remove('open'); }
+
+// ===== PERSISTENCIA DE SESIÓN =====
+function persistir(){
+  if(restaurando) return;
+  try{
+    const data={
+      loggedIn:true, registroId, saved, current, ubicacion,
+      fotoAntesURL, fotoDespuesURL,
+      campos:recolectarGestion(),
+      listas:{ productosPedido, agotadosList, fechasList },
+      portadaOculta: document.getElementById('portada').classList.contains('hide')
+    };
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(Object.assign({}, data, { fotoAntes, fotoDespues }))); }
+    catch(e){ localStorage.setItem(LS_KEY, JSON.stringify(data)); } // sin base64 si excede cuota
+  }catch(e){}
+}
+function restaurarSesion(){
+  let raw; try{ raw=localStorage.getItem(LS_KEY); }catch(e){ return false; }
+  if(!raw) return false;
+  let d; try{ d=JSON.parse(raw); }catch(e){ return false; }
+  if(!d || !d.loggedIn || !d.campos) return false;
+  restaurando = true;
+  const g=d.campos;
+  // Campos simples
+  ['nombreMercaderista','cedulaMercaderista','telefono','nombreNegocio','nitCliente','contactoPrincipal','canalVentas',
+   'ventaMotivoNo','ventaMetodoPago','ventaPlazo','ventaObservaciones','inventarioPQP','marcasCompetencia','inventarioObs',
+   'descuento','observacionesGenerales','proximaVisita'].forEach(id=>{ const el=document.getElementById(id); if(el&&g[id]!=null) el.value=g[id]; });
+  // Radios
+  setRadio('ventaRealizada', g.ventaRealizada); setRadio('ventaCondicion', g.ventaCondicion); setRadio('materialPOP', g.materialPOP);
+  onVentaChange();
+  const sc=document.querySelector('input[name="ventaCondicion"]:checked'); document.getElementById('ventaPlazoG').style.display=(sc&&sc.value==='Credito')?'block':'none';
+  // Promos (desde string "a, b")
+  const promos=(g.pedidoPromos||'').split(',').map(s=>s.trim()).filter(Boolean);
+  ['promo1','promo2','promo3','promo4'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=promos.indexOf(el.value)!==-1; });
+  // Ciudad / PDV (se aplican al cargar parametrización)
+  pendCiudad = g.ciudad||''; pendPDV = g.puntoVenta||'';
+  if(modoManual){ document.getElementById('ciudadTexto').value=pendCiudad; document.getElementById('pdvTexto').value=pendPDV; }
+  else { aplicarPendCiudadPDV(); }
+  // Listas
+  productosPedido = (d.listas&&d.listas.productosPedido)||[]; agotadosList=(d.listas&&d.listas.agotadosList)||[]; fechasList=(d.listas&&d.listas.fechasList)||[];
+  renderPedido(); renderAgotados(); renderFechas(); calcularTotalPedido();
+  // Ubicación
+  ubicacion = d.ubicacion||{lat:null,lng:null,acc:null};
+  if(ubicacion.lat&&ubicacion.lng){
+    document.getElementById('locBox').classList.add('ok');
+    document.getElementById('locTitle').textContent='Ubicación capturada';
+    document.getElementById('locDesc').textContent='Precisión aproximada: '+(ubicacion.acc||'?')+' m';
+    const c=document.getElementById('locCoords'); c.style.display='flex';
+    c.innerHTML='<span>'+ubicacion.lat+', '+ubicacion.lng+'</span> · <a href="https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'" target="_blank">Ver en Maps</a>';
+  }
+  // Fotos
+  fotoAntesURL=d.fotoAntesURL||''; fotoDespuesURL=d.fotoDespuesURL||'';
+  if(d.fotoAntes){ aplicarFoto('antes', d.fotoAntes); }
+  else if(fotoAntesURL){ setAvatar(fotoAntesURL); document.getElementById('imgAntes').src=fotoAntesURL; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has'); }
+  if(d.fotoDespues){ aplicarFoto('despues', d.fotoDespues); }
+  else if(fotoDespuesURL){ document.getElementById('imgDespues').src=fotoDespuesURL; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has'); }
+  // Estado
+  saved=d.saved||{}; registroId=d.registroId||''; current=d.current||'inicio';
+  onIdentChange();
+  // Ocultar portada (ya estaba logueado)
+  const p=document.getElementById('portada'); p.classList.add('hide'); p.style.display='none';
+  renderNav();
+  restaurando = false;
+  return true;
+}
+function setRadio(name, value){ if(!value) return; const el=document.querySelector('input[name="'+name+'"][value="'+value+'"]'); if(el) el.checked=true; }
+function aplicarPendCiudadPDV(){
+  if(pendCiudad==null) return;
+  const cs=document.getElementById('ciudad');
+  if(cs && cs.querySelector('option[value="'+(window.CSS&&CSS.escape?CSS.escape(pendCiudad):pendCiudad)+'"]')){ cs.value=pendCiudad; actualizarPDV(); const ps=document.getElementById('puntoVenta'); if(ps) ps.value=pendPDV; }
 }
 
 // ===== UBICACIÓN GPS =====
@@ -687,12 +918,12 @@ async function cargarParametrizacion(){
   try{
     const res=await fetch(GAS_URL+'?action=parametrizacion',{redirect:'follow'});
     const data=await res.json();
-    if(data&&data.success&&data.ciudadesPDV&&Object.keys(data.ciudadesPDV).length>0){ parametrizacion=data; modoManual=false; activarModoSelect(); cargarCiudades(); }
+    if(data&&data.success&&data.ciudadesPDV&&Object.keys(data.ciudadesPDV).length>0){ parametrizacion=data; modoManual=false; activarModoSelect(); cargarCiudades(); aplicarPendCiudadPDV(); }
     else activarModoManual((data&&data.error)?data.error:'La hoja respondió sin ciudades. Revisa la hoja "PDV ciudad".');
   }catch(err){ activarModoManual('No hay conexión con el servidor. ('+err.message+')'); }
 }
 function activarModoSelect(){ ['ciudad','puntoVenta'].forEach(i=>document.getElementById(i).style.display=''); ['ciudadTexto','pdvTexto'].forEach(i=>document.getElementById(i).style.display='none'); }
-function activarModoManual(msg){ modoManual=true; ['ciudad','puntoVenta'].forEach(i=>document.getElementById(i).style.display='none'); ['ciudadTexto','pdvTexto'].forEach(i=>document.getElementById(i).style.display=''); document.getElementById('alertParamMsg').textContent=msg; document.getElementById('alertParam').style.display='flex'; }
+function activarModoManual(msg){ modoManual=true; ['ciudad','puntoVenta'].forEach(i=>document.getElementById(i).style.display='none'); ['ciudadTexto','pdvTexto'].forEach(i=>document.getElementById(i).style.display=''); document.getElementById('alertParamMsg').textContent=msg; document.getElementById('alertParam').style.display='flex'; if(pendCiudad!=null){ document.getElementById('ciudadTexto').value=pendCiudad; document.getElementById('pdvTexto').value=pendPDV||''; } }
 function ocultarAlertaParam(){ document.getElementById('alertParam').style.display='none'; }
 function cargarCiudades(){ const s=document.getElementById('ciudad'); s.innerHTML='<option value="">Seleccionar ciudad</option>'; Object.keys(parametrizacion.ciudadesPDV).sort().forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;s.appendChild(o);}); }
 function actualizarPDV(){ const c=document.getElementById('ciudad').value; const s=document.getElementById('puntoVenta'); s.innerHTML='<option value="">Seleccionar PDV</option>'; if(c&&parametrizacion.ciudadesPDV[c]){ parametrizacion.ciudadesPDV[c].slice().sort().forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p;s.appendChild(o);}); s.disabled=false; } else s.disabled=true; }
@@ -762,36 +993,69 @@ function fmt(n){ return Number(n||0).toLocaleString('es-CO',{maximumFractionDigi
 
 // ===== FOTOS =====
 function leerFoto(e,tipo){ const file=e.target.files[0]; if(!file)return; if(file.size>10*1024*1024){ alert('La imagen supera 10 MB.'); e.target.value=''; return; }
-  const r=new FileReader(); r.onload=ev=>{ const data=ev.target.result;
-    if(tipo==='antes'){ fotoAntes=data; fotoAntesURL=''; document.getElementById('imgAntes').src=data; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has'); }
-    else{ fotoDespues=data; fotoDespuesURL=''; document.getElementById('imgDespues').src=data; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has'); }
-  }; r.readAsDataURL(file); }
-function quitarFoto(tipo){ if(tipo==='antes'){ fotoAntes=''; fotoAntesURL=''; document.getElementById('fileAntes').value=''; document.getElementById('defAntes').style.display='block'; document.getElementById('prevAntes').style.display='none'; document.getElementById('uploadAntes').classList.remove('has'); } else { fotoDespues=''; fotoDespuesURL=''; document.getElementById('fileDespues').value=''; document.getElementById('defDespues').style.display='block'; document.getElementById('prevDespues').style.display='none'; document.getElementById('uploadDespues').classList.remove('has'); } }
+  const r=new FileReader(); r.onload=ev=>{ aplicarFoto(tipo, ev.target.result); persistir(); }; r.readAsDataURL(file); }
+function quitarFoto(tipo){
+  if(tipo==='antes'){
+    fotoAntes=''; fotoAntesURL='';
+    document.getElementById('fileAntes').value=''; document.getElementById('fileIngreso').value='';
+    document.getElementById('defAntes').style.display='block'; document.getElementById('prevAntes').style.display='none'; document.getElementById('uploadAntes').classList.remove('has');
+    const fb=document.getElementById('fotoIngresoBox'); if(fb){ fb.classList.remove('has'); document.getElementById('fotoIngresoPrev').style.display='none'; document.getElementById('fiIcon').style.display=''; document.getElementById('fiTitle').textContent='Foto de ingreso'; document.getElementById('fiSub').textContent='Toca para tomar la foto'; }
+    resetAvatar();
+  } else {
+    fotoDespues=''; fotoDespuesURL=''; document.getElementById('fileDespues').value='';
+    document.getElementById('defDespues').style.display='block'; document.getElementById('prevDespues').style.display='none'; document.getElementById('uploadDespues').classList.remove('has');
+  }
+  persistir();
+}
 
 // ===== RESUMEN =====
 function renderResumen(){
-  const totalPed = productosPedido.reduce((s,p)=>s+p.subtotal,0);
-  const desc = parseFloat(document.getElementById('descuento').value)||0;
-  const cont = document.getElementById('resumenContenido');
-  const venta = (document.querySelector('input[name="ventaRealizada"]:checked')||{}).value || '—';
-  const ubic = (ubicacion.lat&&ubicacion.lng) ? '<a href="https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'" target="_blank">Ver en Maps</a>' : '—';
-  cont.innerHTML =
-    '<div class="sum-grid">'+
-      cell('Mercaderista', val('nombreMercaderista')||'—')+
-      cell('Ciudad / PDV', (getCiudad()||'—')+' · '+(getPDV()||'—'))+
-      cell('Ubicación', ubic)+
-      cell('Venta', venta)+
-      cell('Agotados', agotadosList.length)+
-      cell('Fechas cortas', fechasList.length)+
-      cell('Productos pedido', productosPedido.length)+
-      cell('Total pedido', '$'+fmt(Math.max(0,totalPed-desc)))+
-    '</div>'+
-    '<div style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin:6px 0 10px">Estado de módulos</div>'+
-    MODS.filter(m=>m.id!=='resumen').map(m =>
-      '<div class="mod-state"><div class="ms-ic"><svg class="icon icon-sm"><use href="#'+m.icon+'"/></svg></div><div class="ms-name">'+m.label+'</div><span class="ms-tag '+(saved[m.id]?'ok':'no')+'">'+(saved[m.id]?'Guardado':'Pendiente')+'</span></div>'
-    ).join('');
+  const cont=document.getElementById('resumenContenido');
+  const totalPed=productosPedido.reduce((s,p)=>s+p.subtotal,0);
+  const desc=parseFloat(document.getElementById('descuento').value)||0;
+  const ventaR=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value||'';
+  const pop=(document.querySelector('input[name="materialPOP"]:checked')||{}).value||'';
+  const cond=(document.querySelector('input[name="ventaCondicion"]:checked')||{}).value||'';
+  const promos=Array.from(document.querySelectorAll('input[id^="promo"]:checked')).map(c=>c.value);
+  const ubic=(ubicacion.lat&&ubicacion.lng)?'<a href="https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'" target="_blank">Abrir en Maps</a> ('+ubicacion.lat+', '+ubicacion.lng+')':'No capturada';
+
+  let h='';
+  h+=sec('i-user','Mercaderista',[ ln('Nombre',escHtml(val('nombreMercaderista'))||'—'), ln('Documento',escHtml(val('cedulaMercaderista'))||'—'), ln('Teléfono',escHtml(val('telefono'))||'—') ]);
+  h+=sec('i-pin','Punto de venta',[ ln('Ciudad',escHtml(getCiudad())||'—'), ln('PDV',escHtml(getPDV())||'—'), ln('Negocio',escHtml(val('nombreNegocio'))||'—'), ln('Ubicación',ubic) ]);
+
+  let lv=[ ln('¿Se realizó venta?', ventaR||'—') ];
+  if(ventaR==='No') lv.push(ln('Motivo', escHtml(val('ventaMotivoNo'))||'—'));
+  if(ventaR==='Si'){ lv.push(ln('Método de pago', escHtml(val('ventaMetodoPago'))||'—')); lv.push(ln('Condición', cond||'—')); if(cond==='Credito') lv.push(ln('Plazo', (escHtml(val('ventaPlazo'))||'—')+' días')); }
+  if(val('ventaObservaciones')) lv.push(ln('Obs.', escHtml(val('ventaObservaciones'))));
+  h+=sec('i-cart','Ventas',lv);
+
+  h+=sec('i-box','Inventario',[ ln('Material POP', pop||'—'), ln('Competencia', escHtml(val('marcasCompetencia'))||'—'), ln('Inventario PQP', escHtml(val('inventarioPQP'))||'—') ]);
+
+  const agH = agotadosList.length ? agotadosList.map((a,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(a.sku)||'—')+'</b>'+(a.obs?(' — '+escHtml(a.obs)):'')+'</div>').join('') : '<div class="res-mini">Sin agotados registrados</div>';
+  h+=secRaw('i-xcircle','Agotados ('+agotadosList.length+')', agH);
+
+  const fcH = fechasList.length ? fechasList.map((f,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(f.sku)||'—')+'</b> · vence '+(f.vence||'—')+' · cant '+(f.cantidad||0)+(f.lote?(' · lote '+escHtml(f.lote)):'')+'</div>').join('') : '<div class="res-mini">Sin productos por vencer</div>';
+  h+=secRaw('i-clock','Fechas cortas ('+fechasList.length+')', fcH);
+
+  let pedH = productosPedido.length ? productosPedido.map((p,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(p.sku)||'—')+'</b> · '+p.cantidad+' × $'+fmt(p.precio)+' = <b>$'+fmt(p.subtotal)+'</b></div>').join('') : '<div class="res-mini">Sin productos en el pedido</div>';
+  pedH+='<div class="res-line" style="margin-top:8px"><span class="rk">Subtotal</span><span class="rv">$'+fmt(totalPed)+'</span></div>';
+  pedH+='<div class="res-line"><span class="rk">Descuento</span><span class="rv">$'+fmt(desc)+'</span></div>';
+  pedH+='<div class="res-line"><span class="rk">Total final</span><span class="rv">$'+fmt(Math.max(0,totalPed-desc))+'</span></div>';
+  if(promos.length) pedH+='<div class="res-mini">Promociones: '+escHtml(promos.join(', '))+'</div>';
+  h+=secRaw('i-package','Pedido ('+productosPedido.length+' productos)', pedH);
+
+  h+=sec('i-camera','Fotos',[
+    ln('Ingreso', (fotoAntes||fotoAntesURL)?(fotoAntesURL?'<a href="'+fotoAntesURL+'" target="_blank">Ver foto</a>':'Tomada ✓'):'—'),
+    ln('Salida', (fotoDespues||fotoDespuesURL)?(fotoDespuesURL?'<a href="'+fotoDespuesURL+'" target="_blank">Ver foto</a>':'Tomada ✓'):'—')
+  ]);
+
+  h+='<div class="res-sec-h" style="margin-top:4px"><svg class="icon icon-sm"><use href="#i-list"/></svg>Estado de módulos</div>';
+  h+=MODS.filter(m=>m.id!=='resumen').map(m=>'<div class="mod-state"><div class="ms-ic"><svg class="icon icon-sm"><use href="#'+m.icon+'"/></svg></div><div class="ms-name">'+m.label+'</div><span class="ms-tag '+(saved[m.id]?'ok':'no')+'">'+(saved[m.id]?'Guardado':'Pendiente')+'</span></div>').join('');
+  cont.innerHTML=h;
 }
-function cell(k,v){ return '<div class="sum-cell"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'; }
+function sec(icon,titulo,lines){ return '<div class="res-sec"><div class="res-sec-h"><svg class="icon icon-sm"><use href="#'+icon+'"/></svg>'+titulo+'</div>'+lines.join('')+'</div>'; }
+function secRaw(icon,titulo,html){ return '<div class="res-sec"><div class="res-sec-h"><svg class="icon icon-sm"><use href="#'+icon+'"/></svg>'+titulo+'</div>'+html+'</div>'; }
+function ln(k,v){ return '<div class="res-line"><span class="rk">'+k+'</span><span class="rv">'+v+'</span></div>'; }
 
 // ===== GUARDADO POR MÓDULO =====
 function validarModulo(id){
@@ -819,7 +1083,7 @@ function recolectarGestion(){
   const promos=Array.from(document.querySelectorAll('input[id^="promo"]:checked')).map(c=>c.value);
   return {
     registroId: registroId,
-    nombreMercaderista: val('nombreMercaderista'), cedulaMercaderista: val('cedulaMercaderista'),
+    nombreMercaderista: val('nombreMercaderista'), cedulaMercaderista: val('cedulaMercaderista'), telefono: val('telefono'),
     ciudad: getCiudad(), puntoVenta: getPDV(),
     latitud: ubicacion.lat||'', longitud: ubicacion.lng||'', precisionGPS: ubicacion.acc||'',
     nombreNegocio: val('nombreNegocio'), nitCliente: val('nitCliente'), contactoPrincipal: val('contactoPrincipal'), canalVentas: val('canalVentas'),
@@ -850,7 +1114,7 @@ async function guardarModulo(id, finalizar){
       registroId=data.registroId||registroId;
       if(data.fotoAntesURL){ fotoAntesURL=data.fotoAntesURL; fotoAntes=''; }
       if(data.fotoDespuesURL){ fotoDespuesURL=data.fotoDespuesURL; fotoDespues=''; }
-      renderNav();
+      renderNav(); persistir();
       if(finalizar){ mostrarExito(data); }
       else { toast((MODS.find(m=>m.id===id)||{}).label+' guardado'); }
     } else { saved[id]=false; alert('Error: '+(data&&data.error?data.error:'desconocido')); }
@@ -862,7 +1126,7 @@ function mostrarLoading(m){ document.getElementById('loadingMsg').textContent=m;
 function ocultarLoading(){ document.getElementById('loadingOverlay').classList.remove('show'); }
 function mostrarExito(d){ document.getElementById('successInfo').textContent='Registro: '+d.registroId; document.getElementById('successModal').classList.add('show'); }
 
-function nuevaGestion(){ location.reload(); }
+function nuevaGestion(){ try{ localStorage.removeItem(LS_KEY); }catch(e){} location.reload(); }
 function val(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
 </script>
 </body>
