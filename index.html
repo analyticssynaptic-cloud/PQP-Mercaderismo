@@ -288,6 +288,8 @@
   <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
   <symbol id="i-slides" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol>
   <symbol id="i-video" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></symbol>
 </svg>
 
 <!-- PORTADA / BIENVENIDA -->
@@ -338,7 +340,7 @@
       <p>Registra tu jornada en campo, paso a paso.</p>
     </div>
     <div class="portada-form" id="portadaForm">
-      <div class="portada-err" id="portadaErr">Completa tu nombre, documento y foto de ingreso.</div>
+      <div class="portada-err" id="portadaErr">Completa tu nombre, documento y selfie.</div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-user"/></svg></span><input type="text" id="nombreMercaderista" placeholder="Nombre completo" autocomplete="name"></div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-id"/></svg></span><input type="tel" id="cedulaMercaderista" placeholder="Documento / Cédula" inputmode="numeric"></div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-phone"/></svg></span><input type="tel" id="telefono" placeholder="Teléfono" inputmode="tel"></div>
@@ -346,7 +348,7 @@
         <input type="file" id="fileIngreso" accept="image/*" capture="user" style="display:none">
         <span class="fi-ic" id="fiIcon"><svg class="icon icon-lg"><use href="#i-camera"/></svg></span>
         <img class="fi-prev" id="fotoIngresoPrev" style="display:none" alt="">
-        <span class="fi-txt"><b id="fiTitle">Foto de ingreso</b><span id="fiSub">Toca para tomar la foto</span></span>
+        <span class="fi-txt"><b id="fiTitle">Tu selfie</b><span id="fiSub">Toca para tomar la foto (cámara frontal)</span></span>
       </label>
       <button class="btn-portada" onclick="comenzar()">Comenzar <svg class="icon"><use href="#i-arrowr"/></svg></button>
       <div class="portada-foot">Tus datos quedan asociados a esta gestión</div>
@@ -439,18 +441,9 @@
         </div>
       </div>
       <div id="ventaSi" style="display:none">
-        <div class="field"><label class="label" for="ventaMetodoPago">Método de pago</label>
-          <select id="ventaMetodoPago" class="select"><option value="">Seleccionar</option><option>Efectivo</option><option>Tarjeta Movistar</option><option>Crédito</option></select>
-        </div>
-        <div class="field"><label class="label">Condición de venta</label>
-          <div class="opt-grid opt-grid-2">
-            <div class="opt"><input type="radio" name="ventaCondicion" id="vcCont" value="Contado"><label for="vcCont"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Contado</label></div>
-            <div class="opt"><input type="radio" name="ventaCondicion" id="vcCred" value="Credito"><label for="vcCred"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Crédito</label></div>
-          </div>
-        </div>
-        <div class="field" id="ventaPlazoG" style="display:none"><label class="label" for="ventaPlazo">Plazo en días</label><input type="number" id="ventaPlazo" class="input" min="1" max="365" placeholder="Ej: 30"></div>
+        <div id="listaVentas"></div>
+        <button type="button" class="btn btn-soft btn-block" onclick="agregarVenta()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar producto vendido</button>
       </div>
-      <div class="field"><label class="label" for="ventaObservaciones">Observaciones</label><textarea id="ventaObservaciones" class="textarea" placeholder="Notas de la venta"></textarea></div>
       <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('ventas')"><svg class="icon"><use href="#i-save"/></svg>Guardar Ventas</button></div>
     </div>
   </section>
@@ -460,19 +453,18 @@
     <div class="card">
       <div class="card-head">
         <div class="card-chip"><svg class="icon icon-lg"><use href="#i-box"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Inventarios</div><div class="card-sub">Estante, competencia y material POP</div></div>
+        <div class="card-head-text"><div class="card-title">Inventarios</div><div class="card-sub">Productos en estante y material POP</div></div>
         <span class="saved-badge" id="badge-inventarios"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
-      <div class="field"><label class="label" for="inventarioPQP">Inventario PQP en estante</label><textarea id="inventarioPQP" class="textarea" placeholder="Referencias y cantidades observadas"></textarea></div>
-      <div class="field"><label class="label" for="marcasCompetencia">Marcas de competencia</label><textarea id="marcasCompetencia" class="textarea" placeholder="Marcas presentes"></textarea></div>
-      <div class="field"><label class="label">Material POP en buen estado</label>
+      <div id="listaInventario"></div>
+      <button type="button" class="btn btn-soft btn-block" onclick="agregarInv()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar producto</button>
+      <div class="field" style="margin-top:16px"><label class="label label-req">¿Material POP en buen estado?</label>
         <div class="opt-grid">
           <div class="opt"><input type="radio" name="materialPOP" id="popSi" value="Si"><label for="popSi"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Sí</label></div>
           <div class="opt"><input type="radio" name="materialPOP" id="popNo" value="No"><label for="popNo"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>No</label></div>
           <div class="opt"><input type="radio" name="materialPOP" id="popPar" value="Parcial"><label for="popPar"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Parcial</label></div>
         </div>
       </div>
-      <div class="field"><label class="label" for="inventarioObs">Observaciones</label><textarea id="inventarioObs" class="textarea" placeholder="Notas del inventario"></textarea></div>
       <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('inventarios')"><svg class="icon"><use href="#i-save"/></svg>Guardar Inventarios</button></div>
     </div>
   </section>
@@ -482,20 +474,20 @@
     <div class="card">
       <div class="card-head">
         <div class="card-chip"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Fotos: ingreso y salida</div><div class="card-sub">Estante al llegar y al terminar</div></div>
+        <div class="card-head-text"><div class="card-title">Antes y Después</div><div class="card-sub">Comparativo del estante</div></div>
         <span class="saved-badge" id="badge-fotos"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
-      <div class="field"><label class="label label-req">Foto de ingreso (selfie)</label>
+      <div class="field"><label class="label label-req">Foto ANTES</label>
         <div class="upload" id="uploadAntes">
-          <input type="file" id="fileAntes" accept="image/*" capture="user">
-          <div id="defAntes"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Toca para tomar la foto al llegar</div><div class="upload-h">Obligatoria · JPG, PNG</div></div>
+          <input type="file" id="fileAntes" accept="image/*" capture="environment">
+          <div id="defAntes"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Estante al llegar</div><div class="upload-h">Obligatoria · JPG, PNG</div></div>
           <div id="prevAntes" style="display:none"><img id="imgAntes" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileAntes').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('antes')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
         </div>
       </div>
-      <div class="field"><label class="label">Foto de salida <span class="label-hint">(opcional)</span></label>
+      <div class="field"><label class="label">Foto DESPUÉS <span class="label-hint">(opcional)</span></label>
         <div class="upload" id="uploadDespues">
           <input type="file" id="fileDespues" accept="image/*" capture="environment">
-          <div id="defDespues"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Toca para tomar la foto al terminar</div><div class="upload-h">Opcional · JPG, PNG</div></div>
+          <div id="defDespues"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Estante mejorado</div><div class="upload-h">Opcional · JPG, PNG</div></div>
           <div id="prevDespues" style="display:none"><img id="imgDespues" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileDespues').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('despues')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
         </div>
       </div>
@@ -568,7 +560,11 @@
       <div id="resumenContenido"></div>
       <div class="field" style="margin-top:8px"><label class="label" for="proximaVisita">Próxima visita programada</label><input type="date" id="proximaVisita" class="input"></div>
       <div class="field"><label class="label" for="observacionesGenerales">Observaciones finales</label><textarea id="observacionesGenerales" class="textarea" placeholder="Compromisos y notas"></textarea></div>
-      <div class="save-row"><button class="btn btn-success btn-block" onclick="guardarModulo('resumen', true)"><svg class="icon"><use href="#i-check"/></svg>Finalizar gestión</button></div>
+      <div style="display:flex;gap:10px;margin-top:6px">
+        <button type="button" class="btn btn-success" style="flex:1" onclick="compartirWhatsApp()"><svg class="icon"><use href="#i-chat"/></svg>WhatsApp</button>
+        <button type="button" class="btn btn-outline" style="flex:1" onclick="copiarGestion()"><svg class="icon"><use href="#i-copy"/></svg>Copiar</button>
+      </div>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('resumen', true)"><svg class="icon"><use href="#i-check"/></svg>Finalizar gestión</button></div>
     </div>
   </section>
 
@@ -665,8 +661,9 @@ let saved = {};
 let current = 'inicio';
 let flowerOpen = false;
 let ubicacion = { lat:null, lng:null, acc:null };
+let fotoPerfil = '', fotoPerfilURL = '';
 let fotoAntes = '', fotoDespues = '', fotoAntesURL = '', fotoDespuesURL = '';
-let productosPedido = [], agotadosList = [], fechasList = [];
+let productosPedido = [], agotadosList = [], fechasList = [], ventasList = [], inventarioList = [];
 let pendCiudad = null, pendPDV = null, ayudasOpen = false, restaurando = false;
 
 // ===== INIT =====
@@ -687,9 +684,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input[name="ventaCondicion"]').forEach(r => r.addEventListener('change', () => {
     const s=document.querySelector('input[name="ventaCondicion"]:checked'); document.getElementById('ventaPlazoG').style.display=(s&&s.value==='Credito')?'block':'none';
   }));
-  document.getElementById('fileIngreso').addEventListener('change', e => leerFoto(e,'antes'));
+  document.getElementById('fileIngreso').addEventListener('change', e => leerFoto(e,'perfil'));
+  document.getElementById('filePerfil').addEventListener('change', e => leerFoto(e,'perfil'));
   document.getElementById('fileAntes').addEventListener('change', e => leerFoto(e,'antes'));
-  document.getElementById('filePerfil').addEventListener('change', e => leerFoto(e,'antes'));
   document.getElementById('fileDespues').addEventListener('change', e => leerFoto(e,'despues'));
   document.getElementById('descuento').addEventListener('input', calcularTotalFinal);
 
@@ -704,11 +701,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== NAV =====
 function identDone(){ return !!(val('nombreMercaderista') && val('cedulaMercaderista')); }
-function modAvailable(id){ if(id==='inicio') return true; return !!saved.inicio; }
-function availableMods(){ return MODS.filter(m => modAvailable(m.id)); }
+function modAvailable(id){ return true; } // navegación libre tras el login
+function availableMods(){ return MODS.slice(); }
 
 function goTo(id){
-  if(!modAvailable(id)){ current='inicio'; renderNav(); toast('Guarda primero el módulo Inicio', true); closeFlower(); return; }
   current=id; renderNav(); closeFlower();
   if(id==='resumen') renderResumen();
 }
@@ -751,7 +747,7 @@ function onIdentChange(){
 // ===== PORTADA =====
 function comenzar(){
   const n=val('nombreMercaderista'), c=val('cedulaMercaderista');
-  if(!n || !c || !(fotoAntes||fotoAntesURL)){
+  if(!n || !c || !(fotoPerfil||fotoPerfilURL)){
     const f=document.getElementById('portadaForm');
     f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake');
     document.getElementById('portadaErr').style.display='block';
@@ -779,18 +775,20 @@ async function guardarSilencioso(){
     const gestion=recolectarGestion();
     const res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({registroId:registroId,gestion:gestion}),redirect:'follow'});
     const data=await res.json();
-    if(data&&data.success){ registroId=data.registroId||registroId; if(data.fotoAntesURL){fotoAntesURL=data.fotoAntesURL;fotoAntes='';} persistir(); }
+    if(data&&data.success){ registroId=data.registroId||registroId; if(data.fotoPerfilURL){fotoPerfilURL=data.fotoPerfilURL;fotoPerfil='';} persistir(); }
   }catch(e){ /* offline: se guardará al guardar un módulo */ }
 }
 
 // ===== FOTO + AVATAR =====
 function aplicarFoto(tipo, data){
-  if(tipo==='antes'){
+  if(tipo==='perfil'){
+    fotoPerfil=data; fotoPerfilURL='';
+    const fp=document.getElementById('fotoIngresoPrev');
+    if(fp){ fp.src=data; fp.style.display='block'; document.getElementById('fiIcon').style.display='none'; document.getElementById('fotoIngresoBox').classList.add('has'); document.getElementById('fiTitle').textContent='Selfie lista'; document.getElementById('fiSub').textContent='Toca para volver a tomar'; }
+    setAvatar(data); setPersonaFoto(data);
+  } else if(tipo==='antes'){
     fotoAntes=data; fotoAntesURL='';
     document.getElementById('imgAntes').src=data; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has');
-    const fp=document.getElementById('fotoIngresoPrev');
-    if(fp){ fp.src=data; fp.style.display='block'; document.getElementById('fiIcon').style.display='none'; document.getElementById('fotoIngresoBox').classList.add('has'); document.getElementById('fiTitle').textContent='Foto lista'; document.getElementById('fiSub').textContent='Toca para volver a tomar'; }
-    setAvatar(data); setPersonaFoto(data);
   } else {
     fotoDespues=data; fotoDespuesURL='';
     document.getElementById('imgDespues').src=data; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has');
@@ -817,7 +815,7 @@ function abrirPersona(){
   document.getElementById('pDoc').value = val('cedulaMercaderista');
   document.getElementById('pTel').value = val('telefono');
   document.getElementById('pPdvActual').textContent = (getCiudad()||'—') + ' · ' + (getPDV()||'—');
-  setPersonaFoto(fotoAntes || fotoAntesURL || '');
+  setPersonaFoto(fotoPerfil || fotoPerfilURL || '');
   document.getElementById('personaModal').classList.add('show');
 }
 function cerrarPersona(){ document.getElementById('personaModal').classList.remove('show'); }
@@ -841,13 +839,13 @@ function closeAyudas(){ ayudasOpen=false; document.getElementById('ayudas').clas
 function persistir(){
   if(restaurando) return;
   try{
-    const campos=recolectarGestion(); campos.fotoAntes=''; campos.fotoDespues=''; // sin base64 (ligero y rápido)
-    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotoAntesURL, fotoDespuesURL, campos, listas:{ productosPedido, agotadosList, fechasList } };
+    const campos=recolectarGestion(); campos.fotoPerfil=''; campos.fotoAntes=''; campos.fotoDespues=''; // sin base64 (ligero y rápido)
+    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotoPerfilURL, fotoAntesURL, fotoDespuesURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList } };
     localStorage.setItem(LS_KEY, JSON.stringify(data));
   }catch(e){}
 }
 // Las fotos base64 se guardan aparte y SOLO cuando cambian (evita lag en cada tecla/click)
-function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotoAntes, fotoDespues })); }catch(e){} }
+function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotoPerfil, fotoAntes, fotoDespues })); }catch(e){} }
 function restaurarSesion(){
   let raw; try{ raw=localStorage.getItem(LS_KEY); }catch(e){ return false; }
   if(!raw) return false;
@@ -856,13 +854,11 @@ function restaurarSesion(){
   restaurando = true;
   const g=d.campos;
   // Campos simples
-  ['nombreMercaderista','cedulaMercaderista','telefono','nombreNegocio','nitCliente','contactoPrincipal','canalVentas',
-   'ventaMotivoNo','ventaMetodoPago','ventaPlazo','ventaObservaciones','inventarioPQP','marcasCompetencia','inventarioObs',
+  ['nombreMercaderista','cedulaMercaderista','telefono','ventaMotivoNo',
    'descuento','observacionesGenerales','proximaVisita'].forEach(id=>{ const el=document.getElementById(id); if(el&&g[id]!=null) el.value=g[id]; });
   // Radios
-  setRadio('ventaRealizada', g.ventaRealizada); setRadio('ventaCondicion', g.ventaCondicion); setRadio('materialPOP', g.materialPOP);
+  setRadio('ventaRealizada', g.ventaRealizada); setRadio('materialPOP', g.materialPOP);
   onVentaChange();
-  const sc=document.querySelector('input[name="ventaCondicion"]:checked'); document.getElementById('ventaPlazoG').style.display=(sc&&sc.value==='Credito')?'block':'none';
   // Promos (desde string "a, b")
   const promos=(g.pedidoPromos||'').split(',').map(s=>s.trim()).filter(Boolean);
   ['promo1','promo2','promo3','promo4'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=promos.indexOf(el.value)!==-1; });
@@ -871,8 +867,9 @@ function restaurarSesion(){
   if(modoManual){ document.getElementById('ciudadTexto').value=pendCiudad; document.getElementById('pdvTexto').value=pendPDV; }
   else { aplicarPendCiudadPDV(); }
   // Listas
-  productosPedido = (d.listas&&d.listas.productosPedido)||[]; agotadosList=(d.listas&&d.listas.agotadosList)||[]; fechasList=(d.listas&&d.listas.fechasList)||[];
-  renderPedido(); renderAgotados(); renderFechas(); calcularTotalPedido();
+  const L=d.listas||{};
+  productosPedido=L.productosPedido||[]; agotadosList=L.agotadosList||[]; fechasList=L.fechasList||[]; ventasList=L.ventasList||[]; inventarioList=L.inventarioList||[];
+  renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); calcularTotalPedido();
   // Ubicación
   ubicacion = d.ubicacion||{lat:null,lng:null,acc:null};
   if(ubicacion.lat&&ubicacion.lng){
@@ -884,9 +881,11 @@ function restaurarSesion(){
   }
   // Fotos (clave separada)
   let fotos={}; try{ fotos=JSON.parse(localStorage.getItem(LS_FOTOS)||'{}'); }catch(e){}
-  fotoAntesURL=d.fotoAntesURL||''; fotoDespuesURL=d.fotoDespuesURL||'';
+  fotoPerfilURL=d.fotoPerfilURL||''; fotoAntesURL=d.fotoAntesURL||''; fotoDespuesURL=d.fotoDespuesURL||'';
+  if(fotos.fotoPerfil){ aplicarFoto('perfil', fotos.fotoPerfil); }
+  else if(fotoPerfilURL){ setAvatar(fotoPerfilURL); setPersonaFoto(fotoPerfilURL); }
   if(fotos.fotoAntes){ aplicarFoto('antes', fotos.fotoAntes); }
-  else if(fotoAntesURL){ setAvatar(fotoAntesURL); document.getElementById('imgAntes').src=fotoAntesURL; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has'); }
+  else if(fotoAntesURL){ document.getElementById('imgAntes').src=fotoAntesURL; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has'); }
   if(fotos.fotoDespues){ aplicarFoto('despues', fotos.fotoDespues); }
   else if(fotoDespuesURL){ document.getElementById('imgDespues').src=fotoDespuesURL; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has'); }
   // Estado
@@ -943,10 +942,34 @@ function getCiudad(){ return modoManual?document.getElementById('ciudadTexto').v
 function getPDV(){ return modoManual?document.getElementById('pdvTexto').value.trim():document.getElementById('puntoVenta').value.trim(); }
 
 // ===== VENTAS =====
-function onVentaChange(){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; document.getElementById('ventaNo').style.display=v==='No'?'block':'none'; document.getElementById('ventaSi').style.display=v==='Si'?'block':'none'; }
+function onVentaChange(){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; document.getElementById('ventaNo').style.display=v==='No'?'block':'none'; document.getElementById('ventaSi').style.display=v==='Si'?'block':'none'; if(v==='Si'&&ventasList.length===0&&!restaurando) agregarVenta(); }
 
 // ===== LISTAS (pedido / agotados / fechas) =====
-function findItem(id){ return productosPedido.find(x=>x.id===id) || agotadosList.find(x=>x.id===id) || fechasList.find(x=>x.id===id); }
+function findItem(id){ return productosPedido.find(x=>x.id===id) || agotadosList.find(x=>x.id===id) || fechasList.find(x=>x.id===id) || ventasList.find(x=>x.id===id) || inventarioList.find(x=>x.id===id); }
+
+// Ventas (SKU + cantidad)
+function agregarVenta(){ ventasList.push({id:uid('v'),sku:'',cantidad:1}); renderVentas(); }
+function eliminarVenta(id){ ventasList=ventasList.filter(x=>x.id!==id); renderVentas(); }
+function renderVentas(){
+  const cont=document.getElementById('listaVentas'); if(!cont) return; cont.innerHTML='';
+  if(ventasList.length===0){ cont.innerHTML='<div class="empty-hint">Agrega los productos vendidos.</div>'; return; }
+  ventasList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-cart"/></svg>Vendido ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarVenta('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
+}
+
+// Inventario (SKU + cantidad en estante)
+function agregarInv(){ inventarioList.push({id:uid('n'),sku:'',cantidad:1}); renderInventario(); }
+function eliminarInv(id){ inventarioList=inventarioList.filter(x=>x.id!==id); renderInventario(); }
+function renderInventario(){
+  const cont=document.getElementById('listaInventario'); if(!cont) return; cont.innerHTML='';
+  if(inventarioList.length===0){ cont.innerHTML='<div class="empty-hint">Agrega los productos en estante.</div>'; return; }
+  inventarioList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-box"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarInv('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad en estante</label><input type="number" class="input" min="0" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
+}
 
 function agregarProducto(){ productosPedido.push({id:uid('p'),sku:'',cantidad:1,precio:0,subtotal:0}); renderPedido(); }
 function eliminarProducto(id){ productosPedido=productosPedido.filter(p=>p.id!==id); renderPedido(); calcularTotalPedido(); }
@@ -965,7 +988,7 @@ function subDOM(contId,list,p){ const i=list.indexOf(p); const row=document.quer
 function calcularTotalPedido(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); document.getElementById('totalPedido').textContent='$'+fmt(t); calcularTotalFinal(); }
 function calcularTotalFinal(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); const d=parseFloat(document.getElementById('descuento').value)||0; document.getElementById('totalFinal').textContent='$'+fmt(Math.max(0,t-d)); }
 
-function agregarAgotado(){ agotadosList.push({id:uid('a'),sku:'',obs:''}); renderAgotados(); }
+function agregarAgotado(){ agotadosList.push({id:uid('a'),sku:'',cantidad:1}); renderAgotados(); }
 function eliminarAgotado(id){ agotadosList=agotadosList.filter(x=>x.id!==id); renderAgotados(); }
 function renderAgotados(){
   const cont=document.getElementById('listaAgotados'); cont.innerHTML='';
@@ -973,9 +996,8 @@ function renderAgotados(){
   agotadosList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-xcircle"/></svg>Agotado ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarAgotado('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
     <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
-    <div class="field" style="margin-bottom:0"><label class="label">Observación</label><input type="text" class="input" value="${escAttr(p.obs)}" oninput="setObs('${p.id}',this.value)" placeholder="Días sin producto, etc."></div>`; cont.appendChild(d); });
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad próxima a agotarse</label><input type="number" class="input" min="0" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
 }
-function setObs(id,v){ const p=findItem(id); if(p)p.obs=v; }
 
 function agregarFecha(){ fechasList.push({id:uid('f'),sku:'',lote:'',vence:'',cantidad:1}); renderFechas(); }
 function eliminarFecha(id){ fechasList=fechasList.filter(x=>x.id!==id); renderFechas(); }
@@ -985,8 +1007,7 @@ function renderFechas(){
   fechasList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-clock"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarFecha('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
     <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
-    <div class="field-row"><div class="field" style="margin-bottom:0"><label class="label label-req">Vence</label><input type="date" class="input" value="${escAttr(p.vence)}" oninput="setFld('${p.id}','vence',this.value)"></div><div class="field" style="margin-bottom:0"><label class="label">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div></div>
-    <div class="field" style="margin-bottom:0;margin-top:11px"><label class="label">Lote</label><input type="text" class="input" value="${escAttr(p.lote)}" oninput="setFld('${p.id}','lote',this.value)" placeholder="Lote (opcional)"></div>`; cont.appendChild(d); });
+    <div class="field-row" style="margin-bottom:0"><div class="field" style="margin-bottom:0"><label class="label label-req">Vence</label><input type="date" class="input" value="${escAttr(p.vence)}" oninput="setFld('${p.id}','vence',this.value)"></div><div class="field" style="margin-bottom:0"><label class="label">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div></div>`; cont.appendChild(d); });
 }
 function setFld(id,campo,v){ const p=findItem(id); if(p)p[campo]= (campo==='cantidad'?(parseFloat(v)||0):v); }
 
@@ -996,7 +1017,7 @@ function filtrarSKU(id,valor){ const dd=document.getElementById('dd_'+id); if(!d
     : r.map(s=>{const safe=escHtml(s.completo);const attr=String(s.completo).replace(/'/g,"\\'");return `<div class="sku-item" onmousedown="seleccionarSKU('${id}','${attr}',${s.precio||0})">${safe}</div>`;}).join('');
   dd.classList.add('show'); }
 function cerrarSKU(id){ const d=document.getElementById('dd_'+id); if(d)d.classList.remove('show'); }
-function seleccionarSKU(id,sku,precio){ const p=findItem(id); if(!p)return; p.sku=sku; if('precio'in p){p.precio=parseFloat(precio)||0; p.subtotal=p.cantidad*p.precio;} cerrarSKU(id); renderPedido(); renderAgotados(); renderFechas(); calcularTotalPedido(); }
+function seleccionarSKU(id,sku,precio){ const p=findItem(id); if(!p)return; p.sku=sku; if('precio'in p){p.precio=parseFloat(precio)||0; p.subtotal=p.cantidad*p.precio;} cerrarSKU(id); renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); calcularTotalPedido(); }
 
 function uid(pfx){ return pfx+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
 function escAttr(s){ return String(s==null?'':s).replace(/"/g,'&quot;'); }
@@ -1008,11 +1029,8 @@ function leerFoto(e,tipo){ const file=e.target.files[0]; if(!file)return; if(fil
   const r=new FileReader(); r.onload=ev=>{ aplicarFoto(tipo, ev.target.result); persistir(); persistirFotos(); }; r.readAsDataURL(file); }
 function quitarFoto(tipo){
   if(tipo==='antes'){
-    fotoAntes=''; fotoAntesURL='';
-    document.getElementById('fileAntes').value=''; document.getElementById('fileIngreso').value='';
+    fotoAntes=''; fotoAntesURL=''; document.getElementById('fileAntes').value='';
     document.getElementById('defAntes').style.display='block'; document.getElementById('prevAntes').style.display='none'; document.getElementById('uploadAntes').classList.remove('has');
-    const fb=document.getElementById('fotoIngresoBox'); if(fb){ fb.classList.remove('has'); document.getElementById('fotoIngresoPrev').style.display='none'; document.getElementById('fiIcon').style.display=''; document.getElementById('fiTitle').textContent='Foto de ingreso'; document.getElementById('fiSub').textContent='Toca para tomar la foto'; }
-    resetAvatar();
   } else {
     fotoDespues=''; fotoDespuesURL=''; document.getElementById('fileDespues').value='';
     document.getElementById('defDespues').style.display='block'; document.getElementById('prevDespues').style.display='none'; document.getElementById('uploadDespues').classList.remove('has');
@@ -1027,7 +1045,6 @@ function renderResumen(){
   const desc=parseFloat(document.getElementById('descuento').value)||0;
   const ventaR=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value||'';
   const pop=(document.querySelector('input[name="materialPOP"]:checked')||{}).value||'';
-  const cond=(document.querySelector('input[name="ventaCondicion"]:checked')||{}).value||'';
   const promos=Array.from(document.querySelectorAll('input[id^="promo"]:checked')).map(c=>c.value);
   const ubic=(ubicacion.lat&&ubicacion.lng)?'<a href="https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'" target="_blank">Abrir en Maps</a> ('+ubicacion.lat+', '+ubicacion.lng+')':'No capturada';
 
@@ -1035,18 +1052,19 @@ function renderResumen(){
   h+=sec('i-user','Mercaderista',[ ln('Nombre',escHtml(val('nombreMercaderista'))||'—'), ln('Documento',escHtml(val('cedulaMercaderista'))||'—'), ln('Teléfono',escHtml(val('telefono'))||'—') ]);
   h+=sec('i-pin','Punto de venta',[ ln('Ciudad',escHtml(getCiudad())||'—'), ln('PDV',escHtml(getPDV())||'—'), ln('Ubicación',ubic) ]);
 
-  let lv=[ ln('¿Se realizó venta?', ventaR||'—') ];
-  if(ventaR==='No') lv.push(ln('Motivo', escHtml(val('ventaMotivoNo'))||'—'));
-  if(ventaR==='Si'){ lv.push(ln('Método de pago', escHtml(val('ventaMetodoPago'))||'—')); lv.push(ln('Condición', cond||'—')); if(cond==='Credito') lv.push(ln('Plazo', (escHtml(val('ventaPlazo'))||'—')+' días')); }
-  if(val('ventaObservaciones')) lv.push(ln('Obs.', escHtml(val('ventaObservaciones'))));
-  h+=sec('i-cart','Ventas',lv);
+  let vH='<div class="res-line"><span class="rk">¿Se realizó venta?</span><span class="rv">'+(ventaR||'—')+'</span></div>';
+  if(ventaR==='No') vH+='<div class="res-line"><span class="rk">Motivo</span><span class="rv">'+(escHtml(val('ventaMotivoNo'))||'—')+'</span></div>';
+  if(ventaR==='Si') vH+=(ventasList.length?ventasList.map((p,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(p.sku)||'—')+'</b> · '+(p.cantidad||0)+' und</div>').join(''):'<div class="res-mini">Sin productos vendidos</div>');
+  h+=secRaw('i-cart','Ventas',vH);
 
-  h+=sec('i-box','Inventario',[ ln('Material POP', pop||'—'), ln('Competencia', escHtml(val('marcasCompetencia'))||'—'), ln('Inventario PQP', escHtml(val('inventarioPQP'))||'—') ]);
+  let iH='<div class="res-line"><span class="rk">Material POP</span><span class="rv">'+(pop||'—')+'</span></div>';
+  iH+=(inventarioList.length?inventarioList.map((p,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(p.sku)||'—')+'</b> · '+(p.cantidad||0)+' en estante</div>').join(''):'<div class="res-mini">Sin inventario registrado</div>');
+  h+=secRaw('i-box','Inventario',iH);
 
-  const agH = agotadosList.length ? agotadosList.map((a,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(a.sku)||'—')+'</b>'+(a.obs?(' — '+escHtml(a.obs)):'')+'</div>').join('') : '<div class="res-mini">Sin agotados registrados</div>';
+  const agH = agotadosList.length ? agotadosList.map((a,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(a.sku)||'—')+'</b> · '+(a.cantidad||0)+' und</div>').join('') : '<div class="res-mini">Sin agotados registrados</div>';
   h+=secRaw('i-xcircle','Agotados ('+agotadosList.length+')', agH);
 
-  const fcH = fechasList.length ? fechasList.map((f,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(f.sku)||'—')+'</b> · vence '+(f.vence||'—')+' · cant '+(f.cantidad||0)+(f.lote?(' · lote '+escHtml(f.lote)):'')+'</div>').join('') : '<div class="res-mini">Sin productos por vencer</div>';
+  const fcH = fechasList.length ? fechasList.map((f,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(f.sku)||'—')+'</b> · vence '+(f.vence||'—')+' · '+(f.cantidad||0)+' und</div>').join('') : '<div class="res-mini">Sin productos por vencer</div>';
   h+=secRaw('i-clock','Fechas cortas ('+fechasList.length+')', fcH);
 
   let pedH = productosPedido.length ? productosPedido.map((p,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(p.sku)||'—')+'</b> · '+p.cantidad+' × $'+fmt(p.precio)+' = <b>$'+fmt(p.subtotal)+'</b></div>').join('') : '<div class="res-mini">Sin productos en el pedido</div>';
@@ -1056,9 +1074,9 @@ function renderResumen(){
   if(promos.length) pedH+='<div class="res-mini">Promociones: '+escHtml(promos.join(', '))+'</div>';
   h+=secRaw('i-package','Pedido ('+productosPedido.length+' productos)', pedH);
 
-  h+=sec('i-camera','Fotos',[
-    ln('Ingreso', (fotoAntes||fotoAntesURL)?(fotoAntesURL?'<a href="'+fotoAntesURL+'" target="_blank">Ver foto</a>':'Tomada ✓'):'—'),
-    ln('Salida', (fotoDespues||fotoDespuesURL)?(fotoDespuesURL?'<a href="'+fotoDespuesURL+'" target="_blank">Ver foto</a>':'Tomada ✓'):'—')
+  h+=sec('i-camera','Fotos (estante)',[
+    ln('Antes', (fotoAntes||fotoAntesURL)?(fotoAntesURL?'<a href="'+fotoAntesURL+'" target="_blank">Ver foto</a>':'Tomada ✓'):'—'),
+    ln('Después', (fotoDespues||fotoDespuesURL)?(fotoDespuesURL?'<a href="'+fotoDespuesURL+'" target="_blank">Ver foto</a>':'Tomada ✓'):'—')
   ]);
 
   h+='<div class="res-sec-h" style="margin-top:4px"><svg class="icon icon-sm"><use href="#i-list"/></svg>Estado de módulos</div>';
@@ -1077,10 +1095,10 @@ function validarModulo(id){
     if(!val('cedulaMercaderista')) e.push('Cédula');
     if(!getCiudad()) e.push('Ciudad');
     if(!getPDV()) e.push('Punto de venta');
-    if(!(ubicacion.lat&&ubicacion.lng)) e.push('Ubicación GPS (toca "Capturar ubicación")');
   }
-  if(id==='ventas'){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; if(!v) e.push('¿Se realizó venta?'); if(v==='No'&&!val('ventaMotivoNo')) e.push('Motivo de no venta'); }
-  if(id==='fotos'){ if(!fotoAntes&&!fotoAntesURL) e.push('Foto de ingreso'); }
+  if(id==='ventas'){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; if(!v) e.push('¿Se realizó venta?'); if(v==='No'&&!val('ventaMotivoNo')) e.push('Motivo de no venta'); if(v==='Si'){ if(ventasList.length===0) e.push('Agrega al menos un producto vendido'); ventasList.forEach((p,i)=>{ if(!p.sku) e.push('SKU vendido '+(i+1)); if(!p.cantidad||p.cantidad<1) e.push('Cantidad vendido '+(i+1)); }); } }
+  if(id==='inventarios'){ inventarioList.forEach((p,i)=>{ if(!p.sku) e.push('SKU inventario '+(i+1)); }); }
+  if(id==='fotos'){ if(!fotoAntes&&!fotoAntesURL) e.push('Foto Antes'); }
   if(id==='agotados'){ agotadosList.forEach((p,i)=>{ if(!p.sku) e.push('SKU del agotado '+(i+1)); }); }
   if(id==='fechas'){ fechasList.forEach((p,i)=>{ if(!p.sku) e.push('SKU del producto '+(i+1)); if(!p.vence) e.push('Fecha de vencimiento '+(i+1)); }); }
   if(id==='pedido'){ productosPedido.forEach((p,i)=>{ if(!p.sku) e.push('SKU producto '+(i+1)); if(!p.cantidad||p.cantidad<1) e.push('Cantidad producto '+(i+1)); }); }
@@ -1090,7 +1108,6 @@ function validarModulo(id){
 function recolectarGestion(){
   const totalPed=productosPedido.reduce((s,p)=>s+p.subtotal,0);
   const desc=parseFloat(document.getElementById('descuento').value)||0;
-  const cond=(document.querySelector('input[name="ventaCondicion"]:checked')||{}).value||'';
   const pop=(document.querySelector('input[name="materialPOP"]:checked')||{}).value||'';
   const promos=Array.from(document.querySelectorAll('input[id^="promo"]:checked')).map(c=>c.value);
   return {
@@ -1098,13 +1115,15 @@ function recolectarGestion(){
     nombreMercaderista: val('nombreMercaderista'), cedulaMercaderista: val('cedulaMercaderista'), telefono: val('telefono'),
     ciudad: getCiudad(), puntoVenta: getPDV(),
     latitud: ubicacion.lat||'', longitud: ubicacion.lng||'', precisionGPS: ubicacion.acc||'',
-    nombreNegocio: val('nombreNegocio'), nitCliente: val('nitCliente'), contactoPrincipal: val('contactoPrincipal'), canalVentas: val('canalVentas'),
+    fotoPerfil: fotoPerfil, fotoPerfilURL: fotoPerfilURL,
     ventaRealizada: (document.querySelector('input[name="ventaRealizada"]:checked')||{}).value||'',
-    ventaMotivoNo: val('ventaMotivoNo'), ventaMetodoPago: val('ventaMetodoPago'), ventaCondicion: cond, ventaPlazo: val('ventaPlazo'), ventaObservaciones: val('ventaObservaciones'),
-    inventarioPQP: val('inventarioPQP'), marcasCompetencia: val('marcasCompetencia'), materialPOP: pop, inventarioObs: val('inventarioObs'),
+    ventaMotivoNo: val('ventaMotivoNo'),
+    ventaProductos: ventasList.map(p=>({sku:p.sku,cantidad:p.cantidad})),
+    materialPOP: pop,
+    inventarioProductos: inventarioList.map(p=>({sku:p.sku,cantidad:p.cantidad})),
     fotoAntes: fotoAntes, fotoDespues: fotoDespues, fotoAntesURL: fotoAntesURL, fotoDespuesURL: fotoDespuesURL,
-    agotados: agotadosList.map(a=>({sku:a.sku,obs:a.obs})),
-    fechasCortas: fechasList.map(f=>({sku:f.sku,lote:f.lote,vence:f.vence,cantidad:f.cantidad})),
+    agotados: agotadosList.map(a=>({sku:a.sku,cantidad:a.cantidad})),
+    fechasCortas: fechasList.map(f=>({sku:f.sku,vence:f.vence,cantidad:f.cantidad})),
     pedidoProductos: productosPedido.map(p=>({sku:p.sku,cantidad:p.cantidad,precio:p.precio,subtotal:p.subtotal})),
     pedidoTotal: totalPed, pedidoPromos: promos.join(', '), pedidoDescuento: desc, pedidoTotalFinal: Math.max(0,totalPed-desc),
     observacionesGenerales: val('observacionesGenerales'), proximaVisita: val('proximaVisita'),
@@ -1118,17 +1137,19 @@ async function guardarModulo(id, finalizar){
   const gestion=recolectarGestion();
   saved[id]=true;
   gestion.modulosGuardados=Object.keys(saved).filter(k=>saved[k]).join(', ');
-  mostrarLoading(finalizar?'Finalizando gestión...':'Guardando '+(MODS.find(m=>m.id===id)||{}).label+'...');
+  const enviarCorreo = (id==='pedido' && productosPedido.length>0); // al guardar pedido, enviar correo
+  mostrarLoading(finalizar?'Finalizando gestión...':(enviarCorreo?'Guardando y enviando pedido...':'Guardando '+(MODS.find(m=>m.id===id)||{}).label+'...'));
   try{
-    const res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({registroId:registroId,gestion:gestion}),redirect:'follow'});
+    const res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({registroId:registroId,gestion:gestion,enviarCorreo:enviarCorreo}),redirect:'follow'});
     const data=await res.json(); ocultarLoading();
     if(data&&data.success){
       registroId=data.registroId||registroId;
+      if(data.fotoPerfilURL){ fotoPerfilURL=data.fotoPerfilURL; fotoPerfil=''; }
       if(data.fotoAntesURL){ fotoAntesURL=data.fotoAntesURL; fotoAntes=''; }
       if(data.fotoDespuesURL){ fotoDespuesURL=data.fotoDespuesURL; fotoDespues=''; }
       renderNav(); persistir();
       if(finalizar){ mostrarExito(data); }
-      else { toast((MODS.find(m=>m.id===id)||{}).label+' guardado'); }
+      else { toast((MODS.find(m=>m.id===id)||{}).label+' guardado'+(data.correoEnviado?' · correo enviado':'')); }
     } else { saved[id]=false; alert('Error: '+(data&&data.error?data.error:'desconocido')); }
   }catch(err){ saved[id]=false; ocultarLoading(); alert('Error de red: '+err.message); }
 }
@@ -1137,6 +1158,37 @@ function toast(msg, warn){ const t=document.getElementById('toast'); document.ge
 function mostrarLoading(m){ document.getElementById('loadingMsg').textContent=m; document.getElementById('loadingOverlay').classList.add('show'); }
 function ocultarLoading(){ document.getElementById('loadingOverlay').classList.remove('show'); }
 function mostrarExito(d){ document.getElementById('successInfo').textContent='Registro: '+d.registroId; document.getElementById('successModal').classList.add('show'); }
+
+// ===== COMPARTIR / WHATSAPP =====
+function generarTextoGestion(){
+  const totalPed=productosPedido.reduce((s,p)=>s+p.subtotal,0);
+  const desc=parseFloat(document.getElementById('descuento').value)||0;
+  const ventaR=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value||'';
+  const pop=(document.querySelector('input[name="materialPOP"]:checked')||{}).value||'';
+  let t='*GESTIÓN PQP*\n';
+  t+='Mercaderista: '+(val('nombreMercaderista')||'-')+' (CC '+(val('cedulaMercaderista')||'-')+')\n';
+  if(val('telefono')) t+='Tel: '+val('telefono')+'\n';
+  t+='Ciudad/PDV: '+(getCiudad()||'-')+' / '+(getPDV()||'-')+'\n';
+  if(ubicacion.lat&&ubicacion.lng) t+='Ubicación: https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'\n';
+  t+='\n*VENTAS:* '+(ventaR||'-')+'\n';
+  if(ventaR==='No') t+='Motivo: '+(val('ventaMotivoNo')||'-')+'\n';
+  if(ventaR==='Si') ventasList.forEach(p=>{ t+='- '+(p.sku||'-')+'  x'+(p.cantidad||0)+'\n'; });
+  t+='\n*INVENTARIO* (POP: '+(pop||'-')+')\n';
+  if(inventarioList.length) inventarioList.forEach(p=>{ t+='- '+(p.sku||'-')+': '+(p.cantidad||0)+'\n'; }); else t+='-\n';
+  if(agotadosList.length){ t+='\n*AGOTADOS:*\n'; agotadosList.forEach(a=>{ t+='- '+(a.sku||'-')+'  x'+(a.cantidad||0)+'\n'; }); }
+  if(fechasList.length){ t+='\n*FECHAS CORTAS:*\n'; fechasList.forEach(f=>{ t+='- '+(f.sku||'-')+'  vence '+(f.vence||'-')+'  x'+(f.cantidad||0)+'\n'; }); }
+  if(productosPedido.length){ t+='\n*PEDIDO:*\n'; productosPedido.forEach(p=>{ t+='- '+(p.sku||'-')+'  x'+p.cantidad+' = $'+fmt(p.subtotal)+'\n'; }); t+='*Total: $'+fmt(Math.max(0,totalPed-desc))+'*\n'; }
+  if(val('proximaVisita')) t+='\nPróxima visita: '+val('proximaVisita')+'\n';
+  if(val('observacionesGenerales')) t+='Obs: '+val('observacionesGenerales')+'\n';
+  return t;
+}
+function compartirWhatsApp(){ window.open('https://wa.me/?text='+encodeURIComponent(generarTextoGestion()),'_blank'); }
+function copiarGestion(){
+  const t=generarTextoGestion();
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(()=>toast('Copiado al portapapeles')).catch(()=>fallbackCopy(t)); }
+  else fallbackCopy(t);
+}
+function fallbackCopy(t){ const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.focus(); ta.select(); try{ document.execCommand('copy'); toast('Copiado al portapapeles'); }catch(e){ prompt('Copia manual:', t); } document.body.removeChild(ta); }
 
 function nuevaGestion(){ try{ localStorage.removeItem(LS_KEY); localStorage.removeItem(LS_FOTOS); }catch(e){} location.reload(); }
 function val(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
