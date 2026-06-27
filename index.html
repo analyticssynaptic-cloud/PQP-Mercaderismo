@@ -587,9 +587,9 @@
 
 <!-- BOTTOM NAV -->
 <nav class="bottomnav">
-  <div class="nav-side left"><button class="nav-icon" id="btnPersona" onclick="abrirPersona()" aria-label="Mi información"><img id="navAvatarImg" alt="" style="display:none"><svg class="icon" id="navAvatarIcon"><use href="#i-user"/></svg></button></div>
-  <div class="fab-slot"><button class="fab" id="fab" onclick="toggleFlower()" aria-label="Navegar módulos"><span class="fab-ic"><svg class="icon icon-lg"><use href="#i-grid"/></svg></span></button></div>
-  <div class="nav-side right"><button class="nav-icon" id="btnAyudas" onclick="toggleAyudas()" aria-label="Ayudas"><svg class="icon"><use href="#i-help"/></svg></button></div>
+  <div class="nav-side left"><button class="nav-icon" id="btnPersona" type="button" aria-label="Mi información"><img id="navAvatarImg" alt="" style="display:none"><svg class="icon" id="navAvatarIcon"><use href="#i-user"/></svg></button></div>
+  <div class="fab-slot"><button class="fab" id="fab" type="button" aria-label="Navegar módulos"><span class="fab-ic"><svg class="icon icon-lg"><use href="#i-grid"/></svg></span></button></div>
+  <div class="nav-side right"><button class="nav-icon" id="btnAyudas" type="button" aria-label="Ayudas"><svg class="icon"><use href="#i-help"/></svg></button></div>
 </nav>
 
 <!-- MENÚ AYUDAS -->
@@ -697,6 +697,18 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('input', persistDeb);
   document.addEventListener('change', persistDeb);
 
+  // Navegación por pétalos: delegación => un toque en cualquier parte del pétalo navega
+  document.getElementById('flower').addEventListener('click', e => {
+    const pet = e.target.closest('.petal');
+    if (pet) goTo(pet.dataset.mod);
+  });
+  // Botones de la barra inferior por delegación (robusto al icono)
+  document.querySelector('.bottomnav').addEventListener('click', e => {
+    if (e.target.closest('#fab')) toggleFlower();
+    else if (e.target.closest('#btnPersona')) abrirPersona();
+    else if (e.target.closest('#btnAyudas')) toggleAyudas();
+  });
+
   // Restaurar sesión previa (tras caída de red, cierre, etc.)
   if (!restaurarSesion()) renderNav();
 });
@@ -731,7 +743,6 @@ function renderPetals(){
     p.classList.toggle('active', id===current);
     p.classList.toggle('saved', !!saved[id]);
     p.classList.toggle('locked', !modAvailable(id));
-    p.onclick=()=>goTo(id);
   });
 }
 function toggleFlower(){ flowerOpen?closeFlower():openFlower(); }
