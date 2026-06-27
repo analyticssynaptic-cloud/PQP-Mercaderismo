@@ -22,6 +22,8 @@
   body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:120px}
   h1,h2,h3{font-family:'Poppins',sans-serif}
   .icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  svg{pointer-events:none} /* el clic siempre llega al botón, no al icono */
+  button,.btn,.nav-icon,.fab,.petal,.opt label,.upload,.foto-ingreso,.ayuda-item{touch-action:manipulation}
   .icon-lg{width:22px;height:22px}.icon-sm{width:15px;height:15px}.icon-xl{width:30px;height:30px}
 
   /* TOPBAR */
@@ -479,15 +481,15 @@
       </div>
       <div class="field"><label class="label label-req">Foto ANTES</label>
         <div class="upload" id="uploadAntes">
-          <input type="file" id="fileAntes" accept="image/*" capture="environment">
-          <div id="defAntes"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Estante al llegar</div><div class="upload-h">Obligatoria · JPG, PNG</div></div>
+          <input type="file" id="fileAntes" accept="image/*">
+          <div id="defAntes"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-image"/></svg></div><div class="upload-t">Estante al llegar</div><div class="upload-h">Desde la galería · JPG, PNG</div></div>
           <div id="prevAntes" style="display:none"><img id="imgAntes" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileAntes').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('antes')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
         </div>
       </div>
       <div class="field"><label class="label">Foto DESPUÉS <span class="label-hint">(opcional)</span></label>
         <div class="upload" id="uploadDespues">
-          <input type="file" id="fileDespues" accept="image/*" capture="environment">
-          <div id="defDespues"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-camera"/></svg></div><div class="upload-t">Estante mejorado</div><div class="upload-h">Opcional · JPG, PNG</div></div>
+          <input type="file" id="fileDespues" accept="image/*">
+          <div id="defDespues"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-image"/></svg></div><div class="upload-t">Estante mejorado</div><div class="upload-h">Desde la galería · JPG, PNG</div></div>
           <div id="prevDespues" style="display:none"><img id="imgDespues" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileDespues').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('despues')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
         </div>
       </div>
