@@ -155,7 +155,7 @@
   /* PÉTALOS: solo icono, sin fondo */
   .petal{position:absolute;left:0;bottom:0;width:62px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;cursor:pointer;transform:translate(-50%,0) scale(.3);opacity:0;pointer-events:none;transition:transform .36s cubic-bezier(.34,1.56,.64,1),opacity .25s}
   .flower.open .petal{transform:translate(calc(-50% + var(--x)),var(--y)) scale(1);opacity:1;pointer-events:auto}
-  .flower.open .petal:nth-child(1){transition-delay:.02s}.flower.open .petal:nth-child(2){transition-delay:.05s}.flower.open .petal:nth-child(3){transition-delay:.08s}.flower.open .petal:nth-child(4){transition-delay:.11s}.flower.open .petal:nth-child(5){transition-delay:.14s}.flower.open .petal:nth-child(6){transition-delay:.17s}.flower.open .petal:nth-child(7){transition-delay:.2s}.flower.open .petal:nth-child(8){transition-delay:.23s}
+  .flower.open .petal:nth-child(1){transition-delay:.02s}.flower.open .petal:nth-child(2){transition-delay:.05s}.flower.open .petal:nth-child(3){transition-delay:.08s}.flower.open .petal:nth-child(4){transition-delay:.11s}.flower.open .petal:nth-child(5){transition-delay:.14s}.flower.open .petal:nth-child(6){transition-delay:.17s}.flower.open .petal:nth-child(7){transition-delay:.20s}.flower.open .petal:nth-child(8){transition-delay:.23s}.flower.open .petal:nth-child(9){transition-delay:.26s}
   .petal-ic{color:#fff;filter:drop-shadow(0 3px 7px rgba(0,0,0,.45));transition:all .15s ease}
   .petal-ic svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .petal:hover .petal-ic{transform:translateY(-3px);color:#cfe0ff}
@@ -231,7 +231,7 @@
   /* ===== MENÚ AYUDAS (expandible) ===== */
   .ayudas-bd{position:fixed;inset:0;background:rgba(20,33,62,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:58}
   .ayudas-bd.open{opacity:1;pointer-events:auto}
-  .ayudas{position:fixed;right:16px;bottom:86px;z-index:62;display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+  .ayudas{position:fixed;right:16px;bottom:86px;z-index:62;display:flex;flex-direction:column;gap:12px;align-items:flex-end;pointer-events:none} /* el contenedor nunca bloquea toques; solo sus items al abrir */
   .ayuda-item{display:flex;align-items:center;gap:11px;background:#fff;color:var(--ink);padding:11px 16px 11px 12px;border-radius:30px;text-decoration:none;font-family:'Poppins';font-weight:600;font-size:14px;box-shadow:var(--sh-pop);transform:translateY(18px) scale(.85);opacity:0;pointer-events:none;transition:transform .32s cubic-bezier(.34,1.56,.64,1),opacity .22s}
   .ayudas.open .ayuda-item{transform:none;opacity:1;pointer-events:auto}
   .ayudas.open .ayuda-item:nth-child(1){transition-delay:.16s}.ayudas.open .ayuda-item:nth-child(2){transition-delay:.09s}.ayudas.open .ayuda-item:nth-child(3){transition-delay:.02s}
@@ -256,6 +256,14 @@
   .persona-foto-ph{width:96px;height:96px;border-radius:50%;background:var(--navy-grad);color:#fff;display:flex;align-items:center;justify-content:center}
   .persona-foto-edit{position:absolute;right:2px;bottom:2px;width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;border:3px solid #fff}
   .persona-foto-hint{text-align:center;font-size:12px;color:var(--muted);margin:0 0 16px}
+
+  /* ===== AYUDAS dentro del panel persona ===== */
+  .ayudas-sec{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line-strong)}
+  .ayudas-titulo{display:flex;align-items:center;gap:8px;font-family:'Poppins';font-size:13px;font-weight:600;color:var(--navy);margin-bottom:11px}
+  .ayuda-link{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid var(--line-strong);border-radius:var(--r-md);background:#fbfcfe;text-decoration:none;color:var(--ink);font-weight:600;font-size:14px;margin-bottom:9px;transition:.15s}
+  .ayuda-link:hover{border-color:var(--blue);background:var(--blue-soft)}
+  .ayuda-link .ayuda-ic{width:38px;height:38px;border-radius:50%;background:var(--blue-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .ayuda-link .ayuda-go{margin-left:auto;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -292,6 +300,8 @@
   <symbol id="i-video" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></symbol>
   <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8z"/></symbol>
   <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
 </svg>
 
 <!-- PORTADA / BIENVENIDA -->
@@ -353,7 +363,7 @@
         <span class="fi-txt"><b id="fiTitle">Tu selfie</b><span id="fiSub">Toca para tomar la foto (cámara frontal)</span></span>
       </label>
       <button class="btn-portada" onclick="comenzar()">Comenzar <svg class="icon"><use href="#i-arrowr"/></svg></button>
-      <div class="portada-foot">Tus datos quedan asociados a esta gestión</div>
+      <div class="portada-foot">Una herramienta de <b style="font-weight:700;letter-spacing:.5px">SYNAPTIC</b></div>
     </div>
   </div>
 </div>
@@ -471,6 +481,38 @@
     </div>
   </section>
 
+  <!-- EXHIBICIONES ADICIONALES -->
+  <section class="mod" data-mod="exhibiciones">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-star"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Exhibición adicional</div><div class="card-sub">Espacios extra ganados en el PDV</div></div>
+        <span class="saved-badge" id="badge-exhibiciones"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
+      </div>
+      <div class="field"><label class="label label-req">¿Se ganó una exhibición adicional?</label>
+        <div class="opt-grid opt-grid-2">
+          <div class="opt"><input type="radio" name="tieneExhibicion" id="exSi" value="Si"><label for="exSi"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Sí</label></div>
+          <div class="opt"><input type="radio" name="tieneExhibicion" id="exNo" value="No"><label for="exNo"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>No</label></div>
+        </div>
+      </div>
+      <div id="exhibicionSi" style="display:none">
+        <div class="field"><label class="label label-req" for="tipoExhibicion">Tipo de exhibición</label>
+          <select id="tipoExhibicion" class="select"><option value="">Seleccionar tipo</option><option>Cabecera de góndola</option><option>Isla</option><option>Exhibidor adicional</option><option>Punta de góndola</option><option>Vitrina</option><option>Otro</option></select>
+        </div>
+        <div id="listaExhibicion"></div>
+        <button type="button" class="btn btn-soft btn-block" onclick="agregarExhibicion()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar producto exhibido</button>
+        <div class="field" style="margin-top:16px"><label class="label">Foto de la exhibición <span class="label-hint">(opcional)</span></label>
+          <div class="upload" id="uploadExhibicion">
+            <input type="file" id="fileExhibicion" accept="image/*">
+            <div id="defExhibicion"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-image"/></svg></div><div class="upload-t">Foto del espacio exhibido</div><div class="upload-h">Desde la galería · JPG, PNG</div></div>
+            <div id="prevExhibicion" style="display:none"><img id="imgExhibicion" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileExhibicion').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('exhibicion')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('exhibiciones')"><svg class="icon"><use href="#i-save"/></svg>Guardar Exhibición</button></div>
+    </div>
+  </section>
+
   <!-- FOTOS -->
   <section class="mod" data-mod="fotos">
     <div class="card">
@@ -548,7 +590,7 @@
         <div class="total-row"><span class="total-lbl">Subtotal</span><span class="total-val" id="totalPedido">$0</span></div>
         <div class="total-row big"><span class="total-lbl">Total final</span><span class="total-val" id="totalFinal">$0</span></div>
       </div>
-      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('pedido')"><svg class="icon"><use href="#i-save"/></svg>Guardar Pedido</button></div>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('pedido')"><svg class="icon"><use href="#i-mail"/></svg>Guardar y enviar pedido por correo</button></div>
     </div>
   </section>
 
@@ -575,13 +617,14 @@
 <!-- FLOWER -->
 <div class="flower-bd" id="flowerBd" onclick="closeFlower()"></div>
 <div class="flower" id="flower">
-  <button class="petal" data-mod="inicio"      style="--x:-148px;--y:-26px"><span class="petal-ic"><svg><use href="#i-pin"/></svg></span><span class="petal-lbl">Inicio</span></button>
-  <button class="petal" data-mod="ventas"      style="--x:-126px;--y:-81px"><span class="petal-ic"><svg><use href="#i-cart"/></svg></span><span class="petal-lbl">Ventas</span></button>
-  <button class="petal" data-mod="inventarios" style="--x:-85px;--y:-124px"><span class="petal-ic"><svg><use href="#i-box"/></svg></span><span class="petal-lbl">Inventario</span></button>
-  <button class="petal" data-mod="fotos"        style="--x:-30px;--y:-147px"><span class="petal-ic"><svg><use href="#i-camera"/></svg></span><span class="petal-lbl">Fotos</span></button>
-  <button class="petal" data-mod="agotados"     style="--x:30px;--y:-147px"><span class="petal-ic"><svg><use href="#i-xcircle"/></svg></span><span class="petal-lbl">Agotados</span></button>
-  <button class="petal" data-mod="fechas"       style="--x:85px;--y:-124px"><span class="petal-ic"><svg><use href="#i-clock"/></svg></span><span class="petal-lbl">Fechas</span></button>
-  <button class="petal" data-mod="pedido"       style="--x:126px;--y:-81px"><span class="petal-ic"><svg><use href="#i-package"/></svg></span><span class="petal-lbl">Pedido</span></button>
+  <button class="petal" data-mod="inicio"       style="--x:-148px;--y:-26px"><span class="petal-ic"><svg><use href="#i-pin"/></svg></span><span class="petal-lbl">Inicio</span></button>
+  <button class="petal" data-mod="ventas"       style="--x:-130px;--y:-75px"><span class="petal-ic"><svg><use href="#i-cart"/></svg></span><span class="petal-lbl">Ventas</span></button>
+  <button class="petal" data-mod="inventarios"  style="--x:-96px;--y:-115px"><span class="petal-ic"><svg><use href="#i-box"/></svg></span><span class="petal-lbl">Inventario</span></button>
+  <button class="petal" data-mod="exhibiciones" style="--x:-51px;--y:-141px"><span class="petal-ic"><svg><use href="#i-star"/></svg></span><span class="petal-lbl">Exhibición</span></button>
+  <button class="petal" data-mod="fotos"        style="--x:0px;--y:-150px"><span class="petal-ic"><svg><use href="#i-camera"/></svg></span><span class="petal-lbl">Fotos</span></button>
+  <button class="petal" data-mod="agotados"     style="--x:51px;--y:-141px"><span class="petal-ic"><svg><use href="#i-xcircle"/></svg></span><span class="petal-lbl">Agotados</span></button>
+  <button class="petal" data-mod="fechas"       style="--x:96px;--y:-115px"><span class="petal-ic"><svg><use href="#i-clock"/></svg></span><span class="petal-lbl">Fechas</span></button>
+  <button class="petal" data-mod="pedido"       style="--x:130px;--y:-75px"><span class="petal-ic"><svg><use href="#i-package"/></svg></span><span class="petal-lbl">Pedido</span></button>
   <button class="petal" data-mod="resumen"      style="--x:148px;--y:-26px"><span class="petal-ic"><svg><use href="#i-list"/></svg></span><span class="petal-lbl">Resumen</span></button>
 </div>
 
@@ -589,37 +632,32 @@
 <nav class="bottomnav">
   <div class="nav-side left"><button class="nav-icon" id="btnPersona" type="button" aria-label="Mi información"><img id="navAvatarImg" alt="" style="display:none"><svg class="icon" id="navAvatarIcon"><use href="#i-user"/></svg></button></div>
   <div class="fab-slot"><button class="fab" id="fab" type="button" aria-label="Navegar módulos"><span class="fab-ic"><svg class="icon icon-lg"><use href="#i-grid"/></svg></span></button></div>
-  <div class="nav-side right"><button class="nav-icon" id="btnAyudas" type="button" aria-label="Ayudas"><svg class="icon"><use href="#i-help"/></svg></button></div>
+  <div class="nav-side right"></div>
 </nav>
-
-<!-- MENÚ AYUDAS -->
-<div class="ayudas-bd" id="ayudasBd" onclick="closeAyudas()"></div>
-<div class="ayudas" id="ayudas">
-  <a class="ayuda-item" id="ayudaImagenes" target="_blank" rel="noopener" onclick="closeAyudas()"><span class="ayuda-ic"><svg class="icon icon-lg"><use href="#i-image"/></svg></span>Imágenes</a>
-  <a class="ayuda-item" id="ayudaPresentaciones" target="_blank" rel="noopener" onclick="closeAyudas()"><span class="ayuda-ic"><svg class="icon icon-lg"><use href="#i-slides"/></svg></span>Presentaciones</a>
-  <a class="ayuda-item" id="ayudaVideos" target="_blank" rel="noopener" onclick="closeAyudas()"><span class="ayuda-ic"><svg class="icon icon-lg"><use href="#i-video"/></svg></span>Videos</a>
-</div>
 
 <!-- MODAL PERSONA -->
 <div class="overlay" id="personaModal">
   <div class="modal left">
     <button class="modal-close" onclick="cerrarPersona()"><svg class="icon icon-sm"><use href="#i-x"/></svg></button>
     <div class="modal-h"><svg class="icon"><use href="#i-user"/></svg>Mi información</div>
-    <div class="modal-p">Datos del mercaderista registrado</div>
-    <label class="persona-foto" id="personaFotoBox">
-      <input type="file" id="filePerfil" accept="image/*" capture="user" style="display:none">
-      <img class="persona-foto-img" id="personaFotoImg" alt="">
-      <span class="persona-foto-ph" id="personaFotoPh"><svg class="icon icon-xl"><use href="#i-user"/></svg></span>
-      <span class="persona-foto-edit"><svg class="icon icon-sm"><use href="#i-camera"/></svg></span>
-    </label>
-    <div class="persona-foto-hint">Toca para tomar tu selfie de nuevo</div>
+    <div class="modal-p">Datos del mercaderista y lugar</div>
     <div class="field"><label class="label">Nombre</label><input type="text" id="pNombre" class="input"></div>
     <div class="field"><label class="label">Documento</label><input type="tel" id="pDoc" class="input" inputmode="numeric"></div>
     <div class="field"><label class="label">Teléfono</label><input type="tel" id="pTel" class="input" inputmode="tel" placeholder="Teléfono"></div>
     <div class="merc-chip" style="margin:4px 0 16px"><div class="merc-ava"><svg class="icon"><use href="#i-pin"/></svg></div><div class="merc-info"><b>Ciudad / PDV</b><span id="pPdvActual">—</span></div><button type="button" class="btn btn-outline btn-sm" onclick="cerrarPersona();goTo('inicio')"><svg class="icon icon-sm"><use href="#i-edit"/></svg>Cambiar</button></div>
     <button class="btn btn-primary btn-block" onclick="guardarPersona()"><svg class="icon"><use href="#i-save"/></svg>Guardar cambios</button>
+
+    <div class="ayudas-sec">
+      <div class="ayudas-titulo"><svg class="icon icon-sm"><use href="#i-help"/></svg>Material de apoyo</div>
+      <a class="ayuda-link" id="ayudaImagenes" target="_blank" rel="noopener"><span class="ayuda-ic"><svg class="icon"><use href="#i-image"/></svg></span>Imágenes<svg class="icon icon-sm ayuda-go"><use href="#i-chevR"/></svg></a>
+      <a class="ayuda-link" id="ayudaPresentaciones" target="_blank" rel="noopener"><span class="ayuda-ic"><svg class="icon"><use href="#i-slides"/></svg></span>Presentaciones<svg class="icon icon-sm ayuda-go"><use href="#i-chevR"/></svg></a>
+      <a class="ayuda-link" id="ayudaVideos" target="_blank" rel="noopener"><span class="ayuda-ic"><svg class="icon"><use href="#i-video"/></svg></span>Videos<svg class="icon icon-sm ayuda-go"><use href="#i-chevR"/></svg></a>
+    </div>
   </div>
 </div>
+
+<!-- Lista global de SKU para los <input list> -->
+<datalist id="skusGlobal"></datalist>
 
 <!-- TOAST -->
 <div class="toast" id="toast"><svg class="icon icon-sm"><use href="#i-check"/></svg><span id="toastMsg"></span></div>
@@ -635,7 +673,7 @@
 </div></div>
 
 <script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzuKQ5lVt0JFZhu7j8uR3Wk7K9M7kzyZ3PdR_U847vKDskpyRt9OExIMZBTrknocrkNbg/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyJea-8wogCybPbYxHFVhaoj-p6xpqaBJqQyePVGrvcZREcdAd4WazI_to1OnE91E2uDw/exec';
 // Carpeta(s) de ayudas en Drive. Si tienes subcarpetas por tipo, reemplaza cada URL.
 const AYUDAS = {
   imagenes: 'https://drive.google.com/drive/folders/1THDU2CZIMfJn2qdHB-PcbhNW7ZCeywMt?usp=sharing',
@@ -646,14 +684,15 @@ const LS_KEY = 'pqp_session_v1';
 const LS_FOTOS = 'pqp_fotos_v1';
 
 const MODS = [
-  {id:'inicio', icon:'i-pin', label:'Inicio'},
-  {id:'ventas', icon:'i-cart', label:'Ventas'},
-  {id:'inventarios', icon:'i-box', label:'Inventarios'},
-  {id:'fotos', icon:'i-camera', label:'Fotos'},
-  {id:'agotados', icon:'i-xcircle', label:'Agotados'},
-  {id:'fechas', icon:'i-clock', label:'Fechas cortas'},
-  {id:'pedido', icon:'i-package', label:'Pedido'},
-  {id:'resumen', icon:'i-list', label:'Resumen'}
+  {id:'inicio',       icon:'i-pin',     label:'Inicio'},
+  {id:'ventas',       icon:'i-cart',    label:'Ventas'},
+  {id:'inventarios',  icon:'i-box',     label:'Inventarios'},
+  {id:'exhibiciones', icon:'i-star',    label:'Exhibición'},
+  {id:'fotos',        icon:'i-camera',  label:'Fotos'},
+  {id:'agotados',     icon:'i-xcircle', label:'Agotados'},
+  {id:'fechas',       icon:'i-clock',   label:'Fechas cortas'},
+  {id:'pedido',       icon:'i-package', label:'Pedido'},
+  {id:'resumen',      icon:'i-list',    label:'Resumen'}
 ];
 
 let parametrizacion = { ciudadesPDV:{}, skus:[] };
@@ -665,14 +704,15 @@ let flowerOpen = false;
 let ubicacion = { lat:null, lng:null, acc:null };
 let fotoPerfil = '', fotoPerfilURL = '';
 let fotoAntes = '', fotoDespues = '', fotoAntesURL = '', fotoDespuesURL = '';
-let productosPedido = [], agotadosList = [], fechasList = [], ventasList = [], inventarioList = [];
+let productosPedido = [], agotadosList = [], fechasList = [], ventasList = [], inventarioList = [], exhibicionList = [];
+let fotoExhibicion = '', fotoExhibicionURL = '';
 let pendCiudad = null, pendPDV = null, ayudasOpen = false, restaurando = false;
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   const ahora = new Date();
   document.getElementById('heroDate').textContent = ahora.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long'});
-  // URLs de ayudas
+  // Enlaces de material de apoyo (dentro del panel persona)
   document.getElementById('ayudaImagenes').href = AYUDAS.imagenes;
   document.getElementById('ayudaPresentaciones').href = AYUDAS.presentaciones;
   document.getElementById('ayudaVideos').href = AYUDAS.videos;
@@ -687,9 +727,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const s=document.querySelector('input[name="ventaCondicion"]:checked'); document.getElementById('ventaPlazoG').style.display=(s&&s.value==='Credito')?'block':'none';
   }));
   document.getElementById('fileIngreso').addEventListener('change', e => leerFoto(e,'perfil'));
-  document.getElementById('filePerfil').addEventListener('change', e => leerFoto(e,'perfil'));
   document.getElementById('fileAntes').addEventListener('change', e => leerFoto(e,'antes'));
   document.getElementById('fileDespues').addEventListener('change', e => leerFoto(e,'despues'));
+  document.getElementById('fileExhibicion').addEventListener('change', e => leerFoto(e,'exhibicion'));
+  document.querySelectorAll('input[name="tieneExhibicion"]').forEach(r => r.addEventListener('change', onExhibicionChange));
   document.getElementById('descuento').addEventListener('input', calcularTotalFinal);
 
   // Persistencia automática ante cualquier cambio (debounced)
@@ -706,7 +747,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.bottomnav').addEventListener('click', e => {
     if (e.target.closest('#fab')) toggleFlower();
     else if (e.target.closest('#btnPersona')) abrirPersona();
-    else if (e.target.closest('#btnAyudas')) toggleAyudas();
   });
 
   // Restaurar sesión previa (tras caída de red, cierre, etc.)
@@ -802,9 +842,12 @@ function aplicarFoto(tipo, data){
   } else if(tipo==='antes'){
     fotoAntes=data; fotoAntesURL='';
     document.getElementById('imgAntes').src=data; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has');
-  } else {
+  } else if(tipo==='despues'){
     fotoDespues=data; fotoDespuesURL='';
     document.getElementById('imgDespues').src=data; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has');
+  } else if(tipo==='exhibicion'){
+    fotoExhibicion=data; fotoExhibicionURL='';
+    document.getElementById('imgExhibicion').src=data; document.getElementById('defExhibicion').style.display='none'; document.getElementById('prevExhibicion').style.display='block'; document.getElementById('uploadExhibicion').classList.add('has');
   }
 }
 function setAvatar(src){
@@ -853,12 +896,12 @@ function persistir(){
   if(restaurando) return;
   try{
     const campos=recolectarGestion(); campos.fotoPerfil=''; campos.fotoAntes=''; campos.fotoDespues=''; // sin base64 (ligero y rápido)
-    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotoPerfilURL, fotoAntesURL, fotoDespuesURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList } };
+    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotoPerfilURL, fotoAntesURL, fotoDespuesURL, fotoExhibicionURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList, exhibicionList } };
     localStorage.setItem(LS_KEY, JSON.stringify(data));
   }catch(e){}
 }
 // Las fotos base64 se guardan aparte y SOLO cuando cambian (evita lag en cada tecla/click)
-function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotoPerfil, fotoAntes, fotoDespues })); }catch(e){} }
+function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotoPerfil, fotoAntes, fotoDespues, fotoExhibicion })); }catch(e){} }
 function restaurarSesion(){
   let raw; try{ raw=localStorage.getItem(LS_KEY); }catch(e){ return false; }
   if(!raw) return false;
@@ -870,8 +913,10 @@ function restaurarSesion(){
   ['nombreMercaderista','cedulaMercaderista','telefono','ventaMotivoNo',
    'descuento','observacionesGenerales','proximaVisita'].forEach(id=>{ const el=document.getElementById(id); if(el&&g[id]!=null) el.value=g[id]; });
   // Radios
-  setRadio('ventaRealizada', g.ventaRealizada); setRadio('materialPOP', g.materialPOP);
-  onVentaChange();
+  setRadio('ventaRealizada', g.ventaRealizada); setRadio('materialPOP', g.materialPOP); setRadio('tieneExhibicion', g.tieneExhibicionAdicional);
+  onVentaChange(); onExhibicionChange();
+  // tipoExhibicion (select con clave diferente al id del DOM)
+  if(g.tipoExhibicionAdicional!=null){ const el=document.getElementById('tipoExhibicion'); if(el) el.value=g.tipoExhibicionAdicional; }
   // Promos (desde string "a, b")
   const promos=(g.pedidoPromos||'').split(',').map(s=>s.trim()).filter(Boolean);
   ['promo1','promo2','promo3','promo4'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=promos.indexOf(el.value)!==-1; });
@@ -881,8 +926,8 @@ function restaurarSesion(){
   else { aplicarPendCiudadPDV(); }
   // Listas
   const L=d.listas||{};
-  productosPedido=L.productosPedido||[]; agotadosList=L.agotadosList||[]; fechasList=L.fechasList||[]; ventasList=L.ventasList||[]; inventarioList=L.inventarioList||[];
-  renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); calcularTotalPedido();
+  productosPedido=L.productosPedido||[]; agotadosList=L.agotadosList||[]; fechasList=L.fechasList||[]; ventasList=L.ventasList||[]; inventarioList=L.inventarioList||[]; exhibicionList=L.exhibicionList||[];
+  renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); calcularTotalPedido();
   // Ubicación
   ubicacion = d.ubicacion||{lat:null,lng:null,acc:null};
   if(ubicacion.lat&&ubicacion.lng){
@@ -894,13 +939,15 @@ function restaurarSesion(){
   }
   // Fotos (clave separada)
   let fotos={}; try{ fotos=JSON.parse(localStorage.getItem(LS_FOTOS)||'{}'); }catch(e){}
-  fotoPerfilURL=d.fotoPerfilURL||''; fotoAntesURL=d.fotoAntesURL||''; fotoDespuesURL=d.fotoDespuesURL||'';
+  fotoPerfilURL=d.fotoPerfilURL||''; fotoAntesURL=d.fotoAntesURL||''; fotoDespuesURL=d.fotoDespuesURL||''; fotoExhibicionURL=d.fotoExhibicionURL||'';
   if(fotos.fotoPerfil){ aplicarFoto('perfil', fotos.fotoPerfil); }
   else if(fotoPerfilURL){ setAvatar(fotoPerfilURL); setPersonaFoto(fotoPerfilURL); }
   if(fotos.fotoAntes){ aplicarFoto('antes', fotos.fotoAntes); }
   else if(fotoAntesURL){ document.getElementById('imgAntes').src=fotoAntesURL; document.getElementById('defAntes').style.display='none'; document.getElementById('prevAntes').style.display='block'; document.getElementById('uploadAntes').classList.add('has'); }
   if(fotos.fotoDespues){ aplicarFoto('despues', fotos.fotoDespues); }
   else if(fotoDespuesURL){ document.getElementById('imgDespues').src=fotoDespuesURL; document.getElementById('defDespues').style.display='none'; document.getElementById('prevDespues').style.display='block'; document.getElementById('uploadDespues').classList.add('has'); }
+  if(fotos.fotoExhibicion){ aplicarFoto('exhibicion', fotos.fotoExhibicion); }
+  else if(fotoExhibicionURL){ document.getElementById('imgExhibicion').src=fotoExhibicionURL; document.getElementById('defExhibicion').style.display='none'; document.getElementById('prevExhibicion').style.display='block'; document.getElementById('uploadExhibicion').classList.add('has'); }
   // Estado
   saved=d.saved||{}; registroId=d.registroId||''; current=d.current||'inicio';
   onIdentChange();
@@ -942,7 +989,7 @@ async function cargarParametrizacion(){
   try{
     const res=await fetch(GAS_URL+'?action=parametrizacion',{redirect:'follow'});
     const data=await res.json();
-    if(data&&data.success&&data.ciudadesPDV&&Object.keys(data.ciudadesPDV).length>0){ parametrizacion=data; modoManual=false; activarModoSelect(); cargarCiudades(); aplicarPendCiudadPDV(); }
+    if(data&&data.success&&data.ciudadesPDV&&Object.keys(data.ciudadesPDV).length>0){ parametrizacion=data; modoManual=false; activarModoSelect(); cargarCiudades(); poblarSkus(); aplicarPendCiudadPDV(); }
     else activarModoManual((data&&data.error)?data.error:'La hoja respondió sin ciudades. Revisa la hoja "PDV ciudad".');
   }catch(err){ activarModoManual('No hay conexión con el servidor. ('+err.message+')'); }
 }
@@ -958,40 +1005,40 @@ function getPDV(){ return modoManual?document.getElementById('pdvTexto').value.t
 function onVentaChange(){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; document.getElementById('ventaNo').style.display=v==='No'?'block':'none'; document.getElementById('ventaSi').style.display=v==='Si'?'block':'none'; if(v==='Si'&&ventasList.length===0&&!restaurando) agregarVenta(); }
 
 // ===== LISTAS (pedido / agotados / fechas) =====
-function findItem(id){ return productosPedido.find(x=>x.id===id) || agotadosList.find(x=>x.id===id) || fechasList.find(x=>x.id===id) || ventasList.find(x=>x.id===id) || inventarioList.find(x=>x.id===id); }
+function findItem(id){ return productosPedido.find(x=>x.id===id) || agotadosList.find(x=>x.id===id) || fechasList.find(x=>x.id===id) || ventasList.find(x=>x.id===id) || inventarioList.find(x=>x.id===id) || exhibicionList.find(x=>x.id===id); }
 
-// Ventas (SKU + cantidad)
-function agregarVenta(){ ventasList.push({id:uid('v'),sku:'',cantidad:1}); renderVentas(); }
+// Ventas (categoría + SKU + cantidad)
+function agregarVenta(){ ventasList.push({id:uid('v'),categoria:'',sku:'',cantidad:1}); renderVentas(); }
 function eliminarVenta(id){ ventasList=ventasList.filter(x=>x.id!==id); renderVentas(); }
 function renderVentas(){
   const cont=document.getElementById('listaVentas'); if(!cont) return; cont.innerHTML='';
   if(ventasList.length===0){ cont.innerHTML='<div class="empty-hint">Agrega los productos vendidos.</div>'; return; }
   ventasList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-cart"/></svg>Vendido ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarVenta('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
-    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    ${campoSkuCascada(p)}
     <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
 }
 
-// Inventario (SKU + cantidad en estante)
-function agregarInv(){ inventarioList.push({id:uid('n'),sku:'',cantidad:1}); renderInventario(); }
+// Inventario (categoría + SKU + cantidad en estante)
+function agregarInv(){ inventarioList.push({id:uid('n'),categoria:'',sku:'',cantidad:1}); renderInventario(); }
 function eliminarInv(id){ inventarioList=inventarioList.filter(x=>x.id!==id); renderInventario(); }
 function renderInventario(){
   const cont=document.getElementById('listaInventario'); if(!cont) return; cont.innerHTML='';
   if(inventarioList.length===0){ cont.innerHTML='<div class="empty-hint">Agrega los productos en estante.</div>'; return; }
   inventarioList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-box"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarInv('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
-    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    ${campoSkuCascada(p)}
     <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad en estante</label><input type="number" class="input" min="0" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
 }
 
-function agregarProducto(){ productosPedido.push({id:uid('p'),sku:'',cantidad:1,precio:0,subtotal:0}); renderPedido(); }
+function agregarProducto(){ productosPedido.push({id:uid('p'),categoria:'',sku:'',cantidad:1,precio:0,subtotal:0}); renderPedido(); }
 function eliminarProducto(id){ productosPedido=productosPedido.filter(p=>p.id!==id); renderPedido(); calcularTotalPedido(); }
 function renderPedido(){
   const cont=document.getElementById('listaPedido'); cont.innerHTML='';
   if(productosPedido.length===0){ cont.innerHTML='<div class="empty-hint">Sin productos. Agrega el primero.</div>'; calcularTotalPedido(); return; }
   productosPedido.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-package"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarProducto('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
-    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    ${campoSkuCascada(p)}
     <div class="field-row" style="margin-bottom:0"><div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setCant('${p.id}',this.value)"></div><div class="field" style="margin-bottom:0"><label class="label">Precio unit.</label><input type="number" class="input" min="0" value="${p.precio}" oninput="setPrecio('${p.id}',this.value)"></div></div>
     <div class="item-sub">Subtotal: <strong>$${fmt(p.subtotal)}</strong></div>`; cont.appendChild(d); });
 }
@@ -1001,36 +1048,89 @@ function subDOM(contId,list,p){ const i=list.indexOf(p); const row=document.quer
 function calcularTotalPedido(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); document.getElementById('totalPedido').textContent='$'+fmt(t); calcularTotalFinal(); }
 function calcularTotalFinal(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); const d=parseFloat(document.getElementById('descuento').value)||0; document.getElementById('totalFinal').textContent='$'+fmt(Math.max(0,t-d)); }
 
-function agregarAgotado(){ agotadosList.push({id:uid('a'),sku:'',cantidad:1}); renderAgotados(); }
+function agregarAgotado(){ agotadosList.push({id:uid('a'),categoria:'',sku:'',cantidad:1}); renderAgotados(); }
 function eliminarAgotado(id){ agotadosList=agotadosList.filter(x=>x.id!==id); renderAgotados(); }
 function renderAgotados(){
   const cont=document.getElementById('listaAgotados'); cont.innerHTML='';
   if(agotadosList.length===0){ cont.innerHTML='<div class="empty-hint">Sin agotados registrados.</div>'; return; }
   agotadosList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-xcircle"/></svg>Agotado ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarAgotado('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
-    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    ${campoSkuCascada(p)}
     <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad próxima a agotarse</label><input type="number" class="input" min="0" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
 }
 
-function agregarFecha(){ fechasList.push({id:uid('f'),sku:'',lote:'',vence:'',cantidad:1}); renderFechas(); }
+function agregarFecha(){ fechasList.push({id:uid('f'),categoria:'',sku:'',lote:'',vence:'',cantidad:1}); renderFechas(); }
 function eliminarFecha(id){ fechasList=fechasList.filter(x=>x.id!==id); renderFechas(); }
 function renderFechas(){
   const cont=document.getElementById('listaFechas'); cont.innerHTML='';
   if(fechasList.length===0){ cont.innerHTML='<div class="empty-hint">Sin productos próximos a vencer.</div>'; return; }
   fechasList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-clock"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarFecha('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
-    <div class="field"><label class="label label-req">SKU</label><div class="sku-wrap"><input type="text" class="input" id="sku_${p.id}" placeholder="Buscar producto" value="${escAttr(p.sku)}" autocomplete="off" oninput="filtrarSKU('${p.id}',this.value)" onfocus="filtrarSKU('${p.id}',this.value)" onblur="setTimeout(()=>cerrarSKU('${p.id}'),180)"><div class="sku-dd" id="dd_${p.id}"></div></div></div>
+    ${campoSkuCascada(p)}
     <div class="field-row" style="margin-bottom:0"><div class="field" style="margin-bottom:0"><label class="label label-req">Vence</label><input type="date" class="input" value="${escAttr(p.vence)}" oninput="setFld('${p.id}','vence',this.value)"></div><div class="field" style="margin-bottom:0"><label class="label">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div></div>`; cont.appendChild(d); });
+}
+
+// ===== EXHIBICIONES =====
+function onExhibicionChange(){ const v=(document.querySelector('input[name="tieneExhibicion"]:checked')||{}).value; document.getElementById('exhibicionSi').style.display=v==='Si'?'block':'none'; if(v==='Si'&&exhibicionList.length===0&&!restaurando) agregarExhibicion(); }
+function agregarExhibicion(){ exhibicionList.push({id:uid('e'),categoria:'',sku:'',cantidad:1}); renderExhibicion(); }
+function eliminarExhibicion(id){ exhibicionList=exhibicionList.filter(x=>x.id!==id); renderExhibicion(); }
+function renderExhibicion(){
+  const cont=document.getElementById('listaExhibicion'); if(!cont) return; cont.innerHTML='';
+  if(exhibicionList.length===0){ cont.innerHTML='<div class="empty-hint">Agrega los productos en la exhibición.</div>'; return; }
+  exhibicionList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-star"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarExhibicion('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    ${campoSkuCascada(p)}
+    <div class="field" style="margin-bottom:0"><label class="label">Cantidad de caras / facings</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
 }
 function setFld(id,campo,v){ const p=findItem(id); if(p)p[campo]= (campo==='cantidad'?(parseFloat(v)||0):v); }
 
-// SKU buscador (compartido)
-function filtrarSKU(id,valor){ const dd=document.getElementById('dd_'+id); if(!dd)return; const f=valor.toLowerCase().trim(); const r=parametrizacion.skus.filter(s=>s.completo.toLowerCase().includes(f)).slice(0,30);
-  dd.innerHTML = r.length===0 ? (parametrizacion.skus.length===0?'<div class="sku-empty">No hay SKU cargados</div>':'<div class="sku-empty">Sin resultados</div>')
-    : r.map(s=>{const safe=escHtml(s.completo);const attr=String(s.completo).replace(/'/g,"\\'");return `<div class="sku-item" onmousedown="seleccionarSKU('${id}','${attr}',${s.precio||0})">${safe}</div>`;}).join('');
-  dd.classList.add('show'); }
-function cerrarSKU(id){ const d=document.getElementById('dd_'+id); if(d)d.classList.remove('show'); }
-function seleccionarSKU(id,sku,precio){ const p=findItem(id); if(!p)return; p.sku=sku; if('precio'in p){p.precio=parseFloat(precio)||0; p.subtotal=p.cantidad*p.precio;} cerrarSKU(id); renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); calcularTotalPedido(); }
+// ===== CATEGORÍAS + PRODUCTO CASCADA =====
+function categoriasUnicas(){
+  const cats = parametrizacion.categorias || [...new Set((parametrizacion.skus||[]).map(s=>s.categoria||'Sin categoría'))];
+  return [...cats].sort();
+}
+function opcionesCategoria(sel){
+  return '<option value="">Categoría</option>' +
+    categoriasUnicas().map(c=>'<option value="'+escAttr(c)+'"'+(c===sel?' selected':'')+'>'+escHtml(c)+'</option>').join('');
+}
+function opcionesSkuPorCategoria(categoria, sel){
+  if(!categoria) return '<option value="">Elige una categoría primero</option>';
+  const lista=(parametrizacion.skus||[]).filter(s=>(s.categoria||'Sin categoría')===categoria);
+  return '<option value="">Seleccionar producto</option>' +
+    lista.map(s=>'<option value="'+escAttr(s.completo)+'"'+(s.completo===sel?' selected':'')+'>'+escHtml(s.completo)+'</option>').join('');
+}
+function campoSkuCascada(p){
+  return `<div class="field-row" style="margin-bottom:11px">
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Categoría</label><select class="select" id="sel-cat-${p.id}" onchange="setCategoriaItem('${p.id}',this.value)">${opcionesCategoria(p.categoria)}</select></div>
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Producto</label><select class="select" id="sel-prod-${p.id}" onchange="setSkuItem('${p.id}',this.value)">${opcionesSkuPorCategoria(p.categoria,p.sku)}</select></div>
+  </div>`;
+}
+function setCategoriaItem(id, valor){
+  const p=findItem(id); if(!p) return;
+  p.categoria=valor; p.sku='';
+  const sel=document.getElementById('sel-prod-'+id);
+  if(sel) sel.innerHTML=opcionesSkuPorCategoria(valor,'');
+  if('precio' in p){ p.precio=0; p.subtotal=0; calcularTotalPedido(); subDOM('listaPedido',productosPedido,p); }
+}
+// Re-render de las listas para refrescar opciones cuando llegan los SKU de la API
+function poblarSkus(){ renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); }
+// Guarda el SKU elegido en el item (y precio si es pedido)
+function setSkuItem(id, valor){
+  const p=findItem(id); if(!p) return;
+  p.sku=valor;
+  const m=(parametrizacion.skus||[]).find(s=>s.completo===valor);
+  if('precio' in p){
+    if(m) p.precio=m.precio||0;
+    p.subtotal=p.cantidad*(p.precio||0);
+    const row=document.querySelectorAll('#listaPedido .item')[productosPedido.indexOf(p)];
+    if(row){
+      const nums=row.querySelectorAll('input[type=number]');
+      if(m && nums[1]) nums[1].value=p.precio;
+      const s=row.querySelector('.item-sub'); if(s) s.innerHTML=`Subtotal: <strong>$${fmt(p.subtotal)}</strong>`;
+    }
+    calcularTotalPedido();
+  }
+}
 
 function uid(pfx){ return pfx+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
 function escAttr(s){ return String(s==null?'':s).replace(/"/g,'&quot;'); }
@@ -1038,15 +1138,33 @@ function escHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&
 function fmt(n){ return Number(n||0).toLocaleString('es-CO',{maximumFractionDigits:2}); }
 
 // ===== FOTOS =====
-function leerFoto(e,tipo){ const file=e.target.files[0]; if(!file)return; if(file.size>10*1024*1024){ alert('La imagen supera 10 MB.'); e.target.value=''; return; }
-  const r=new FileReader(); r.onload=ev=>{ aplicarFoto(tipo, ev.target.result); persistir(); persistirFotos(); }; r.readAsDataURL(file); }
+function leerFoto(e,tipo){ const file=e.target.files[0]; if(!file)return; if(file.size>25*1024*1024){ alert('La imagen es muy pesada (más de 25 MB).'); e.target.value=''; return; }
+  const r=new FileReader(); r.onload=ev=>{ comprimirImagen(ev.target.result, tipo==='perfil'?700:1280, 0.7, data=>{ aplicarFoto(tipo, data); persistir(); persistirFotos(); }); }; r.readAsDataURL(file); }
+// Redimensiona y comprime la imagen en el navegador antes de subirla (sube mucho más rápido)
+function comprimirImagen(dataURL, maxLado, calidad, cb){
+  const img=new Image();
+  img.onload=function(){
+    let w=img.width, h=img.height; const m=Math.max(w,h);
+    if(m>maxLado){ const r=maxLado/m; w=Math.round(w*r); h=Math.round(h*r); }
+    try{
+      const c=document.createElement('canvas'); c.width=w; c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      cb(c.toDataURL('image/jpeg', calidad));
+    }catch(err){ cb(dataURL); }
+  };
+  img.onerror=function(){ cb(dataURL); };
+  img.src=dataURL;
+}
 function quitarFoto(tipo){
   if(tipo==='antes'){
     fotoAntes=''; fotoAntesURL=''; document.getElementById('fileAntes').value='';
     document.getElementById('defAntes').style.display='block'; document.getElementById('prevAntes').style.display='none'; document.getElementById('uploadAntes').classList.remove('has');
-  } else {
+  } else if(tipo==='despues'){
     fotoDespues=''; fotoDespuesURL=''; document.getElementById('fileDespues').value='';
     document.getElementById('defDespues').style.display='block'; document.getElementById('prevDespues').style.display='none'; document.getElementById('uploadDespues').classList.remove('has');
+  } else if(tipo==='exhibicion'){
+    fotoExhibicion=''; fotoExhibicionURL=''; document.getElementById('fileExhibicion').value='';
+    document.getElementById('defExhibicion').style.display='block'; document.getElementById('prevExhibicion').style.display='none'; document.getElementById('uploadExhibicion').classList.remove('has');
   }
   persistir(); persistirFotos();
 }
@@ -1071,8 +1189,17 @@ function renderResumen(){
   h+=secRaw('i-cart','Ventas',vH);
 
   let iH='<div class="res-line"><span class="rk">Material POP</span><span class="rv">'+(pop||'—')+'</span></div>';
-  iH+=(inventarioList.length?inventarioList.map((p,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(p.sku)||'—')+'</b> · '+(p.cantidad||0)+' en estante</div>').join(''):'<div class="res-mini">Sin inventario registrado</div>');
+  iH+=(inventarioList.length?inventarioList.map((p,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(p.sku)||'—')+'</b>'+(p.categoria?' ['+escHtml(p.categoria)+']':'')+' · '+(p.cantidad||0)+' en estante</div>').join(''):'<div class="res-mini">Sin inventario registrado</div>');
   h+=secRaw('i-box','Inventario',iH);
+
+  const tieneEx=(document.querySelector('input[name="tieneExhibicion"]:checked')||{}).value||'';
+  let exH='<div class="res-line"><span class="rk">¿Exhibición adicional?</span><span class="rv">'+(tieneEx||'—')+'</span></div>';
+  if(tieneEx==='Si'){
+    exH+='<div class="res-line"><span class="rk">Tipo</span><span class="rv">'+(escHtml(val('tipoExhibicion'))||'—')+'</span></div>';
+    exH+=(exhibicionList.length?exhibicionList.map((p,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(p.sku)||'—')+'</b>'+(p.categoria?' ['+escHtml(p.categoria)+']':'')+' · '+(p.cantidad||0)+' cara(s)</div>').join(''):'<div class="res-mini">Sin productos en la exhibición</div>');
+    exH+=ln('Foto',((fotoExhibicion||fotoExhibicionURL)?(fotoExhibicionURL?'<a href="'+fotoExhibicionURL+'" target="_blank">Ver foto</a>':'Tomada ✓'):'—'));
+  }
+  h+=secRaw('i-star','Exhibición adicional',exH);
 
   const agH = agotadosList.length ? agotadosList.map((a,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(a.sku)||'—')+'</b> · '+(a.cantidad||0)+' und</div>').join('') : '<div class="res-mini">Sin agotados registrados</div>';
   h+=secRaw('i-xcircle','Agotados ('+agotadosList.length+')', agH);
@@ -1114,6 +1241,7 @@ function validarModulo(id){
   if(id==='fotos'){ if(!fotoAntes&&!fotoAntesURL) e.push('Foto Antes'); }
   if(id==='agotados'){ agotadosList.forEach((p,i)=>{ if(!p.sku) e.push('SKU del agotado '+(i+1)); }); }
   if(id==='fechas'){ fechasList.forEach((p,i)=>{ if(!p.sku) e.push('SKU del producto '+(i+1)); if(!p.vence) e.push('Fecha de vencimiento '+(i+1)); }); }
+  if(id==='exhibiciones'){ const v=(document.querySelector('input[name="tieneExhibicion"]:checked')||{}).value; if(!v) e.push('¿Se ganó una exhibición adicional?'); if(v==='Si'){ if(!val('tipoExhibicion')) e.push('Tipo de exhibición'); if(exhibicionList.length===0) e.push('Agrega al menos un producto exhibido'); exhibicionList.forEach((p,i)=>{ if(!p.sku) e.push('Producto exhibición '+(i+1)); }); } }
   if(id==='pedido'){ productosPedido.forEach((p,i)=>{ if(!p.sku) e.push('SKU producto '+(i+1)); if(!p.cantidad||p.cantidad<1) e.push('Cantidad producto '+(i+1)); }); }
   return e;
 }
@@ -1131,13 +1259,17 @@ function recolectarGestion(){
     fotoPerfil: fotoPerfil, fotoPerfilURL: fotoPerfilURL,
     ventaRealizada: (document.querySelector('input[name="ventaRealizada"]:checked')||{}).value||'',
     ventaMotivoNo: val('ventaMotivoNo'),
-    ventaProductos: ventasList.map(p=>({sku:p.sku,cantidad:p.cantidad})),
+    ventaProductos: ventasList.map(p=>({categoria:p.categoria,sku:p.sku,cantidad:p.cantidad})),
     materialPOP: pop,
-    inventarioProductos: inventarioList.map(p=>({sku:p.sku,cantidad:p.cantidad})),
+    inventarioProductos: inventarioList.map(p=>({categoria:p.categoria,sku:p.sku,cantidad:p.cantidad})),
     fotoAntes: fotoAntes, fotoDespues: fotoDespues, fotoAntesURL: fotoAntesURL, fotoDespuesURL: fotoDespuesURL,
-    agotados: agotadosList.map(a=>({sku:a.sku,cantidad:a.cantidad})),
-    fechasCortas: fechasList.map(f=>({sku:f.sku,vence:f.vence,cantidad:f.cantidad})),
-    pedidoProductos: productosPedido.map(p=>({sku:p.sku,cantidad:p.cantidad,precio:p.precio,subtotal:p.subtotal})),
+    tieneExhibicionAdicional: (document.querySelector('input[name="tieneExhibicion"]:checked')||{}).value||'',
+    tipoExhibicionAdicional: val('tipoExhibicion'),
+    exhibicionAdicionalProductos: exhibicionList.map(p=>({categoria:p.categoria,sku:p.sku,cantidad:p.cantidad})),
+    fotoExhibicion: fotoExhibicion, fotoExhibicionURL: fotoExhibicionURL,
+    agotados: agotadosList.map(a=>({categoria:a.categoria,sku:a.sku,cantidad:a.cantidad})),
+    fechasCortas: fechasList.map(f=>({categoria:f.categoria,sku:f.sku,vence:f.vence,cantidad:f.cantidad})),
+    pedidoProductos: productosPedido.map(p=>({categoria:p.categoria,sku:p.sku,cantidad:p.cantidad,precio:p.precio,subtotal:p.subtotal})),
     pedidoTotal: totalPed, pedidoPromos: promos.join(', '), pedidoDescuento: desc, pedidoTotalFinal: Math.max(0,totalPed-desc),
     observacionesGenerales: val('observacionesGenerales'), proximaVisita: val('proximaVisita'),
     modulosGuardados: ''
@@ -1160,9 +1292,11 @@ async function guardarModulo(id, finalizar){
       if(data.fotoPerfilURL){ fotoPerfilURL=data.fotoPerfilURL; fotoPerfil=''; }
       if(data.fotoAntesURL){ fotoAntesURL=data.fotoAntesURL; fotoAntes=''; }
       if(data.fotoDespuesURL){ fotoDespuesURL=data.fotoDespuesURL; fotoDespues=''; }
+      if(data.fotoExhibicionURL){ fotoExhibicionURL=data.fotoExhibicionURL; fotoExhibicion=''; }
       renderNav(); persistir();
       if(finalizar){ mostrarExito(data); }
-      else { toast((MODS.find(m=>m.id===id)||{}).label+' guardado'+(data.correoEnviado?' · correo enviado':'')); }
+      else if(enviarCorreo){ toast(data.correoEnviado?'Pedido guardado y enviado por correo':'Pedido guardado (correo pendiente: revisa el despliegue del backend)', !data.correoEnviado); }
+      else { toast((MODS.find(m=>m.id===id)||{}).label+' guardado'); }
     } else { saved[id]=false; alert('Error: '+(data&&data.error?data.error:'desconocido')); }
   }catch(err){ saved[id]=false; ocultarLoading(); alert('Error de red: '+err.message); }
 }
@@ -1178,21 +1312,26 @@ function generarTextoGestion(){
   const desc=parseFloat(document.getElementById('descuento').value)||0;
   const ventaR=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value||'';
   const pop=(document.querySelector('input[name="materialPOP"]:checked')||{}).value||'';
-  let t='*GESTIÓN PQP*\n';
-  t+='Mercaderista: '+(val('nombreMercaderista')||'-')+' (CC '+(val('cedulaMercaderista')||'-')+')\n';
-  if(val('telefono')) t+='Tel: '+val('telefono')+'\n';
-  t+='Ciudad/PDV: '+(getCiudad()||'-')+' / '+(getPDV()||'-')+'\n';
-  if(ubicacion.lat&&ubicacion.lng) t+='Ubicación: https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'\n';
-  t+='\n*VENTAS:* '+(ventaR||'-')+'\n';
-  if(ventaR==='No') t+='Motivo: '+(val('ventaMotivoNo')||'-')+'\n';
-  if(ventaR==='Si') ventasList.forEach(p=>{ t+='- '+(p.sku||'-')+'  x'+(p.cantidad||0)+'\n'; });
-  t+='\n*INVENTARIO* (POP: '+(pop||'-')+')\n';
-  if(inventarioList.length) inventarioList.forEach(p=>{ t+='- '+(p.sku||'-')+': '+(p.cantidad||0)+'\n'; }); else t+='-\n';
-  if(agotadosList.length){ t+='\n*AGOTADOS:*\n'; agotadosList.forEach(a=>{ t+='- '+(a.sku||'-')+'  x'+(a.cantidad||0)+'\n'; }); }
-  if(fechasList.length){ t+='\n*FECHAS CORTAS:*\n'; fechasList.forEach(f=>{ t+='- '+(f.sku||'-')+'  vence '+(f.vence||'-')+'  x'+(f.cantidad||0)+'\n'; }); }
-  if(productosPedido.length){ t+='\n*PEDIDO:*\n'; productosPedido.forEach(p=>{ t+='- '+(p.sku||'-')+'  x'+p.cantidad+' = $'+fmt(p.subtotal)+'\n'; }); t+='*Total: $'+fmt(Math.max(0,totalPed-desc))+'*\n'; }
-  if(val('proximaVisita')) t+='\nPróxima visita: '+val('proximaVisita')+'\n';
-  if(val('observacionesGenerales')) t+='Obs: '+val('observacionesGenerales')+'\n';
+  const linea='━━━━━━━━━━━━━━';
+  let t='🧾 *GESTIÓN PQP*\n'+linea+'\n';
+  t+='👤 *'+(val('nombreMercaderista')||'-')+'*\n';
+  t+='🪪 CC '+(val('cedulaMercaderista')||'-')+'\n';
+  if(val('telefono')) t+='📞 '+val('telefono')+'\n';
+  t+='📍 '+(getCiudad()||'-')+' · '+(getPDV()||'-')+'\n';
+  if(ubicacion.lat&&ubicacion.lng) t+='🗺️ https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'\n';
+  t+='\n🛒 *VENTAS:* '+(ventaR||'-')+'\n';
+  if(ventaR==='No') t+='   ↳ Motivo: '+(val('ventaMotivoNo')||'-')+'\n';
+  if(ventaR==='Si') ventasList.forEach(p=>{ t+='   • '+(p.sku||'-')+'  _x'+(p.cantidad||0)+'_\n'; });
+  t+='\n📦 *INVENTARIO*  (POP: '+(pop||'-')+')\n';
+  if(inventarioList.length) inventarioList.forEach(p=>{ t+='   • '+(p.sku||'-')+'  _'+(p.cantidad||0)+' und_\n'; }); else t+='   • -\n';
+  const tieneEx2=(document.querySelector('input[name="tieneExhibicion"]:checked')||{}).value||'';
+  if(tieneEx2==='Si'){ t+='\n🏆 *EXHIBICIÓN ADICIONAL* ('+(val('tipoExhibicion')||'-')+')\n'; exhibicionList.forEach(p=>{ t+='   • '+(p.sku||'-')+(p.categoria?' ['+p.categoria+']':'')+' _x'+(p.cantidad||0)+'_\n'; }); }
+  if(agotadosList.length){ t+='\n⚠️ *AGOTADOS*\n'; agotadosList.forEach(a=>{ t+='   • '+(a.sku||'-')+'  _x'+(a.cantidad||0)+'_\n'; }); }
+  if(fechasList.length){ t+='\n⏰ *FECHAS CORTAS*\n'; fechasList.forEach(f=>{ t+='   • '+(f.sku||'-')+'  _vence '+(f.vence||'-')+' · x'+(f.cantidad||0)+'_\n'; }); }
+  if(productosPedido.length){ t+='\n🧮 *PEDIDO*\n'; productosPedido.forEach(p=>{ t+='   • '+(p.sku||'-')+'  _x'+p.cantidad+'_ → $'+fmt(p.subtotal)+'\n'; }); t+=linea+'\n💰 *TOTAL: $'+fmt(Math.max(0,totalPed-desc))+'*\n'; }
+  if(val('proximaVisita')) t+='\n📅 Próxima visita: '+val('proximaVisita')+'\n';
+  if(val('observacionesGenerales')) t+='📝 '+val('observacionesGenerales')+'\n';
+  t+='\n_Enviado desde Captura PQP_';
   return t;
 }
 function compartirWhatsApp(){ window.open('https://wa.me/?text='+encodeURIComponent(generarTextoGestion()),'_blank'); }
