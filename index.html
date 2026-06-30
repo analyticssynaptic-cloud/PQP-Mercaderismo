@@ -663,18 +663,20 @@
 <!-- FLOWER -->
 <div class="flower-bd" id="flowerBd" onclick="closeFlower()"></div>
 <div class="flower" id="flower">
-  <button class="petal petal-out" data-mod="inicio"       style="--x:-163px;--y:-52px"><span class="petal-ic"><svg><use href="#i-pin"/></svg></span><span class="petal-lbl">Inicio</span></button>
-  <button class="petal petal-out" data-mod="ventas"       style="--x:-123px;--y:-122px"><span class="petal-ic"><svg><use href="#i-cart"/></svg></span><span class="petal-lbl">Ventas</span></button>
-  <button class="petal petal-out" data-mod="inventarios"  style="--x:-46px;--y:-163px"><span class="petal-ic"><svg><use href="#i-box"/></svg></span><span class="petal-lbl">Inventario</span></button>
-  <button class="petal petal-out" data-mod="exhibiciones" style="--x:46px;--y:-163px"><span class="petal-ic"><svg><use href="#i-star"/></svg></span><span class="petal-lbl">Exhibición</span></button>
-  <button class="petal petal-out" data-mod="fotos"        style="--x:123px;--y:-122px"><span class="petal-ic"><svg><use href="#i-camera"/></svg></span><span class="petal-lbl">Fotos</span></button>
-  <button class="petal petal-out" data-mod="agotados"     style="--x:163px;--y:-52px"><span class="petal-ic"><svg><use href="#i-xcircle"/></svg></span><span class="petal-lbl">Agotados</span></button>
-  <button class="petal petal-in" data-mod="fechas"        style="--x:-117px;--y:-68px"><span class="petal-ic"><svg><use href="#i-clock"/></svg></span><span class="petal-lbl">Fechas</span></button>
-  <button class="petal petal-in" data-mod="muestras"      style="--x:-81px;--y:-106px"><span class="petal-ic"><svg><use href="#i-image"/></svg></span><span class="petal-lbl">Muestras</span></button>
-  <button class="petal petal-in" data-mod="materialpop"   style="--x:-29px;--y:-127px"><span class="petal-ic"><svg><use href="#i-upload"/></svg></span><span class="petal-lbl">Mat. POP</span></button>
-  <button class="petal petal-in" data-mod="chequeo"       style="--x:29px;--y:-127px"><span class="petal-ic"><svg><use href="#i-alert"/></svg></span><span class="petal-lbl">Chek Precio</span></button>
-  <button class="petal petal-in" data-mod="pedido"        style="--x:81px;--y:-106px"><span class="petal-ic"><svg><use href="#i-package"/></svg></span><span class="petal-lbl">Sugerido</span></button>
-  <button class="petal petal-in" data-mod="resumen"       style="--x:117px;--y:-68px"><span class="petal-ic"><svg><use href="#i-list"/></svg></span><span class="petal-lbl">Resumen</span></button>
+  <!-- Fila lejana (paso 1-6 de la ruta) -->
+  <button class="petal" data-mod="inicio"       style="--x:-150px;--y:-150px"><span class="petal-ic"><svg><use href="#i-pin"/></svg></span><span class="petal-lbl">Inicio</span></button>
+  <button class="petal" data-mod="inventarios"  style="--x:-90px;--y:-150px"><span class="petal-ic"><svg><use href="#i-box"/></svg></span><span class="petal-lbl">Inventario</span></button>
+  <button class="petal" data-mod="fotos"        style="--x:-30px;--y:-150px"><span class="petal-ic"><svg><use href="#i-camera"/></svg></span><span class="petal-lbl">Fotos</span></button>
+  <button class="petal" data-mod="ventas"       style="--x:30px;--y:-150px"><span class="petal-ic"><svg><use href="#i-cart"/></svg></span><span class="petal-lbl">Ventas</span></button>
+  <button class="petal" data-mod="exhibiciones" style="--x:90px;--y:-150px"><span class="petal-ic"><svg><use href="#i-star"/></svg></span><span class="petal-lbl">Exhibición</span></button>
+  <button class="petal" data-mod="agotados"     style="--x:150px;--y:-150px"><span class="petal-ic"><svg><use href="#i-xcircle"/></svg></span><span class="petal-lbl">Agotados</span></button>
+  <!-- Fila cercana (paso 7-12 de la ruta) -->
+  <button class="petal" data-mod="fechas"       style="--x:-150px;--y:-66px"><span class="petal-ic"><svg><use href="#i-clock"/></svg></span><span class="petal-lbl">Fechas</span></button>
+  <button class="petal" data-mod="muestras"     style="--x:-90px;--y:-66px"><span class="petal-ic"><svg><use href="#i-image"/></svg></span><span class="petal-lbl">Muestras</span></button>
+  <button class="petal" data-mod="materialpop"  style="--x:-30px;--y:-66px"><span class="petal-ic"><svg><use href="#i-upload"/></svg></span><span class="petal-lbl">Mat. POP</span></button>
+  <button class="petal" data-mod="chequeo"      style="--x:30px;--y:-66px"><span class="petal-ic"><svg><use href="#i-alert"/></svg></span><span class="petal-lbl">Chek Precio</span></button>
+  <button class="petal" data-mod="pedido"       style="--x:90px;--y:-66px"><span class="petal-ic"><svg><use href="#i-package"/></svg></span><span class="petal-lbl">Sugerido</span></button>
+  <button class="petal" data-mod="resumen"      style="--x:150px;--y:-66px"><span class="petal-ic"><svg><use href="#i-list"/></svg></span><span class="petal-lbl">Resumen</span></button>
 </div>
 
 <!-- BOTTOM NAV -->
@@ -698,9 +700,7 @@
 
     <div class="ayudas-sec">
       <div class="ayudas-titulo"><svg class="icon icon-sm"><use href="#i-help"/></svg>Material de apoyo</div>
-      <a class="ayuda-link" id="ayudaImagenes" target="_blank" rel="noopener"><span class="ayuda-ic"><svg class="icon"><use href="#i-image"/></svg></span>Imágenes<svg class="icon icon-sm ayuda-go"><use href="#i-chevR"/></svg></a>
-      <a class="ayuda-link" id="ayudaPresentaciones" target="_blank" rel="noopener"><span class="ayuda-ic"><svg class="icon"><use href="#i-slides"/></svg></span>Presentaciones<svg class="icon icon-sm ayuda-go"><use href="#i-chevR"/></svg></a>
-      <a class="ayuda-link" id="ayudaVideos" target="_blank" rel="noopener"><span class="ayuda-ic"><svg class="icon"><use href="#i-video"/></svg></span>Videos<svg class="icon icon-sm ayuda-go"><use href="#i-chevR"/></svg></a>
+      <a class="ayuda-link" id="ayudaDrive" target="_blank" rel="noopener"><span class="ayuda-ic"><svg class="icon"><use href="#i-box"/></svg></span>Abrir Drive<svg class="icon icon-sm ayuda-go"><use href="#i-chevR"/></svg></a>
     </div>
   </div>
 </div>
@@ -723,21 +723,20 @@
 
 <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbx_lXzyCnbJW_z6vsXEK592cnIzfgg0MCl4ZbFUq9HZd3YCg6ejh-UBM6pDeengZwDbNA/exec';
-// Carpeta(s) de ayudas en Drive. Si tienes subcarpetas por tipo, reemplaza cada URL.
+// Carpeta de Drive con material de apoyo
 const AYUDAS = {
-  imagenes: 'https://drive.google.com/drive/folders/1THDU2CZIMfJn2qdHB-PcbhNW7ZCeywMt?usp=sharing',
-  presentaciones: 'https://drive.google.com/drive/folders/1THDU2CZIMfJn2qdHB-PcbhNW7ZCeywMt?usp=sharing',
-  videos: 'https://drive.google.com/drive/folders/1THDU2CZIMfJn2qdHB-PcbhNW7ZCeywMt?usp=sharing'
+  drive: 'https://drive.google.com/drive/folders/1THDU2CZIMfJn2qdHB-PcbhNW7ZCeywMt?usp=sharing'
 };
 const LS_KEY = 'pqp_session_v1';
 const LS_FOTOS = 'pqp_fotos_v1';
 
+// Orden = ruta lógica de la visita: llegada, inventario, fotos, ventas, exhibición, agotados, fechas, muestras, POP, chequeo, sugerido, resumen
 const MODS = [
   {id:'inicio',       icon:'i-pin',     label:'Inicio'},
-  {id:'ventas',       icon:'i-cart',    label:'Ventas'},
   {id:'inventarios',  icon:'i-box',     label:'Inventarios'},
-  {id:'exhibiciones', icon:'i-star',    label:'Exhibición'},
   {id:'fotos',        icon:'i-camera',  label:'Fotos'},
+  {id:'ventas',       icon:'i-cart',    label:'Ventas'},
+  {id:'exhibiciones', icon:'i-star',    label:'Exhibición'},
   {id:'agotados',     icon:'i-xcircle', label:'Agotados'},
   {id:'fechas',       icon:'i-clock',   label:'Fechas cortas'},
   {id:'muestras',     icon:'i-image',   label:'Muestras'},
@@ -766,9 +765,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const ahora = new Date();
   document.getElementById('heroDate').textContent = ahora.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long'});
   // Enlaces de material de apoyo (dentro del panel persona)
-  document.getElementById('ayudaImagenes').href = AYUDAS.imagenes;
-  document.getElementById('ayudaPresentaciones').href = AYUDAS.presentaciones;
-  document.getElementById('ayudaVideos').href = AYUDAS.videos;
+  document.getElementById('ayudaDrive').href = AYUDAS.drive;
 
   cargarParametrizacion();
 
@@ -1240,7 +1237,7 @@ function renderChequeo(){
     d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-alert"/></svg>Chequeo ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarChequeo('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
     ${campoSkuCascada(p)}
-    <div class="field" style="margin-bottom:8px"><label class="label label-req">Precio encontrado en el PDV</label><input type="number" class="input" min="1000" max="9999" placeholder="Ej: 4500" value="${escAttr(p.precio)}" oninput="setPrecioChequeo('${p.id}',this.value)"></div>
+    <div class="field" style="margin-bottom:8px"><label class="label label-req">Precio encontrado en el PDV</label><input type="number" class="input" min="0" placeholder="Ej: 20000" value="${escAttr(p.precio)}" oninput="setPrecioChequeo('${p.id}',this.value)"></div>
     <div id="chkEstado-${p.id}">${estadoChequeoHtml(p)}</div>`;
     contP.appendChild(d);
   });
@@ -1401,8 +1398,7 @@ function validarModulo(id){
     chequeoList.forEach((p,i)=>{
       if(!p.sku) e.push('Producto chequeo '+(i+1));
       const v=parseFloat(p.precio);
-      if(!p.precio || isNaN(v)) e.push('Precio chequeo '+(i+1));
-      else if(v<1000 || v>9999) e.push('Precio chequeo '+(i+1)+' debe tener 4 dígitos (entre 1000 y 9999)');
+      if(!p.precio || isNaN(v) || v<=0) e.push('Precio chequeo '+(i+1));
     });
     chequeoCompList.forEach((p,i)=>{ if(!p.producto) e.push('Producto competencia '+(i+1)); if(!p.valor) e.push('Valor competencia '+(i+1)); });
   }
