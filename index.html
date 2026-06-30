@@ -155,7 +155,7 @@
   /* PÉTALOS: solo icono, sin fondo */
   .petal{position:absolute;left:0;bottom:0;width:62px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;cursor:pointer;transform:translate(-50%,0) scale(.3);opacity:0;pointer-events:none;transition:transform .36s cubic-bezier(.34,1.56,.64,1),opacity .25s}
   .flower.open .petal{transform:translate(calc(-50% + var(--x)),var(--y)) scale(1);opacity:1;pointer-events:auto}
-  .flower.open .petal:nth-child(1){transition-delay:.02s}.flower.open .petal:nth-child(2){transition-delay:.05s}.flower.open .petal:nth-child(3){transition-delay:.08s}.flower.open .petal:nth-child(4){transition-delay:.11s}.flower.open .petal:nth-child(5){transition-delay:.14s}.flower.open .petal:nth-child(6){transition-delay:.17s}.flower.open .petal:nth-child(7){transition-delay:.20s}.flower.open .petal:nth-child(8){transition-delay:.23s}.flower.open .petal:nth-child(9){transition-delay:.26s}
+  .flower.open .petal:nth-child(1){transition-delay:.02s}.flower.open .petal:nth-child(2){transition-delay:.04s}.flower.open .petal:nth-child(3){transition-delay:.06s}.flower.open .petal:nth-child(4){transition-delay:.08s}.flower.open .petal:nth-child(5){transition-delay:.10s}.flower.open .petal:nth-child(6){transition-delay:.12s}.flower.open .petal:nth-child(7){transition-delay:.14s}.flower.open .petal:nth-child(8){transition-delay:.16s}.flower.open .petal:nth-child(9){transition-delay:.18s}.flower.open .petal:nth-child(10){transition-delay:.20s}.flower.open .petal:nth-child(11){transition-delay:.22s}.flower.open .petal:nth-child(12){transition-delay:.24s}
   .petal-ic{color:#fff;filter:drop-shadow(0 3px 7px rgba(0,0,0,.45));transition:all .15s ease}
   .petal-ic svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .petal:hover .petal-ic{transform:translateY(-3px);color:#cfe0ff}
@@ -503,7 +503,7 @@
         <button type="button" class="btn btn-soft btn-block" onclick="agregarExhibicion()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar producto exhibido</button>
         <div class="field" style="margin-top:16px"><label class="label">Foto de la exhibición <span class="label-hint">(opcional)</span></label>
           <div class="upload" id="uploadExhibicion">
-            <input type="file" id="fileExhibicion" accept="image/*">
+            <input type="file" id="fileExhibicion" accept="image/*" capture="environment">
             <div id="defExhibicion"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-image"/></svg></div><div class="upload-t">Foto del espacio exhibido</div><div class="upload-h">Desde la galería · JPG, PNG</div></div>
             <div id="prevExhibicion" style="display:none"><img id="imgExhibicion" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileExhibicion').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('exhibicion')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
           </div>
@@ -523,14 +523,14 @@
       </div>
       <div class="field"><label class="label label-req">Foto ANTES</label>
         <div class="upload" id="uploadAntes">
-          <input type="file" id="fileAntes" accept="image/*">
+          <input type="file" id="fileAntes" accept="image/*" capture="environment">
           <div id="defAntes"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-image"/></svg></div><div class="upload-t">Estante al llegar</div><div class="upload-h">Desde la galería · JPG, PNG</div></div>
           <div id="prevAntes" style="display:none"><img id="imgAntes" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileAntes').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('antes')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
         </div>
       </div>
       <div class="field"><label class="label">Foto DESPUÉS <span class="label-hint">(opcional)</span></label>
         <div class="upload" id="uploadDespues">
-          <input type="file" id="fileDespues" accept="image/*">
+          <input type="file" id="fileDespues" accept="image/*" capture="environment">
           <div id="defDespues"><div class="upload-ic"><svg class="icon icon-lg"><use href="#i-image"/></svg></div><div class="upload-t">Estante mejorado</div><div class="upload-h">Desde la galería · JPG, PNG</div></div>
           <div id="prevDespues" style="display:none"><img id="imgDespues" class="preview-img"><div class="preview-act"><button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation();document.getElementById('fileDespues').click()"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Cambiar</button><button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation();quitarFoto('despues')"><svg class="icon icon-sm"><use href="#i-trash"/></svg>Quitar</button></div></div>
         </div>
@@ -567,12 +567,58 @@
     </div>
   </section>
 
-  <!-- PEDIDO -->
+  <!-- MUESTRAS -->
+  <section class="mod" data-mod="muestras">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-image"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Muestras</div><div class="card-sub">Material de pruebas entregado en el PDV</div></div>
+        <span class="saved-badge" id="badge-muestras"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
+      </div>
+      <div id="listaMuestras"></div>
+      <button type="button" class="btn btn-soft btn-block" onclick="agregarMuestra()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar muestra</button>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('muestras')"><svg class="icon"><use href="#i-save"/></svg>Guardar Muestras</button></div>
+    </div>
+  </section>
+
+  <!-- MATERIAL POP -->
+  <section class="mod" data-mod="materialpop">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-upload"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Material POP</div><div class="card-sub">Material POP entregado en el PDV</div></div>
+        <span class="saved-badge" id="badge-materialpop"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
+      </div>
+      <div id="listaMaterialPop"></div>
+      <button type="button" class="btn btn-soft btn-block" onclick="agregarMaterialPop()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar material</button>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('materialpop')"><svg class="icon"><use href="#i-save"/></svg>Guardar Material POP</button></div>
+    </div>
+  </section>
+
+  <!-- CHEQUEO DE PRECIOS -->
+  <section class="mod" data-mod="chequeo">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-chip"><svg class="icon icon-lg"><use href="#i-alert"/></svg></div>
+        <div class="card-head-text"><div class="card-title">Chek de Precios</div><div class="card-sub">Verificación de precio propio y de competencia</div></div>
+        <span class="saved-badge" id="badge-chequeo"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
+      </div>
+      <div class="res-sec-h"><svg class="icon icon-sm"><use href="#i-package"/></svg>Nuestros productos (±10% del precio sugerido)</div>
+      <div id="listaChequeo"></div>
+      <button type="button" class="btn btn-soft btn-block" onclick="agregarChequeo()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar chequeo</button>
+      <div class="res-sec-h" style="margin-top:20px"><svg class="icon icon-sm"><use href="#i-cart"/></svg>Competencia (sin restricción de rango)</div>
+      <div id="listaCompetencia"></div>
+      <button type="button" class="btn btn-soft btn-block" onclick="agregarCompetencia()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar competencia</button>
+      <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('chequeo')"><svg class="icon"><use href="#i-save"/></svg>Guardar Chek de Precios</button></div>
+    </div>
+  </section>
+
+  <!-- PEDIDO / SUGERIDO -->
   <section class="mod" data-mod="pedido">
     <div class="card">
       <div class="card-head">
         <div class="card-chip"><svg class="icon icon-lg"><use href="#i-package"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Generar pedido</div><div class="card-sub">Productos, totales y promociones</div></div>
+        <div class="card-head-text"><div class="card-title">Sugerido</div><div class="card-sub">Productos sugeridos, cantidades y promociones</div></div>
         <span class="saved-badge" id="badge-pedido"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
       <div id="listaPedido"></div>
@@ -618,13 +664,16 @@
 <div class="flower-bd" id="flowerBd" onclick="closeFlower()"></div>
 <div class="flower" id="flower">
   <button class="petal" data-mod="inicio"       style="--x:-148px;--y:-26px"><span class="petal-ic"><svg><use href="#i-pin"/></svg></span><span class="petal-lbl">Inicio</span></button>
-  <button class="petal" data-mod="ventas"       style="--x:-130px;--y:-75px"><span class="petal-ic"><svg><use href="#i-cart"/></svg></span><span class="petal-lbl">Ventas</span></button>
-  <button class="petal" data-mod="inventarios"  style="--x:-96px;--y:-115px"><span class="petal-ic"><svg><use href="#i-box"/></svg></span><span class="petal-lbl">Inventario</span></button>
-  <button class="petal" data-mod="exhibiciones" style="--x:-51px;--y:-141px"><span class="petal-ic"><svg><use href="#i-star"/></svg></span><span class="petal-lbl">Exhibición</span></button>
-  <button class="petal" data-mod="fotos"        style="--x:0px;--y:-150px"><span class="petal-ic"><svg><use href="#i-camera"/></svg></span><span class="petal-lbl">Fotos</span></button>
-  <button class="petal" data-mod="agotados"     style="--x:51px;--y:-141px"><span class="petal-ic"><svg><use href="#i-xcircle"/></svg></span><span class="petal-lbl">Agotados</span></button>
-  <button class="petal" data-mod="fechas"       style="--x:96px;--y:-115px"><span class="petal-ic"><svg><use href="#i-clock"/></svg></span><span class="petal-lbl">Fechas</span></button>
-  <button class="petal" data-mod="pedido"       style="--x:130px;--y:-75px"><span class="petal-ic"><svg><use href="#i-package"/></svg></span><span class="petal-lbl">Pedido</span></button>
+  <button class="petal" data-mod="ventas"       style="--x:-142px;--y:-61px"><span class="petal-ic"><svg><use href="#i-cart"/></svg></span><span class="petal-lbl">Ventas</span></button>
+  <button class="petal" data-mod="inventarios"  style="--x:-125px;--y:-93px"><span class="petal-ic"><svg><use href="#i-box"/></svg></span><span class="petal-lbl">Inventario</span></button>
+  <button class="petal" data-mod="exhibiciones" style="--x:-97px;--y:-120px"><span class="petal-ic"><svg><use href="#i-star"/></svg></span><span class="petal-lbl">Exhibición</span></button>
+  <button class="petal" data-mod="fotos"        style="--x:-62px;--y:-139px"><span class="petal-ic"><svg><use href="#i-camera"/></svg></span><span class="petal-lbl">Fotos</span></button>
+  <button class="petal" data-mod="agotados"     style="--x:-21px;--y:-149px"><span class="petal-ic"><svg><use href="#i-xcircle"/></svg></span><span class="petal-lbl">Agotados</span></button>
+  <button class="petal" data-mod="fechas"       style="--x:21px;--y:-149px"><span class="petal-ic"><svg><use href="#i-clock"/></svg></span><span class="petal-lbl">Fechas</span></button>
+  <button class="petal" data-mod="muestras"     style="--x:62px;--y:-139px"><span class="petal-ic"><svg><use href="#i-image"/></svg></span><span class="petal-lbl">Muestras</span></button>
+  <button class="petal" data-mod="materialpop"  style="--x:97px;--y:-120px"><span class="petal-ic"><svg><use href="#i-upload"/></svg></span><span class="petal-lbl">Mat. POP</span></button>
+  <button class="petal" data-mod="chequeo"      style="--x:125px;--y:-93px"><span class="petal-ic"><svg><use href="#i-alert"/></svg></span><span class="petal-lbl">Chek Precio</span></button>
+  <button class="petal" data-mod="pedido"       style="--x:142px;--y:-61px"><span class="petal-ic"><svg><use href="#i-package"/></svg></span><span class="petal-lbl">Sugerido</span></button>
   <button class="petal" data-mod="resumen"      style="--x:148px;--y:-26px"><span class="petal-ic"><svg><use href="#i-list"/></svg></span><span class="petal-lbl">Resumen</span></button>
 </div>
 
@@ -691,11 +740,15 @@ const MODS = [
   {id:'fotos',        icon:'i-camera',  label:'Fotos'},
   {id:'agotados',     icon:'i-xcircle', label:'Agotados'},
   {id:'fechas',       icon:'i-clock',   label:'Fechas cortas'},
-  {id:'pedido',       icon:'i-package', label:'Pedido'},
+  {id:'muestras',     icon:'i-image',   label:'Muestras'},
+  {id:'materialpop',  icon:'i-upload',  label:'Material POP'},
+  {id:'chequeo',      icon:'i-alert',   label:'Chek Precios'},
+  {id:'pedido',       icon:'i-package', label:'Sugerido'},
   {id:'resumen',      icon:'i-list',    label:'Resumen'}
 ];
 
-let parametrizacion = { ciudadesPDV:{}, skus:[] };
+let parametrizacion = { ciudadesPDV:{}, skus:[], muestras:[], materialPOPCat:[] };
+let muestrasList = [], materialPopList = [], chequeoList = [], chequeoCompList = [];
 let modoManual = false;
 let registroId = '';
 let saved = {};
@@ -896,7 +949,7 @@ function persistir(){
   if(restaurando) return;
   try{
     const campos=recolectarGestion(); campos.fotoPerfil=''; campos.fotoAntes=''; campos.fotoDespues=''; // sin base64 (ligero y rápido)
-    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotoPerfilURL, fotoAntesURL, fotoDespuesURL, fotoExhibicionURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList, exhibicionList } };
+    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotoPerfilURL, fotoAntesURL, fotoDespuesURL, fotoExhibicionURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList, exhibicionList, muestrasList, materialPopList, chequeoList, chequeoCompList } };
     localStorage.setItem(LS_KEY, JSON.stringify(data));
   }catch(e){}
 }
@@ -927,7 +980,8 @@ function restaurarSesion(){
   // Listas
   const L=d.listas||{};
   productosPedido=L.productosPedido||[]; agotadosList=L.agotadosList||[]; fechasList=L.fechasList||[]; ventasList=L.ventasList||[]; inventarioList=L.inventarioList||[]; exhibicionList=L.exhibicionList||[];
-  renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); calcularTotalPedido();
+  muestrasList=L.muestrasList||[]; materialPopList=L.materialPopList||[]; chequeoList=L.chequeoList||[]; chequeoCompList=L.chequeoCompList||[];
+  renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); renderMuestras(); renderMaterialPop(); renderChequeo(); calcularTotalPedido();
   // Ubicación
   ubicacion = d.ubicacion||{lat:null,lng:null,acc:null};
   if(ubicacion.lat&&ubicacion.lng){
@@ -989,7 +1043,7 @@ async function cargarParametrizacion(){
   try{
     const res=await fetch(GAS_URL+'?action=parametrizacion',{redirect:'follow'});
     const data=await res.json();
-    if(data&&data.success&&data.ciudadesPDV&&Object.keys(data.ciudadesPDV).length>0){ parametrizacion=data; modoManual=false; activarModoSelect(); cargarCiudades(); poblarSkus(); aplicarPendCiudadPDV(); }
+    if(data&&data.success&&data.ciudadesPDV&&Object.keys(data.ciudadesPDV).length>0){ parametrizacion=data; parametrizacion.muestras=data.muestras||[]; parametrizacion.materialPOPCat=data.materialPOPCat||[]; modoManual=false; activarModoSelect(); cargarCiudades(); poblarSkus(); aplicarPendCiudadPDV(); }
     else activarModoManual((data&&data.error)?data.error:'La hoja respondió sin ciudades. Revisa la hoja "PDV ciudad".');
   }catch(err){ activarModoManual('No hay conexión con el servidor. ('+err.message+')'); }
 }
@@ -1005,7 +1059,7 @@ function getPDV(){ return modoManual?document.getElementById('pdvTexto').value.t
 function onVentaChange(){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; document.getElementById('ventaNo').style.display=v==='No'?'block':'none'; document.getElementById('ventaSi').style.display=v==='Si'?'block':'none'; if(v==='Si'&&ventasList.length===0&&!restaurando) agregarVenta(); }
 
 // ===== LISTAS (pedido / agotados / fechas) =====
-function findItem(id){ return productosPedido.find(x=>x.id===id) || agotadosList.find(x=>x.id===id) || fechasList.find(x=>x.id===id) || ventasList.find(x=>x.id===id) || inventarioList.find(x=>x.id===id) || exhibicionList.find(x=>x.id===id); }
+function findItem(id){ return productosPedido.find(x=>x.id===id) || agotadosList.find(x=>x.id===id) || fechasList.find(x=>x.id===id) || ventasList.find(x=>x.id===id) || inventarioList.find(x=>x.id===id) || exhibicionList.find(x=>x.id===id) || muestrasList.find(x=>x.id===id) || materialPopList.find(x=>x.id===id) || chequeoList.find(x=>x.id===id) || chequeoCompList.find(x=>x.id===id); }
 
 // Ventas (categoría + SKU + cantidad)
 function agregarVenta(){ ventasList.push({id:uid('v'),categoria:'',sku:'',cantidad:1}); renderVentas(); }
@@ -1039,12 +1093,11 @@ function renderPedido(){
   productosPedido.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-package"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarProducto('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
     ${campoSkuCascada(p)}
-    <div class="field-row" style="margin-bottom:0"><div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setCant('${p.id}',this.value)"></div><div class="field" style="margin-bottom:0"><label class="label">Precio unit.</label><input type="number" class="input" min="0" value="${p.precio}" oninput="setPrecio('${p.id}',this.value)"></div></div>
-    <div class="item-sub">Subtotal: <strong>$${fmt(p.subtotal)}</strong></div>`; cont.appendChild(d); });
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setCant('${p.id}',this.value)"></div>
+    <div class="item-sub">Precio: <strong>$${fmt(p.precio)}</strong> · Subtotal: <strong>$${fmt(p.subtotal)}</strong></div>`; cont.appendChild(d); });
 }
 function setCant(id,v){ const p=findItem(id); if(!p)return; p.cantidad=parseFloat(v)||0; if('subtotal'in p){p.subtotal=p.cantidad*p.precio;} calcularTotalPedido(); subDOM('listaPedido',productosPedido,p); }
-function setPrecio(id,v){ const p=findItem(id); if(!p)return; p.precio=parseFloat(v)||0; p.subtotal=p.cantidad*p.precio; calcularTotalPedido(); subDOM('listaPedido',productosPedido,p); }
-function subDOM(contId,list,p){ const i=list.indexOf(p); const row=document.querySelectorAll('#'+contId+' .item')[i]; if(row){const s=row.querySelector('.item-sub'); if(s)s.innerHTML=`Subtotal: <strong>$${fmt(p.subtotal)}</strong>`;} }
+function subDOM(contId,list,p){ const i=list.indexOf(p); const row=document.querySelectorAll('#'+contId+' .item')[i]; if(row){const s=row.querySelector('.item-sub'); if(s)s.innerHTML=`Precio: <strong>$${fmt(p.precio)}</strong> · Subtotal: <strong>$${fmt(p.subtotal)}</strong>`;} }
 function calcularTotalPedido(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); document.getElementById('totalPedido').textContent='$'+fmt(t); calcularTotalFinal(); }
 function calcularTotalFinal(){ const t=productosPedido.reduce((s,p)=>s+p.subtotal,0); const d=parseFloat(document.getElementById('descuento').value)||0; document.getElementById('totalFinal').textContent='$'+fmt(Math.max(0,t-d)); }
 
@@ -1113,7 +1166,96 @@ function setCategoriaItem(id, valor){
   if('precio' in p){ p.precio=0; p.subtotal=0; calcularTotalPedido(); subDOM('listaPedido',productosPedido,p); }
 }
 // Re-render de las listas para refrescar opciones cuando llegan los SKU de la API
-function poblarSkus(){ renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); }
+function poblarSkus(){ renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); renderMuestras(); renderMaterialPop(); renderChequeo(); }
+
+// ===== CASCADA GENÉRICA (Muestras / Material POP: catálogo nombre+categoría) =====
+function campoCascadaCatalogo(p, catalogo){
+  const cats=[...new Set((catalogo||[]).map(s=>s.categoria||'Sin categoría'))].sort();
+  const opcCat='<option value="">Categoría</option>'+cats.map(c=>'<option value="'+escAttr(c)+'"'+(c===p.categoria?' selected':'')+'>'+escHtml(c)+'</option>').join('');
+  const lista=(catalogo||[]).filter(s=>(s.categoria||'Sin categoría')===p.categoria);
+  const opcItem = p.categoria ? ('<option value="">Seleccionar</option>'+lista.map(s=>'<option value="'+escAttr(s.nombre)+'"'+(s.nombre===p.nombre?' selected':'')+'>'+escHtml(s.nombre)+'</option>').join('')) : '<option value="">Elige una categoría primero</option>';
+  return `<div class="field-row" style="margin-bottom:11px">
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Categoría</label><select class="select" onchange="setCatGenerico('${p.id}',this.value)">${opcCat}</select></div>
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Material</label><select class="select" onchange="setNombreGenerico('${p.id}',this.value)">${opcItem}</select></div>
+  </div>`;
+}
+function setCatGenerico(id, valor){ const p=findItem(id); if(!p) return; p.categoria=valor; p.nombre=''; rerenderListaDe(p); }
+function setNombreGenerico(id, valor){ const p=findItem(id); if(!p) return; p.nombre=valor; }
+function rerenderListaDe(p){
+  if(muestrasList.includes(p)) renderMuestras();
+  else if(materialPopList.includes(p)) renderMaterialPop();
+}
+
+// ===== MUESTRAS =====
+function agregarMuestra(){ muestrasList.push({id:uid('m'),categoria:'',nombre:'',cantidad:1}); renderMuestras(); }
+function eliminarMuestra(id){ muestrasList=muestrasList.filter(x=>x.id!==id); renderMuestras(); }
+function renderMuestras(){
+  const cont=document.getElementById('listaMuestras'); if(!cont) return; cont.innerHTML='';
+  if(muestrasList.length===0){ cont.innerHTML='<div class="empty-hint">Agrega las muestras entregadas.</div>'; return; }
+  muestrasList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-image"/></svg>Muestra ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarMuestra('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    ${campoCascadaCatalogo(p, parametrizacion.muestras)}
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
+}
+
+// ===== MATERIAL POP (entregado) =====
+function agregarMaterialPop(){ materialPopList.push({id:uid('mp'),categoria:'',nombre:'',cantidad:1}); renderMaterialPop(); }
+function eliminarMaterialPop(id){ materialPopList=materialPopList.filter(x=>x.id!==id); renderMaterialPop(); }
+function renderMaterialPop(){
+  const cont=document.getElementById('listaMaterialPop'); if(!cont) return; cont.innerHTML='';
+  if(materialPopList.length===0){ cont.innerHTML='<div class="empty-hint">Agrega el material POP entregado.</div>'; return; }
+  materialPopList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-upload"/></svg>Material ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarMaterialPop('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    ${campoCascadaCatalogo(p, parametrizacion.materialPOPCat)}
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
+}
+
+// ===== CHEQUEO DE PRECIOS (propio + competencia) =====
+function agregarChequeo(){ chequeoList.push({id:uid('c'),categoria:'',sku:'',precio:''}); renderChequeo(); }
+function eliminarChequeo(id){ chequeoList=chequeoList.filter(x=>x.id!==id); renderChequeo(); }
+function setPrecioChequeo(id,v){ const p=chequeoList.find(x=>x.id===id); if(!p) return; p.precio=v; renderChequeo(); }
+function rangoChequeo(p){
+  const ref=precioRefSku(p.sku); const val=parseFloat(p.precio);
+  if(!ref || !p.sku || isNaN(val)) return null;
+  const min=ref*0.9, max=ref*1.1;
+  return { ref, ok: (val>=min && val<=max), min, max };
+}
+function agregarCompetencia(){ chequeoCompList.push({id:uid('cc'),producto:'',valor:'',tipo:'Normal'}); renderChequeo(); }
+function eliminarCompetencia(id){ chequeoCompList=chequeoCompList.filter(x=>x.id!==id); renderChequeo(); }
+function setCompFld(id,campo,v){ const p=chequeoCompList.find(x=>x.id===id); if(p) p[campo]=v; }
+function renderChequeo(){
+  const contP=document.getElementById('listaChequeo'); const contC=document.getElementById('listaCompetencia');
+  if(!contP || !contC) return;
+  contP.innerHTML='';
+  if(chequeoList.length===0){ contP.innerHTML='<div class="empty-hint">Agrega un producto para chequear su precio.</div>'; }
+  chequeoList.forEach((p,idx)=>{
+    const d=document.createElement('div'); d.className='item';
+    const r=rangoChequeo(p);
+    let estado='';
+    if(r) estado = r.ok
+      ? '<div class="res-mini" style="color:var(--success);font-weight:600">✓ Dentro del rango (±10%) · Ref: $'+fmt(r.ref)+'</div>'
+      : '<div class="res-mini" style="color:var(--error);font-weight:600">✗ Fuera de rango (±10%) · Ref: $'+fmt(r.ref)+' [$'+fmt(r.min)+' - $'+fmt(r.max)+']</div>';
+    d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-alert"/></svg>Chequeo ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarChequeo('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    ${campoSkuCascada(p)}
+    <div class="field" style="margin-bottom:8px"><label class="label label-req">Precio encontrado en el PDV</label><input type="number" class="input" min="1000" max="9999" placeholder="Ej: 4500" value="${escAttr(p.precio)}" oninput="setPrecioChequeo('${p.id}',this.value)"></div>
+    ${estado}`;
+    contP.appendChild(d);
+  });
+  contC.innerHTML='';
+  if(chequeoCompList.length===0){ contC.innerHTML='<div class="empty-hint">Agrega un producto de la competencia.</div>'; }
+  chequeoCompList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
+    <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-cart"/></svg>Competencia ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarCompetencia('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
+    <div class="field"><label class="label label-req">Producto de la competencia</label><input type="text" class="input" placeholder="Nombre del producto" value="${escAttr(p.producto)}" oninput="setCompFld('${p.id}','producto',this.value)"></div>
+    <div class="field-row" style="margin-bottom:0">
+      <div class="field" style="margin-bottom:0"><label class="label label-req">Valor</label><input type="number" class="input" min="0" placeholder="Ej: 4500" value="${escAttr(p.valor)}" oninput="setCompFld('${p.id}','valor',this.value)"></div>
+      <div class="field" style="margin-bottom:0"><label class="label">Condición</label><select class="select" onchange="setCompFld('${p.id}','tipo',this.value)">
+        <option value="Normal"${p.tipo==='Normal'?' selected':''}>Precio normal</option>
+        <option value="Promoción"${p.tipo==='Promoción'?' selected':''}>Promoción</option>
+        <option value="2x1"${p.tipo==='2x1'?' selected':''}>2x1</option>
+      </select></div>
+    </div>`; contC.appendChild(d); });
+}
 // Guarda el SKU elegido en el item (y precio si es pedido)
 function setSkuItem(id, valor){
   const p=findItem(id); if(!p) return;
@@ -1122,15 +1264,13 @@ function setSkuItem(id, valor){
   if('precio' in p){
     if(m) p.precio=m.precio||0;
     p.subtotal=p.cantidad*(p.precio||0);
-    const row=document.querySelectorAll('#listaPedido .item')[productosPedido.indexOf(p)];
-    if(row){
-      const nums=row.querySelectorAll('input[type=number]');
-      if(m && nums[1]) nums[1].value=p.precio;
-      const s=row.querySelector('.item-sub'); if(s) s.innerHTML=`Subtotal: <strong>$${fmt(p.subtotal)}</strong>`;
-    }
+    subDOM('listaPedido',productosPedido,p);
     calcularTotalPedido();
+  } else if(chequeoList.includes(p)){
+    renderChequeo();
   }
 }
+function precioRefSku(sku){ const m=(parametrizacion.skus||[]).find(s=>s.completo===sku); return m?(m.precio||0):0; }
 
 function uid(pfx){ return pfx+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
 function escAttr(s){ return String(s==null?'':s).replace(/"/g,'&quot;'); }
@@ -1212,7 +1352,17 @@ function renderResumen(){
   pedH+='<div class="res-line"><span class="rk">Descuento</span><span class="rv">$'+fmt(desc)+'</span></div>';
   pedH+='<div class="res-line"><span class="rk">Total final</span><span class="rv">$'+fmt(Math.max(0,totalPed-desc))+'</span></div>';
   if(promos.length) pedH+='<div class="res-mini">Promociones: '+escHtml(promos.join(', '))+'</div>';
-  h+=secRaw('i-package','Pedido ('+productosPedido.length+' productos)', pedH);
+  h+=secRaw('i-package','Sugerido ('+productosPedido.length+' productos)', pedH);
+
+  const muH = muestrasList.length ? muestrasList.map((m,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(m.nombre)||'—')+'</b>'+(m.categoria?' ['+escHtml(m.categoria)+']':'')+' · '+(m.cantidad||0)+' und</div>').join('') : '<div class="res-mini">Sin muestras registradas</div>';
+  h+=secRaw('i-image','Muestras ('+muestrasList.length+')', muH);
+
+  const mpH = materialPopList.length ? materialPopList.map((m,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(m.nombre)||'—')+'</b>'+(m.categoria?' ['+escHtml(m.categoria)+']':'')+' · '+(m.cantidad||0)+' und</div>').join('') : '<div class="res-mini">Sin material POP registrado</div>';
+  h+=secRaw('i-upload','Material POP ('+materialPopList.length+')', mpH);
+
+  let chH = chequeoList.length ? chequeoList.map((c,i)=>{ const r=rangoChequeo(c); const tag=r?(r.ok?' ✓ dentro de rango':' ✗ fuera de rango'):''; return '<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(c.sku)||'—')+'</b> · $'+fmt(c.precio||0)+tag+'</div>'; }).join('') : '<div class="res-mini">Sin chequeos propios</div>';
+  chH += chequeoCompList.length ? chequeoCompList.map((c,i)=>'<div class="res-mini">Competencia '+(i+1)+'. <b>'+(escHtml(c.producto)||'—')+'</b> · $'+fmt(c.valor||0)+' · '+escHtml(c.tipo||'Normal')+'</div>').join('') : '<div class="res-mini">Sin chequeos de competencia</div>';
+  h+=secRaw('i-alert','Chek de Precios', chH);
 
   h+=sec('i-camera','Fotos (estante)',[
     ln('Antes', (fotoAntes||fotoAntesURL)?(fotoAntesURL?'<a href="'+fotoAntesURL+'" target="_blank">Ver foto</a>':'Tomada ✓'):'—'),
@@ -1243,6 +1393,17 @@ function validarModulo(id){
   if(id==='fechas'){ fechasList.forEach((p,i)=>{ if(!p.sku) e.push('SKU del producto '+(i+1)); if(!p.vence) e.push('Fecha de vencimiento '+(i+1)); }); }
   if(id==='exhibiciones'){ const v=(document.querySelector('input[name="tieneExhibicion"]:checked')||{}).value; if(!v) e.push('¿Se ganó una exhibición adicional?'); if(v==='Si'){ if(!val('tipoExhibicion')) e.push('Tipo de exhibición'); if(exhibicionList.length===0) e.push('Agrega al menos un producto exhibido'); exhibicionList.forEach((p,i)=>{ if(!p.sku) e.push('Producto exhibición '+(i+1)); }); } }
   if(id==='pedido'){ productosPedido.forEach((p,i)=>{ if(!p.sku) e.push('SKU producto '+(i+1)); if(!p.cantidad||p.cantidad<1) e.push('Cantidad producto '+(i+1)); }); }
+  if(id==='muestras'){ muestrasList.forEach((p,i)=>{ if(!p.nombre) e.push('Material de muestra '+(i+1)); }); }
+  if(id==='materialpop'){ materialPopList.forEach((p,i)=>{ if(!p.nombre) e.push('Material POP '+(i+1)); }); }
+  if(id==='chequeo'){
+    chequeoList.forEach((p,i)=>{
+      if(!p.sku) e.push('Producto chequeo '+(i+1));
+      const v=parseFloat(p.precio);
+      if(!p.precio || isNaN(v)) e.push('Precio chequeo '+(i+1));
+      else if(v<1000 || v>9999) e.push('Precio chequeo '+(i+1)+' debe tener 4 dígitos (entre 1000 y 9999)');
+    });
+    chequeoCompList.forEach((p,i)=>{ if(!p.producto) e.push('Producto competencia '+(i+1)); if(!p.valor) e.push('Valor competencia '+(i+1)); });
+  }
   return e;
 }
 
@@ -1271,6 +1432,10 @@ function recolectarGestion(){
     fechasCortas: fechasList.map(f=>({categoria:f.categoria,sku:f.sku,vence:f.vence,cantidad:f.cantidad})),
     pedidoProductos: productosPedido.map(p=>({categoria:p.categoria,sku:p.sku,cantidad:p.cantidad,precio:p.precio,subtotal:p.subtotal})),
     pedidoTotal: totalPed, pedidoPromos: promos.join(', '), pedidoDescuento: desc, pedidoTotalFinal: Math.max(0,totalPed-desc),
+    muestrasProductos: muestrasList.map(m=>({categoria:m.categoria,nombre:m.nombre,cantidad:m.cantidad})),
+    materialPOPEntregado: materialPopList.map(m=>({categoria:m.categoria,nombre:m.nombre,cantidad:m.cantidad})),
+    chequeoPrecios: chequeoList.map(c=>{ const r=rangoChequeo(c); return { categoria:c.categoria, sku:c.sku, precioEncontrado:c.precio, precioReferencia:r?r.ref:'', dentroDelRango:r?r.ok:'' }; }),
+    chequeoCompetencia: chequeoCompList.map(c=>({producto:c.producto, valor:c.valor, tipo:c.tipo})),
     observacionesGenerales: val('observacionesGenerales'), proximaVisita: val('proximaVisita'),
     modulosGuardados: ''
   };
