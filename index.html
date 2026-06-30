@@ -465,18 +465,11 @@
     <div class="card">
       <div class="card-head">
         <div class="card-chip"><svg class="icon icon-lg"><use href="#i-box"/></svg></div>
-        <div class="card-head-text"><div class="card-title">Inventarios</div><div class="card-sub">Productos en estante y material POP</div></div>
+        <div class="card-head-text"><div class="card-title">Inventarios</div><div class="card-sub">Productos en estante</div></div>
         <span class="saved-badge" id="badge-inventarios"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
       <div id="listaInventario"></div>
       <button type="button" class="btn btn-soft btn-block" onclick="agregarInv()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar producto</button>
-      <div class="field" style="margin-top:16px"><label class="label label-req">¿Material POP en buen estado?</label>
-        <div class="opt-grid">
-          <div class="opt"><input type="radio" name="materialPOP" id="popSi" value="Si"><label for="popSi"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Sí</label></div>
-          <div class="opt"><input type="radio" name="materialPOP" id="popNo" value="No"><label for="popNo"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>No</label></div>
-          <div class="opt"><input type="radio" name="materialPOP" id="popPar" value="Parcial"><label for="popPar"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Parcial</label></div>
-        </div>
-      </div>
       <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('inventarios')"><svg class="icon"><use href="#i-save"/></svg>Guardar Inventarios</button></div>
     </div>
   </section>
@@ -589,7 +582,14 @@
         <div class="card-head-text"><div class="card-title">Material POP</div><div class="card-sub">Material POP entregado en el PDV</div></div>
         <span class="saved-badge" id="badge-materialpop"><svg class="icon icon-sm"><use href="#i-check"/></svg>Guardado</span>
       </div>
-      <div id="listaMaterialPop"></div>
+      <div class="field"><label class="label label-req">¿Material POP en buen estado?</label>
+        <div class="opt-grid">
+          <div class="opt"><input type="radio" name="materialPOP" id="popSi" value="Si"><label for="popSi"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Sí</label></div>
+          <div class="opt"><input type="radio" name="materialPOP" id="popNo" value="No"><label for="popNo"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>No</label></div>
+          <div class="opt"><input type="radio" name="materialPOP" id="popPar" value="Parcial"><label for="popPar"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Parcial</label></div>
+        </div>
+      </div>
+      <div id="listaMaterialPop" style="margin-top:16px"></div>
       <button type="button" class="btn btn-soft btn-block" onclick="agregarMaterialPop()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar material</button>
       <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('materialpop')"><svg class="icon"><use href="#i-save"/></svg>Guardar Material POP</button></div>
     </div>
@@ -663,19 +663,19 @@
 <!-- FLOWER -->
 <div class="flower-bd" id="flowerBd" onclick="closeFlower()"></div>
 <div class="flower" id="flower">
-  <!-- Fila lejana (paso 1-6 de la ruta) -->
+  <!-- Fila lejana (paso 1-6 de la ruta), con curva tipo abanico -->
   <button class="petal" data-mod="inicio"       style="--x:-150px;--y:-150px"><span class="petal-ic"><svg><use href="#i-pin"/></svg></span><span class="petal-lbl">Inicio</span></button>
-  <button class="petal" data-mod="inventarios"  style="--x:-90px;--y:-150px"><span class="petal-ic"><svg><use href="#i-box"/></svg></span><span class="petal-lbl">Inventario</span></button>
-  <button class="petal" data-mod="fotos"        style="--x:-30px;--y:-150px"><span class="petal-ic"><svg><use href="#i-camera"/></svg></span><span class="petal-lbl">Fotos</span></button>
-  <button class="petal" data-mod="ventas"       style="--x:30px;--y:-150px"><span class="petal-ic"><svg><use href="#i-cart"/></svg></span><span class="petal-lbl">Ventas</span></button>
-  <button class="petal" data-mod="exhibiciones" style="--x:90px;--y:-150px"><span class="petal-ic"><svg><use href="#i-star"/></svg></span><span class="petal-lbl">Exhibición</span></button>
+  <button class="petal" data-mod="inventarios"  style="--x:-90px;--y:-173px"><span class="petal-ic"><svg><use href="#i-box"/></svg></span><span class="petal-lbl">Inventario</span></button>
+  <button class="petal" data-mod="fotos"        style="--x:-30px;--y:-185px"><span class="petal-ic"><svg><use href="#i-camera"/></svg></span><span class="petal-lbl">Fotos</span></button>
+  <button class="petal" data-mod="ventas"       style="--x:30px;--y:-185px"><span class="petal-ic"><svg><use href="#i-cart"/></svg></span><span class="petal-lbl">Ventas</span></button>
+  <button class="petal" data-mod="exhibiciones" style="--x:90px;--y:-173px"><span class="petal-ic"><svg><use href="#i-star"/></svg></span><span class="petal-lbl">Exhibición</span></button>
   <button class="petal" data-mod="agotados"     style="--x:150px;--y:-150px"><span class="petal-ic"><svg><use href="#i-xcircle"/></svg></span><span class="petal-lbl">Agotados</span></button>
-  <!-- Fila cercana (paso 7-12 de la ruta) -->
+  <!-- Fila cercana (paso 7-12 de la ruta), misma curva más cerca del fab -->
   <button class="petal" data-mod="fechas"       style="--x:-150px;--y:-66px"><span class="petal-ic"><svg><use href="#i-clock"/></svg></span><span class="petal-lbl">Fechas</span></button>
-  <button class="petal" data-mod="muestras"     style="--x:-90px;--y:-66px"><span class="petal-ic"><svg><use href="#i-image"/></svg></span><span class="petal-lbl">Muestras</span></button>
-  <button class="petal" data-mod="materialpop"  style="--x:-30px;--y:-66px"><span class="petal-ic"><svg><use href="#i-upload"/></svg></span><span class="petal-lbl">Mat. POP</span></button>
-  <button class="petal" data-mod="chequeo"      style="--x:30px;--y:-66px"><span class="petal-ic"><svg><use href="#i-alert"/></svg></span><span class="petal-lbl">Chek Precio</span></button>
-  <button class="petal" data-mod="pedido"       style="--x:90px;--y:-66px"><span class="petal-ic"><svg><use href="#i-package"/></svg></span><span class="petal-lbl">Sugerido</span></button>
+  <button class="petal" data-mod="muestras"     style="--x:-90px;--y:-80px"><span class="petal-ic"><svg><use href="#i-image"/></svg></span><span class="petal-lbl">Muestras</span></button>
+  <button class="petal" data-mod="materialpop"  style="--x:-30px;--y:-87px"><span class="petal-ic"><svg><use href="#i-upload"/></svg></span><span class="petal-lbl">Mat. POP</span></button>
+  <button class="petal" data-mod="chequeo"      style="--x:30px;--y:-87px"><span class="petal-ic"><svg><use href="#i-alert"/></svg></span><span class="petal-lbl">Chek Precio</span></button>
+  <button class="petal" data-mod="pedido"       style="--x:90px;--y:-80px"><span class="petal-ic"><svg><use href="#i-package"/></svg></span><span class="petal-lbl">Sugerido</span></button>
   <button class="petal" data-mod="resumen"      style="--x:150px;--y:-66px"><span class="petal-ic"><svg><use href="#i-list"/></svg></span><span class="petal-lbl">Resumen</span></button>
 </div>
 
@@ -1079,8 +1079,18 @@ function renderInventario(){
   inventarioList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-box"/></svg>Producto ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarInv('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
     ${campoSkuCascada(p)}
-    <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad en estante</label><input type="number" class="input" min="0" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
+    <div class="field" style="margin-bottom:6px"><label class="label label-req">Cantidad en estante</label><input type="number" class="input" min="0" value="${p.cantidad}" oninput="setCantidadInv('${p.id}',this.value)"></div>
+    <div id="invAlerta-${p.id}">${alertaStock(p.cantidad)}</div>`; cont.appendChild(d); });
 }
+function alertaStock(cant){
+  const c=parseFloat(cant);
+  if(isNaN(c)) return '';
+  if(c<=0) return '<div class="res-mini" style="color:var(--error);font-weight:600">🔴 Agotado: 0 unidades en estante</div>';
+  if(c<=3) return '<div class="res-mini" style="color:var(--error);font-weight:600">🔴 Próximo a agotarse: quedan '+c+' und</div>';
+  if(c<=8) return '<div class="res-mini" style="color:var(--warn);font-weight:600">🟡 Inventario bajo: quedan '+c+' und, vigila reposición</div>';
+  return '';
+}
+function setCantidadInv(id,v){ setFld(id,'cantidad',v); const p=findItem(id); const el=document.getElementById('invAlerta-'+id); if(el) el.innerHTML = p?alertaStock(p.cantidad):''; }
 
 function agregarProducto(){ productosPedido.push({id:uid('p'),categoria:'',sku:'',cantidad:1,precio:0,subtotal:0}); renderPedido(); }
 function eliminarProducto(id){ productosPedido=productosPedido.filter(p=>p.id!==id); renderPedido(); calcularTotalPedido(); }
@@ -1218,11 +1228,15 @@ function rangoChequeo(p){
   return { ref, ok: (val>=min && val<=max), min, max };
 }
 function estadoChequeoHtml(p){
+  if(!p.sku) return '';
+  const ref=precioRefSku(p.sku);
+  if(!ref) return '';
+  let h='<div class="res-mini">Precio sugerido: <b>$'+fmt(ref)+'</b></div>';
   const r=rangoChequeo(p);
-  if(!r) return '';
-  return r.ok
-    ? '<div class="res-mini" style="color:var(--success);font-weight:600">✓ Dentro del rango (±10%) · Ref: $'+fmt(r.ref)+'</div>'
-    : '<div class="res-mini" style="color:var(--error);font-weight:600">✗ Fuera de rango (±10%) · Ref: $'+fmt(r.ref)+' [$'+fmt(r.min)+' - $'+fmt(r.max)+']</div>';
+  if(r) h += r.ok
+    ? '<div class="res-mini" style="color:var(--success);font-weight:600">✓ Dentro del rango (±10%) [$'+fmt(r.min)+' - $'+fmt(r.max)+']</div>'
+    : '<div class="res-mini" style="color:var(--error);font-weight:600">✗ Fuera de rango (±10%) [$'+fmt(r.min)+' - $'+fmt(r.max)+']</div>';
+  return h;
 }
 function agregarCompetencia(){ chequeoCompList.push({id:uid('cc'),producto:'',valor:'',tipo:'Normal'}); renderChequeo(); }
 function eliminarCompetencia(id){ chequeoCompList=chequeoCompList.filter(x=>x.id!==id); renderChequeo(); }
@@ -1393,7 +1407,7 @@ function validarModulo(id){
   if(id==='exhibiciones'){ const v=(document.querySelector('input[name="tieneExhibicion"]:checked')||{}).value; if(!v) e.push('¿Se ganó una exhibición adicional?'); if(v==='Si'){ if(!val('tipoExhibicion')) e.push('Tipo de exhibición'); if(exhibicionList.length===0) e.push('Agrega al menos un producto exhibido'); exhibicionList.forEach((p,i)=>{ if(!p.sku) e.push('Producto exhibición '+(i+1)); }); } }
   if(id==='pedido'){ productosPedido.forEach((p,i)=>{ if(!p.sku) e.push('SKU producto '+(i+1)); if(!p.cantidad||p.cantidad<1) e.push('Cantidad producto '+(i+1)); }); }
   if(id==='muestras'){ muestrasList.forEach((p,i)=>{ if(!p.nombre) e.push('Material de muestra '+(i+1)); }); }
-  if(id==='materialpop'){ materialPopList.forEach((p,i)=>{ if(!p.nombre) e.push('Material POP '+(i+1)); }); }
+  if(id==='materialpop'){ if(!(document.querySelector('input[name="materialPOP"]:checked')||{}).value) e.push('¿Material POP en buen estado?'); materialPopList.forEach((p,i)=>{ if(!p.nombre) e.push('Material POP '+(i+1)); }); }
   if(id==='chequeo'){
     chequeoList.forEach((p,i)=>{
       if(!p.sku) e.push('Producto chequeo '+(i+1));
