@@ -1490,22 +1490,54 @@ function escHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&
 function fmt(n){ return Number(n||0).toLocaleString('es-CO',{maximumFractionDigits:2}); }
 
 // ===== FOTOS =====
-function leerFoto(e,tipo,slot){ const file=e.target.files[0]; if(!file)return; if(file.size>25*1024*1024){ alert('La imagen es muy pesada (más de 25 MB).'); e.target.value=''; return; }
-  const r=new FileReader(); r.onload=ev=>{ comprimirImagen(ev.target.result, tipo==='perfil'?700:1280, 0.7, data=>{ aplicarFoto(tipo, data, slot); persistir(); persistirFotos(); }); }; r.readAsDataURL(file); }
-// Redimensiona y comprime la imagen en el navegador antes de subirla (sube mucho más rápido)
-function comprimirImagen(dataURL, maxLado, calidad, cb){
+function leerFoto(e,tipo,slot){
+  const file=e.target.files[0]; if(!file) return;
+  if(file.size>25*1024*1024){ alert('La imagen es muy pesada (más de 25 MB).'); e.target.value=''; return; }
+  comprimirImagen(file, tipo==='perfil'?700:1280, 0.7, data=>{
+    if(!data){
+      alert('No se pudo procesar la foto (memoria insuficiente en el dispositivo). Cierra otras apps/pestañas e intenta de nuevo, o toma la foto con menos resolución.');
+      e.target.value='';
+      return;
+    }
+    aplicarFoto(tipo, data, slot); persistir(); persistirFotos();
+  });
+}
+// Redimensiona y comprime la foto SIN pasar antes por base64 completo (evita quedarse sin memoria en celulares
+// al capturar fotos de la cámara en alta resolución). Usa createImageBitmap cuando está disponible (más eficiente);
+// si no, hace fallback al método clásico <img>+canvas con un object URL temporal.
+function comprimirImagen(archivo, maxLado, calidad, cb){
+  const previoBitmap = window.createImageBitmap ? createImageBitmap(archivo).catch(()=>null) : Promise.resolve(null);
+  previoBitmap.then(bitmap=>{
+    if(bitmap){
+      try{
+        let w=bitmap.width, h=bitmap.height; const m=Math.max(w,h);
+        if(m>maxLado){ const esc=maxLado/m; w=Math.round(w*esc); h=Math.round(h*esc); }
+        const c=document.createElement('canvas'); c.width=w; c.height=h;
+        c.getContext('2d').drawImage(bitmap,0,0,w,h);
+        if(bitmap.close) bitmap.close();
+        cb(c.toDataURL('image/jpeg', calidad));
+        return;
+      }catch(err){ /* sigue al fallback de abajo */ }
+    }
+    comprimirImagenFallback(archivo, maxLado, calidad, cb);
+  });
+}
+function comprimirImagenFallback(archivo, maxLado, calidad, cb){
+  const esBlob = typeof archivo !== 'string';
+  const url = esBlob ? URL.createObjectURL(archivo) : archivo;
   const img=new Image();
   img.onload=function(){
+    if(esBlob) URL.revokeObjectURL(url);
     let w=img.width, h=img.height; const m=Math.max(w,h);
-    if(m>maxLado){ const r=maxLado/m; w=Math.round(w*r); h=Math.round(h*r); }
+    if(m>maxLado){ const esc=maxLado/m; w=Math.round(w*esc); h=Math.round(h*esc); }
     try{
       const c=document.createElement('canvas'); c.width=w; c.height=h;
       c.getContext('2d').drawImage(img,0,0,w,h);
       cb(c.toDataURL('image/jpeg', calidad));
-    }catch(err){ cb(dataURL); }
+    }catch(err){ cb(null); }
   };
-  img.onerror=function(){ cb(dataURL); };
-  img.src=dataURL;
+  img.onerror=function(){ if(esBlob) URL.revokeObjectURL(url); cb(null); };
+  img.src=url;
 }
 function quitarFoto(tipo, slot){
   if(tipo==='antes'){
