@@ -23,7 +23,7 @@
   h1,h2,h3{font-family:'Poppins',sans-serif}
   .icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
   svg{pointer-events:none} /* el clic siempre llega al botón, no al icono */
-  button,.btn,.nav-icon,.fab,.petal,.opt label,.upload,.ayuda-item{touch-action:manipulation}
+  button,.btn,.nav-icon,.fab,.petal,.opt label,.upload,.foto-ingreso,.ayuda-item{touch-action:manipulation}
   .icon-lg{width:22px;height:22px}.icon-sm{width:15px;height:15px}.icon-xl{width:30px;height:30px}
 
   /* TOPBAR */
@@ -230,6 +230,13 @@
   .progress-wrap .step-pill{display:inline-block;margin-bottom:9px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22)}
   .progress-wrap .progress{margin-top:0}
 
+  /* ===== FOTO DE INGRESO (portada) — solo se sube al backend, nunca se usa como avatar ===== */
+  .foto-ingreso{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:24px;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;cursor:pointer;margin-bottom:13px;transition:.2s}
+  .foto-ingreso:hover{background:rgba(255,255,255,.25)}
+  .foto-ingreso.has{border-color:#7ef0a8}
+  .fi-ic{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .fi-txt b{font-size:14px;font-weight:600;display:block}.fi-txt span{font-size:11.5px;opacity:.82}
+
   /* ===== BOTONES LATERALES ===== */
   .nav-icon{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line-strong);background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;position:relative;overflow:hidden}
   .nav-icon:hover{background:var(--blue-soft);border-color:var(--blue)}
@@ -359,10 +366,15 @@
       <p>Registra tu jornada en campo, paso a paso.</p>
     </div>
     <div class="portada-form" id="portadaForm">
-      <div class="portada-err" id="portadaErr">Completa tu nombre y documento.</div>
+      <div class="portada-err" id="portadaErr">Completa tu nombre, documento y selfie.</div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-user"/></svg></span><input type="text" id="nombreMercaderista" placeholder="Nombre completo" autocomplete="name"></div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-id"/></svg></span><input type="tel" id="cedulaMercaderista" placeholder="Documento / Cédula" inputmode="numeric"></div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-phone"/></svg></span><input type="tel" id="telefono" placeholder="Teléfono" inputmode="tel"></div>
+      <label class="foto-ingreso" id="fotoIngresoBox">
+        <input type="file" id="fileIngreso" accept="image/*" capture="user" style="display:none">
+        <span class="fi-ic" id="fiIcon"><svg class="icon icon-lg"><use href="#i-camera"/></svg></span>
+        <span class="fi-txt"><b id="fiTitle">Tu selfie</b><span id="fiSub">Toca para tomar la foto (cámara frontal)</span></span>
+      </label>
       <button class="btn-portada" onclick="comenzar()">Comenzar <svg class="icon"><use href="#i-arrowr"/></svg></button>
       <div class="portada-foot"><a href="#" onclick="event.preventDefault();abrirRecuperarSesion();" style="color:#fff;text-decoration:underline;font-weight:600">¿Ya tienes una gestión en curso? Recuperar sesión</a></div>
       <div class="portada-foot">Una herramienta de <b style="font-weight:700;letter-spacing:.5px">SYNAPTIC</b></div>
@@ -790,6 +802,7 @@ let saved = {};
 let current = 'inicio';
 let flowerOpen = false;
 let ubicacion = { lat:null, lng:null, acc:null };
+let fotoPerfil = '', fotoPerfilURL = '';
 let fotosAntes = ['','',''], fotosDespues = ['','',''];
 let fotosAntesURL = ['','',''], fotosDespuesURL = ['','',''];
 let productosPedido = [], agotadosList = [], fechasList = [], ventasList = [], inventarioList = [], exhibicionList = [];
@@ -814,6 +827,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input[name="ventaCondicion"]').forEach(r => r.addEventListener('change', () => {
     const s=document.querySelector('input[name="ventaCondicion"]:checked'); document.getElementById('ventaPlazoG').style.display=(s&&s.value==='Credito')?'block':'none';
   }));
+  document.getElementById('fileIngreso').addEventListener('change', e => leerFoto(e,'perfil'));
   document.getElementById('fileExhibicion').addEventListener('change', e => leerFoto(e,'exhibicion'));
   renderFotoSlots('antes'); renderFotoSlots('despues');
   document.querySelectorAll('input[name="tieneExhibicion"]').forEach(r => r.addEventListener('change', onExhibicionChange));
@@ -886,7 +900,7 @@ function onIdentChange(){
 // ===== PORTADA =====
 function comenzar(){
   const n=val('nombreMercaderista'), c=val('cedulaMercaderista');
-  if(!n || !c){
+  if(!n || !c || !(fotoPerfil||fotoPerfilURL)){
     const f=document.getElementById('portadaForm');
     f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake');
     document.getElementById('portadaErr').style.display='block';
@@ -898,8 +912,8 @@ function comenzar(){
   const p=document.getElementById('portada');
   p.classList.add('hide');
   window._portadaTimer = setTimeout(()=>{ p.style.display='none'; }, 650);
-  persistir();
-  guardarSilencioso(); // crea el registro
+  persistir(); persistirFotos();
+  guardarSilencioso(); // crea el registro y sube la selfie al Drive
 }
 function reabrirPortada(){
   clearTimeout(window._portadaTimer);
@@ -915,7 +929,7 @@ async function guardarSilencioso(){
     const gestion=recolectarGestion();
     const res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({registroId:registroId,gestion:gestion}),redirect:'follow'});
     const data=await res.json();
-    if(data&&data.success){ registroId=data.registroId||registroId; persistir(); if(eraNuevo) mostrarCodigoSesion(); }
+    if(data&&data.success){ registroId=data.registroId||registroId; if(data.fotoPerfilURL){fotoPerfilURL=data.fotoPerfilURL;fotoPerfil='';} persistir(); if(eraNuevo) mostrarCodigoSesion(); }
   }catch(e){ /* offline: se guardará al guardar un módulo */ }
 }
 
@@ -979,6 +993,8 @@ function aplicarGestionRemota(registroIdRecuperado, g){
   muestrasList=darId(g.muestrasProductos); materialPopList=darId(g.materialPOPEntregado); chequeoList=darId(g.chequeoPrecios); chequeoCompList=darId(g.chequeoCompetencia);
   pendEvacuador1=(g.evacuadorProductos&&g.evacuadorProductos[0])?g.evacuadorProductos[0].producto:''; pendEvacuador2=(g.evacuadorProductos&&g.evacuadorProductos[1])?g.evacuadorProductos[1].producto:'';
   renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); renderMuestras(); renderMaterialPop(); renderChequeo(); calcularTotalPedido(); calcularTotalVenta(); poblarEvacuadores();
+  fotoPerfil=''; fotoPerfilURL=g.fotoPerfilURL||'';
+  if(fotoPerfilURL){ const box=document.getElementById('fotoIngresoBox'); if(box){ box.classList.add('has'); document.getElementById('fiTitle').textContent='Selfie lista ✓'; document.getElementById('fiSub').textContent='Toca para volver a tomar'; } }
   fotoExhibicionURL=g.fotoExhibicionURL||'';
   fotosAntesURL=[g.fotoAntesURL||'', g.fotoAntes2URL||'', g.fotoAntes3URL||'']; fotosDespuesURL=[g.fotoDespuesURL||'', g.fotoDespues2URL||'', g.fotoDespues3URL||''];
   fotosAntes=['','','']; fotosDespues=['','',''];
@@ -995,7 +1011,12 @@ function aplicarGestionRemota(registroIdRecuperado, g){
 
 // ===== FOTOS =====
 function aplicarFoto(tipo, data, slot){
-  if(tipo==='antes'){
+  if(tipo==='perfil'){
+    // Solo confirma dentro de su propia caja (icono + texto). Nunca se usa como avatar en el resto de la app.
+    fotoPerfil=data; fotoPerfilURL='';
+    const box=document.getElementById('fotoIngresoBox');
+    if(box){ box.classList.add('has'); document.getElementById('fiTitle').textContent='Selfie lista ✓'; document.getElementById('fiSub').textContent='Toca para volver a tomar'; }
+  } else if(tipo==='antes'){
     fotosAntes[slot]=data; fotosAntesURL[slot]=''; renderFotoSlots('antes');
   } else if(tipo==='despues'){
     fotosDespues[slot]=data; fotosDespuesURL[slot]=''; renderFotoSlots('despues');
@@ -1066,14 +1087,14 @@ function closeAyudas(){ ayudasOpen=false; document.getElementById('ayudas').clas
 function persistir(){
   if(restaurando) return;
   try{
-    const campos=recolectarGestion(); campos.fotoExhibicion='';
+    const campos=recolectarGestion(); campos.fotoPerfil=''; campos.fotoExhibicion='';
     ['fotoAntes','fotoAntes2','fotoAntes3','fotoDespues','fotoDespues2','fotoDespues3'].forEach(k=>campos[k]='');
     const data={ loggedIn:true, registroId, saved, current, ubicacion, fotosAntesURL, fotosDespuesURL, fotoExhibicionURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList, exhibicionList, muestrasList, materialPopList, chequeoList, chequeoCompList } };
     localStorage.setItem(LS_KEY, JSON.stringify(data));
   }catch(e){}
 }
 // Las fotos base64 se guardan aparte y SOLO cuando cambian (evita lag en cada tecla/click)
-function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotosAntes, fotosDespues, fotoExhibicion })); }catch(e){} }
+function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotoPerfil, fotosAntes, fotosDespues, fotoExhibicion })); }catch(e){} }
 function restaurarSesion(){
   let raw; try{ raw=localStorage.getItem(LS_KEY); }catch(e){ return false; }
   if(!raw) return false;
@@ -1116,7 +1137,7 @@ function restaurarSesion(){
   }
   // Fotos (clave separada)
   let fotos={}; try{ fotos=JSON.parse(localStorage.getItem(LS_FOTOS)||'{}'); }catch(e){}
-  fotoExhibicionURL=d.fotoExhibicionURL||'';
+  fotoPerfilURL=d.fotoPerfilURL||''; fotoExhibicionURL=d.fotoExhibicionURL||'';
   fotosAntesURL = Array.isArray(d.fotosAntesURL) ? d.fotosAntesURL.slice(0,3) : (d.fotoAntesURL?[d.fotoAntesURL,'','']:['','','']);
   fotosDespuesURL = Array.isArray(d.fotosDespuesURL) ? d.fotosDespuesURL.slice(0,3) : (d.fotoDespuesURL?[d.fotoDespuesURL,'','']:['','','']);
   while(fotosAntesURL.length<3) fotosAntesURL.push('');
@@ -1124,6 +1145,7 @@ function restaurarSesion(){
   if(Array.isArray(fotos.fotosAntes)){ fotosAntes = fotos.fotosAntes.slice(0,3); while(fotosAntes.length<3) fotosAntes.push(''); }
   if(Array.isArray(fotos.fotosDespues)){ fotosDespues = fotos.fotosDespues.slice(0,3); while(fotosDespues.length<3) fotosDespues.push(''); }
   renderFotoSlots('antes'); renderFotoSlots('despues');
+  if(fotos.fotoPerfil){ aplicarFoto('perfil', fotos.fotoPerfil); }
   if(fotos.fotoExhibicion){ aplicarFoto('exhibicion', fotos.fotoExhibicion); }
   else if(fotoExhibicionURL){ document.getElementById('imgExhibicion').src=fotoExhibicionURL; document.getElementById('defExhibicion').style.display='none'; document.getElementById('prevExhibicion').style.display='block'; document.getElementById('uploadExhibicion').classList.add('has'); }
   // Estado
@@ -1508,7 +1530,7 @@ function renderResumen(){
   const ubic=(ubicacion.lat&&ubicacion.lng)?'<a href="https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'" target="_blank">Abrir en Maps</a> ('+ubicacion.lat+', '+ubicacion.lng+')':'No capturada';
 
   let h='';
-  h+=sec('i-user','Mercaderista',[ ln('Nombre',escHtml(val('nombreMercaderista'))||'—'), ln('Documento',escHtml(val('cedulaMercaderista'))||'—'), ln('Teléfono',escHtml(val('telefono'))||'—'), ln('Código de sesión',escHtml(registroId)||'—') ]);
+  h+=sec('i-user','Mercaderista',[ ln('Nombre',escHtml(val('nombreMercaderista'))||'—'), ln('Documento',escHtml(val('cedulaMercaderista'))||'—'), ln('Teléfono',escHtml(val('telefono'))||'—'), ln('Selfie',(fotoPerfil||fotoPerfilURL)?'Tomada ✓':'—'), ln('Código de sesión',escHtml(registroId)||'—') ]);
   h+=sec('i-pin','Punto de venta',[ ln('Ciudad',escHtml(getCiudad())||'—'), ln('PDV',escHtml(getPDV())||'—'), ln('Ubicación',ubic) ]);
 
   let vH='<div class="res-line"><span class="rk">¿Se realizó venta?</span><span class="rv">'+(ventaR||'—')+'</span></div>';
@@ -1640,6 +1662,7 @@ function recolectarGestion(){
     nombreMercaderista: val('nombreMercaderista'), cedulaMercaderista: val('cedulaMercaderista'), telefono: val('telefono'),
     ciudad: getCiudad(), puntoVenta: getPDV(),
     latitud: ubicacion.lat||'', longitud: ubicacion.lng||'', precisionGPS: ubicacion.acc||'',
+    fotoPerfil: fotoPerfil, fotoPerfilURL: fotoPerfilURL,
     ventaRealizada: (document.querySelector('input[name="ventaRealizada"]:checked')||{}).value||'',
     ventaMotivoNo: val('ventaMotivoNo'),
     ventaProductos: ventasList.map(p=>({categoria:p.categoria,sku:p.sku,cantidad:p.cantidad,precio:p.precio,subtotal:p.subtotal})),
@@ -1687,6 +1710,7 @@ async function guardarModulo(id, finalizar){
     if(data&&data.success){
       registroId=data.registroId||registroId;
       if(eraNuevo&&registroId) mostrarCodigoSesion();
+      if(data.fotoPerfilURL){ fotoPerfilURL=data.fotoPerfilURL; fotoPerfil=''; }
       let touched=false;
       [['fotoAntesURL',0,'antes'],['fotoAntes2URL',1,'antes'],['fotoAntes3URL',2,'antes'],['fotoDespuesURL',0,'despues'],['fotoDespues2URL',1,'despues'],['fotoDespues3URL',2,'despues']].forEach(([key,slot,tipo])=>{
         if(data[key]){ if(tipo==='antes'){fotosAntesURL[slot]=data[key]; fotosAntes[slot]='';} else {fotosDespuesURL[slot]=data[key]; fotosDespues[slot]='';} touched=true; }
