@@ -23,7 +23,7 @@
   h1,h2,h3{font-family:'Poppins',sans-serif}
   .icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
   svg{pointer-events:none} /* el clic siempre llega al botón, no al icono */
-  button,.btn,.nav-icon,.fab,.petal,.opt label,.upload,.foto-ingreso,.ayuda-item{touch-action:manipulation}
+  button,.btn,.nav-icon,.fab,.petal,.opt label,.upload,.ayuda-item{touch-action:manipulation}
   .icon-lg{width:22px;height:22px}.icon-sm{width:15px;height:15px}.icon-xl{width:30px;height:30px}
 
   /* TOPBAR */
@@ -230,14 +230,6 @@
   .progress-wrap .step-pill{display:inline-block;margin-bottom:9px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22)}
   .progress-wrap .progress{margin-top:0}
 
-  /* ===== FOTO DE INGRESO (portada) ===== */
-  .foto-ingreso{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:24px;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;cursor:pointer;margin-bottom:13px;transition:.2s}
-  .foto-ingreso:hover{background:rgba(255,255,255,.25)}
-  .foto-ingreso.has{border-color:#7ef0a8}
-  .fi-ic{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .fi-prev{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.6)}
-  .fi-txt b{font-size:14px;font-weight:600;display:block}.fi-txt span{font-size:11.5px;opacity:.82}
-
   /* ===== BOTONES LATERALES ===== */
   .nav-icon{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line-strong);background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;position:relative;overflow:hidden}
   .nav-icon:hover{background:var(--blue-soft);border-color:var(--blue)}
@@ -367,17 +359,12 @@
       <p>Registra tu jornada en campo, paso a paso.</p>
     </div>
     <div class="portada-form" id="portadaForm">
-      <div class="portada-err" id="portadaErr">Completa tu nombre, documento y selfie.</div>
+      <div class="portada-err" id="portadaErr">Completa tu nombre y documento.</div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-user"/></svg></span><input type="text" id="nombreMercaderista" placeholder="Nombre completo" autocomplete="name"></div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-id"/></svg></span><input type="tel" id="cedulaMercaderista" placeholder="Documento / Cédula" inputmode="numeric"></div>
       <div class="pinput"><span class="pic"><svg class="icon"><use href="#i-phone"/></svg></span><input type="tel" id="telefono" placeholder="Teléfono" inputmode="tel"></div>
-      <label class="foto-ingreso" id="fotoIngresoBox">
-        <input type="file" id="fileIngreso" accept="image/*" capture="user" style="display:none">
-        <span class="fi-ic" id="fiIcon"><svg class="icon icon-lg"><use href="#i-camera"/></svg></span>
-        <img class="fi-prev" id="fotoIngresoPrev" style="display:none" alt="">
-        <span class="fi-txt"><b id="fiTitle">Tu selfie</b><span id="fiSub">Toca para tomar la foto (cámara frontal)</span></span>
-      </label>
       <button class="btn-portada" onclick="comenzar()">Comenzar <svg class="icon"><use href="#i-arrowr"/></svg></button>
+      <div class="portada-foot"><a href="#" onclick="event.preventDefault();abrirRecuperarSesion();" style="color:#fff;text-decoration:underline;font-weight:600">¿Ya tienes una gestión en curso? Recuperar sesión</a></div>
       <div class="portada-foot">Una herramienta de <b style="font-weight:700;letter-spacing:.5px">SYNAPTIC</b></div>
     </div>
   </div>
@@ -389,8 +376,7 @@
     <div class="topbar-logo"><svg class="icon icon-lg"><use href="#i-clipboard"/></svg></div>
     <div class="topbar-brand"><b>Captura PQP</b><span>Gestión comercial en campo</span></div>
     <div class="avatar-bubble" id="avatarBubble" onclick="abrirPersona()" title="Mi información">
-      <img id="avatarImg" alt="" style="display:none">
-      <svg class="icon icon-lg" id="avatarIcon"><use href="#i-user"/></svg>
+      <svg class="icon icon-lg"><use href="#i-user"/></svg>
     </div>
   </div>
   <div class="greet"><h1 id="heroGreet">Hola, mercaderista</h1><p id="heroDate"></p></div>
@@ -470,6 +456,22 @@
       <div id="ventaSi" style="display:none">
         <div id="listaVentas"></div>
         <button type="button" class="btn btn-soft btn-block" onclick="agregarVenta()"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Agregar producto vendido</button>
+        <div class="total-card">
+          <div class="total-row"><span class="total-lbl">Total venta</span><span class="total-val" id="totalVenta">$0</span></div>
+        </div>
+        <div id="evacuadorSeccion" style="display:none;margin-top:16px">
+          <div class="field">
+            <label class="label label-req">¿Se realizó entrega de Evacuador? <span class="label-hint">(venta superior a $30.000)</span></label>
+            <div class="opt-grid opt-grid-2">
+              <div class="opt"><input type="radio" name="evacuadorEntrega" id="evSi" value="Si"><label for="evSi"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>Sí</label></div>
+              <div class="opt"><input type="radio" name="evacuadorEntrega" id="evNo" value="No"><label for="evNo"><svg class="icon icon-sm chk"><use href="#i-check"/></svg>No</label></div>
+            </div>
+          </div>
+          <div id="evacuadorProductosBox" style="display:none">
+            <div class="field"><label class="label label-req" for="evacuadorProd1">Producto Evacuador 1</label><select id="evacuadorProd1" class="select"><option value="">Seleccionar producto</option></select></div>
+            <div class="field"><label class="label label-req" for="evacuadorProd2">Producto Evacuador 2</label><select id="evacuadorProd2" class="select"><option value="">Seleccionar producto</option></select></div>
+          </div>
+        </div>
       </div>
       <div class="save-row"><button class="btn btn-primary btn-block" onclick="guardarModulo('ventas')"><svg class="icon"><use href="#i-save"/></svg>Guardar Ventas</button></div>
     </div>
@@ -690,7 +692,7 @@
 
 <!-- BOTTOM NAV -->
 <nav class="bottomnav">
-  <div class="nav-side left"><button class="nav-icon" id="btnPersona" type="button" aria-label="Mi información"><img id="navAvatarImg" alt="" style="display:none"><svg class="icon" id="navAvatarIcon"><use href="#i-user"/></svg></button></div>
+  <div class="nav-side left"><button class="nav-icon" id="btnPersona" type="button" aria-label="Mi información"><svg class="icon"><use href="#i-user"/></svg></button></div>
   <div class="fab-slot"><button class="fab" id="fab" type="button" aria-label="Navegar módulos"><span class="fab-ic"><svg class="icon icon-lg"><use href="#i-grid"/></svg></span></button></div>
   <div class="nav-side right"></div>
 </nav>
@@ -705,6 +707,7 @@
     <div class="field"><label class="label">Documento</label><input type="tel" id="pDoc" class="input" inputmode="numeric"></div>
     <div class="field"><label class="label">Teléfono</label><input type="tel" id="pTel" class="input" inputmode="tel" placeholder="Teléfono"></div>
     <div class="merc-chip" style="margin:4px 0 16px"><div class="merc-ava"><svg class="icon"><use href="#i-pin"/></svg></div><div class="merc-info"><b>Ciudad / PDV</b><span id="pPdvActual">—</span></div><button type="button" class="btn btn-outline btn-sm" onclick="cerrarPersona();goTo('inicio')"><svg class="icon icon-sm"><use href="#i-edit"/></svg>Cambiar</button></div>
+    <div class="merc-chip" style="margin:0 0 16px"><div class="merc-ava"><svg class="icon"><use href="#i-id"/></svg></div><div class="merc-info"><b>Código de sesión</b><span id="pCodigoSesion">—</span></div><button type="button" class="btn btn-outline btn-sm" onclick="copiarCodigoSesion()"><svg class="icon icon-sm"><use href="#i-copy"/></svg>Copiar</button></div>
     <button class="btn btn-primary btn-block" onclick="guardarPersona()"><svg class="icon"><use href="#i-save"/></svg>Guardar cambios</button>
 
     <div class="ayudas-sec">
@@ -728,6 +731,30 @@
   <div class="ok-sub">Toda la información quedó registrada.</div>
   <div class="ok-info" id="successInfo"></div>
   <button class="btn btn-primary btn-block" onclick="nuevaGestion()"><svg class="icon"><use href="#i-plus"/></svg>Nueva gestión</button>
+</div></div>
+
+<!-- CÓDIGO DE SESIÓN (se muestra tras el primer guardado) -->
+<div class="overlay" id="codigoSesionModal"><div class="modal">
+  <div class="ok-ic"><svg class="icon icon-xl"><use href="#i-id"/></svg></div>
+  <div class="ok-title">Guarda tu código de sesión</div>
+  <div class="ok-sub">Si sales de la app, cambias de dispositivo o se borran tus datos locales, lo necesitarás para recuperar esta gestión.</div>
+  <div class="ok-info" id="codigoSesionTexto" style="font-size:16px;font-weight:700;text-align:center;letter-spacing:.5px"></div>
+  <div style="display:flex;gap:10px">
+    <button type="button" class="btn btn-outline" style="flex:1" onclick="copiarCodigoSesion()"><svg class="icon icon-sm"><use href="#i-copy"/></svg>Copiar</button>
+    <button type="button" class="btn btn-primary" style="flex:1" onclick="cerrarCodigoSesion()">Entendido</button>
+  </div>
+</div></div>
+
+<!-- RECUPERAR SESIÓN (desde la portada) -->
+<div class="overlay" id="recuperarModal"><div class="modal">
+  <div class="modal-h" style="justify-content:center"><svg class="icon"><use href="#i-refresh"/></svg>Recuperar sesión</div>
+  <div class="modal-p" style="text-align:center">Ingresa el código de sesión que recibiste al iniciar tu gestión.</div>
+  <div class="field"><input type="text" id="codigoRecuperar" class="input" placeholder="Ej: PQP-20260723-153000-123" style="text-align:center"></div>
+  <div id="recuperarErr" style="display:none;color:var(--error);font-size:12.5px;margin-bottom:10px;text-align:center"></div>
+  <div style="display:flex;gap:10px">
+    <button type="button" class="btn btn-outline" style="flex:1" onclick="cerrarRecuperarSesion()">Cancelar</button>
+    <button type="button" class="btn btn-primary" style="flex:1" onclick="confirmarRecuperarSesion()">Recuperar</button>
+  </div>
 </div></div>
 
 <script>
@@ -755,7 +782,7 @@ const MODS = [
   {id:'resumen',      icon:'i-list',    label:'Resumen'}
 ];
 
-let parametrizacion = { ciudadesPDV:{}, skus:[], muestras:[], materialPOPCat:[] };
+let parametrizacion = { ciudadesPDV:{}, skus:[], muestras:[], materialPOPCat:[], evacuadores:[] };
 let muestrasList = [], materialPopList = [], chequeoList = [], chequeoCompList = [];
 let modoManual = false;
 let registroId = '';
@@ -763,12 +790,12 @@ let saved = {};
 let current = 'inicio';
 let flowerOpen = false;
 let ubicacion = { lat:null, lng:null, acc:null };
-let fotoPerfil = '', fotoPerfilURL = '';
 let fotosAntes = ['','',''], fotosDespues = ['','',''];
 let fotosAntesURL = ['','',''], fotosDespuesURL = ['','',''];
 let productosPedido = [], agotadosList = [], fechasList = [], ventasList = [], inventarioList = [], exhibicionList = [];
 let fotoExhibicion = '', fotoExhibicionURL = '';
 let pendCiudad = null, pendPDV = null, ayudasOpen = false, restaurando = false;
+let pendEvacuador1 = null, pendEvacuador2 = null;
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -783,10 +810,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('cedulaMercaderista').addEventListener('input', onIdentChange);
   document.getElementById('ciudad').addEventListener('change', actualizarPDV);
   document.querySelectorAll('input[name="ventaRealizada"]').forEach(r => r.addEventListener('change', onVentaChange));
+  document.querySelectorAll('input[name="evacuadorEntrega"]').forEach(r => r.addEventListener('change', onEvacuadorChange));
   document.querySelectorAll('input[name="ventaCondicion"]').forEach(r => r.addEventListener('change', () => {
     const s=document.querySelector('input[name="ventaCondicion"]:checked'); document.getElementById('ventaPlazoG').style.display=(s&&s.value==='Credito')?'block':'none';
   }));
-  document.getElementById('fileIngreso').addEventListener('change', e => leerFoto(e,'perfil'));
   document.getElementById('fileExhibicion').addEventListener('change', e => leerFoto(e,'exhibicion'));
   renderFotoSlots('antes'); renderFotoSlots('despues');
   document.querySelectorAll('input[name="tieneExhibicion"]').forEach(r => r.addEventListener('change', onExhibicionChange));
@@ -859,7 +886,7 @@ function onIdentChange(){
 // ===== PORTADA =====
 function comenzar(){
   const n=val('nombreMercaderista'), c=val('cedulaMercaderista');
-  if(!n || !c || !(fotoPerfil||fotoPerfilURL)){
+  if(!n || !c){
     const f=document.getElementById('portadaForm');
     f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake');
     document.getElementById('portadaErr').style.display='block';
@@ -871,8 +898,8 @@ function comenzar(){
   const p=document.getElementById('portada');
   p.classList.add('hide');
   window._portadaTimer = setTimeout(()=>{ p.style.display='none'; }, 650);
-  persistir(); persistirFotos();
-  guardarSilencioso(); // crea el registro y sube la foto de ingreso al Drive
+  persistir();
+  guardarSilencioso(); // crea el registro
 }
 function reabrirPortada(){
   clearTimeout(window._portadaTimer);
@@ -884,21 +911,91 @@ function reabrirPortada(){
 // Guardado inicial/silencioso (sin overlay ni validación de módulo)
 async function guardarSilencioso(){
   try{
+    const eraNuevo=!registroId;
     const gestion=recolectarGestion();
     const res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({registroId:registroId,gestion:gestion}),redirect:'follow'});
     const data=await res.json();
-    if(data&&data.success){ registroId=data.registroId||registroId; if(data.fotoPerfilURL){fotoPerfilURL=data.fotoPerfilURL;fotoPerfil='';} persistir(); }
+    if(data&&data.success){ registroId=data.registroId||registroId; persistir(); if(eraNuevo) mostrarCodigoSesion(); }
   }catch(e){ /* offline: se guardará al guardar un módulo */ }
 }
 
-// ===== FOTO + AVATAR =====
+// ===== CÓDIGO DE SESIÓN =====
+function mostrarCodigoSesion(){
+  const el=document.getElementById('codigoSesionTexto'); if(el) el.textContent=registroId;
+  document.getElementById('codigoSesionModal').classList.add('show');
+}
+function cerrarCodigoSesion(){ document.getElementById('codigoSesionModal').classList.remove('show'); }
+function copiarCodigoSesion(){
+  if(!registroId){ toast('Aún no hay código de sesión', true); return; }
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(registroId).then(()=>toast('Código copiado')).catch(()=>fallbackCopy(registroId)); }
+  else fallbackCopy(registroId);
+}
+
+// ===== RECUPERAR SESIÓN (por código, desde la portada) =====
+function abrirRecuperarSesion(){
+  document.getElementById('codigoRecuperar').value='';
+  document.getElementById('recuperarErr').style.display='none';
+  document.getElementById('recuperarModal').classList.add('show');
+}
+function cerrarRecuperarSesion(){ document.getElementById('recuperarModal').classList.remove('show'); }
+async function confirmarRecuperarSesion(){
+  const codigo=document.getElementById('codigoRecuperar').value.trim();
+  const errBox=document.getElementById('recuperarErr');
+  if(!codigo){ errBox.textContent='Ingresa el código de sesión.'; errBox.style.display='block'; return; }
+  mostrarLoading('Recuperando sesión...');
+  try{
+    const res=await fetch(GAS_URL+'?action=recuperar&registroId='+encodeURIComponent(codigo),{redirect:'follow'});
+    const data=await res.json();
+    ocultarLoading();
+    if(data&&data.success){
+      aplicarGestionRemota(data.registroId, data.gestion||{});
+      cerrarRecuperarSesion();
+      toast('Sesión recuperada correctamente');
+    } else {
+      errBox.textContent=(data&&data.error)||'No se encontró esa sesión.';
+      errBox.style.display='block';
+    }
+  }catch(err){
+    ocultarLoading();
+    errBox.textContent='Error de conexión: '+err.message;
+    errBox.style.display='block';
+  }
+}
+// Aplica al formulario una gestión traída del servidor (recuperación por código, posiblemente desde otro dispositivo)
+function aplicarGestionRemota(registroIdRecuperado, g){
+  restaurando=true;
+  registroId=registroIdRecuperado;
+  ['nombreMercaderista','cedulaMercaderista','telefono','ventaMotivoNo','descuento','observacionesGenerales','proximaVisita'].forEach(id=>{ const el=document.getElementById(id); if(el&&g[id]!=null) el.value=g[id]; });
+  setRadio('ventaRealizada', g.ventaRealizada); setRadio('materialPOP', g.materialPOP); setRadio('tieneExhibicion', g.tieneExhibicionAdicional); setRadio('evacuadorEntrega', g.entregaEvacuador);
+  onVentaChange(); onExhibicionChange(); onEvacuadorChange();
+  if(g.tipoExhibicionAdicional!=null){ const el=document.getElementById('tipoExhibicion'); if(el) el.value=g.tipoExhibicionAdicional; }
+  const promos=(g.pedidoPromos||'').split(',').map(s=>s.trim()).filter(Boolean);
+  ['promo1','promo2','promo3','promo4'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=promos.indexOf(el.value)!==-1; });
+  pendCiudad=g.ciudad||''; pendPDV=g.puntoVenta||'';
+  if(modoManual){ document.getElementById('ciudadTexto').value=pendCiudad; document.getElementById('pdvTexto').value=pendPDV; }
+  else { aplicarPendCiudadPDV(); }
+  const darId=list=>(list||[]).map(it=>Object.assign({id:uid('r')},it));
+  productosPedido=darId(g.pedidoProductos); agotadosList=darId(g.agotados); fechasList=darId(g.fechasCortas); ventasList=darId(g.ventaProductos); inventarioList=darId(g.inventarioProductos); exhibicionList=darId(g.exhibicionAdicionalProductos);
+  muestrasList=darId(g.muestrasProductos); materialPopList=darId(g.materialPOPEntregado); chequeoList=darId(g.chequeoPrecios); chequeoCompList=darId(g.chequeoCompetencia);
+  pendEvacuador1=(g.evacuadorProductos&&g.evacuadorProductos[0])?g.evacuadorProductos[0].producto:''; pendEvacuador2=(g.evacuadorProductos&&g.evacuadorProductos[1])?g.evacuadorProductos[1].producto:'';
+  renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); renderMuestras(); renderMaterialPop(); renderChequeo(); calcularTotalPedido(); calcularTotalVenta(); poblarEvacuadores();
+  fotoExhibicionURL=g.fotoExhibicionURL||'';
+  fotosAntesURL=[g.fotoAntesURL||'', g.fotoAntes2URL||'', g.fotoAntes3URL||'']; fotosDespuesURL=[g.fotoDespuesURL||'', g.fotoDespues2URL||'', g.fotoDespues3URL||''];
+  fotosAntes=['','','']; fotosDespues=['','',''];
+  renderFotoSlots('antes'); renderFotoSlots('despues');
+  if(fotoExhibicionURL){ document.getElementById('imgExhibicion').src=fotoExhibicionURL; document.getElementById('defExhibicion').style.display='none'; document.getElementById('prevExhibicion').style.display='block'; document.getElementById('uploadExhibicion').classList.add('has'); }
+  saved={}; (g.modulosGuardados||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(id=>{ saved[id]=true; });
+  current='inicio';
+  onIdentChange();
+  const p=document.getElementById('portada'); clearTimeout(window._portadaTimer); p.classList.add('hide'); p.style.display='none';
+  renderNav();
+  restaurando=false;
+  persistir();
+}
+
+// ===== FOTOS =====
 function aplicarFoto(tipo, data, slot){
-  if(tipo==='perfil'){
-    fotoPerfil=data; fotoPerfilURL='';
-    const fp=document.getElementById('fotoIngresoPrev');
-    if(fp){ fp.src=data; fp.style.display='block'; document.getElementById('fiIcon').style.display='none'; document.getElementById('fotoIngresoBox').classList.add('has'); document.getElementById('fiTitle').textContent='Selfie lista'; document.getElementById('fiSub').textContent='Toca para volver a tomar'; }
-    setAvatar(data); setPersonaFoto(data);
-  } else if(tipo==='antes'){
+  if(tipo==='antes'){
     fotosAntes[slot]=data; fotosAntesURL[slot]=''; renderFotoSlots('antes');
   } else if(tipo==='despues'){
     fotosDespues[slot]=data; fotosDespuesURL[slot]=''; renderFotoSlots('despues');
@@ -939,28 +1036,13 @@ function renderFotoSlots(tipo){
   const cnt=document.getElementById(tipo==='antes'?'cntAntes':'cntDespues');
   if(cnt){ cnt.textContent=usados+' / 3'; cnt.classList.toggle('ok', usados>=3); }
 }
-function setAvatar(src){
-  ['avatarImg','navAvatarImg'].forEach(id=>{ const im=document.getElementById(id); if(im){ im.src=src; im.style.display='block'; } });
-  ['avatarIcon','navAvatarIcon'].forEach(id=>{ const ic=document.getElementById(id); if(ic) ic.style.display='none'; });
-}
-function resetAvatar(){
-  ['avatarImg','navAvatarImg'].forEach(id=>{ const im=document.getElementById(id); if(im){ im.removeAttribute('src'); im.style.display='none'; } });
-  ['avatarIcon','navAvatarIcon'].forEach(id=>{ const ic=document.getElementById(id); if(ic) ic.style.display=''; });
-  setPersonaFoto('');
-}
-function setPersonaFoto(src){
-  const img=document.getElementById('personaFotoImg'), ph=document.getElementById('personaFotoPh');
-  if(src){ if(img){ img.src=src; img.style.display='block'; } if(ph) ph.style.display='none'; }
-  else { if(img){ img.removeAttribute('src'); img.style.display='none'; } if(ph) ph.style.display='flex'; }
-}
-
 // ===== PANEL PERSONA =====
 function abrirPersona(){
   document.getElementById('pNombre').value = val('nombreMercaderista');
   document.getElementById('pDoc').value = val('cedulaMercaderista');
   document.getElementById('pTel').value = val('telefono');
   document.getElementById('pPdvActual').textContent = (getCiudad()||'—') + ' · ' + (getPDV()||'—');
-  setPersonaFoto(fotoPerfil || fotoPerfilURL || '');
+  document.getElementById('pCodigoSesion').textContent = registroId || 'Aún no generado';
   document.getElementById('personaModal').classList.add('show');
 }
 function cerrarPersona(){ document.getElementById('personaModal').classList.remove('show'); }
@@ -984,14 +1066,14 @@ function closeAyudas(){ ayudasOpen=false; document.getElementById('ayudas').clas
 function persistir(){
   if(restaurando) return;
   try{
-    const campos=recolectarGestion(); campos.fotoPerfil=''; campos.fotoExhibicion='';
+    const campos=recolectarGestion(); campos.fotoExhibicion='';
     ['fotoAntes','fotoAntes2','fotoAntes3','fotoDespues','fotoDespues2','fotoDespues3'].forEach(k=>campos[k]='');
-    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotoPerfilURL, fotosAntesURL, fotosDespuesURL, fotoExhibicionURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList, exhibicionList, muestrasList, materialPopList, chequeoList, chequeoCompList } };
+    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotosAntesURL, fotosDespuesURL, fotoExhibicionURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList, exhibicionList, muestrasList, materialPopList, chequeoList, chequeoCompList } };
     localStorage.setItem(LS_KEY, JSON.stringify(data));
   }catch(e){}
 }
 // Las fotos base64 se guardan aparte y SOLO cuando cambian (evita lag en cada tecla/click)
-function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotoPerfil, fotosAntes, fotosDespues, fotoExhibicion })); }catch(e){} }
+function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotosAntes, fotosDespues, fotoExhibicion })); }catch(e){} }
 function restaurarSesion(){
   let raw; try{ raw=localStorage.getItem(LS_KEY); }catch(e){ return false; }
   if(!raw) return false;
@@ -1003,8 +1085,8 @@ function restaurarSesion(){
   ['nombreMercaderista','cedulaMercaderista','telefono','ventaMotivoNo',
    'descuento','observacionesGenerales','proximaVisita'].forEach(id=>{ const el=document.getElementById(id); if(el&&g[id]!=null) el.value=g[id]; });
   // Radios
-  setRadio('ventaRealizada', g.ventaRealizada); setRadio('materialPOP', g.materialPOP); setRadio('tieneExhibicion', g.tieneExhibicionAdicional);
-  onVentaChange(); onExhibicionChange();
+  setRadio('ventaRealizada', g.ventaRealizada); setRadio('materialPOP', g.materialPOP); setRadio('tieneExhibicion', g.tieneExhibicionAdicional); setRadio('evacuadorEntrega', g.entregaEvacuador);
+  onVentaChange(); onExhibicionChange(); onEvacuadorChange();
   // tipoExhibicion (select con clave diferente al id del DOM)
   if(g.tipoExhibicionAdicional!=null){ const el=document.getElementById('tipoExhibicion'); if(el) el.value=g.tipoExhibicionAdicional; }
   // Promos (desde string "a, b")
@@ -1014,11 +1096,15 @@ function restaurarSesion(){
   pendCiudad = g.ciudad||''; pendPDV = g.puntoVenta||'';
   if(modoManual){ document.getElementById('ciudadTexto').value=pendCiudad; document.getElementById('pdvTexto').value=pendPDV; }
   else { aplicarPendCiudadPDV(); }
+  // Productos Evacuador (se aplican al cargar parametrización)
+  pendEvacuador1 = (g.evacuadorProductos&&g.evacuadorProductos[0]) ? g.evacuadorProductos[0].producto : '';
+  pendEvacuador2 = (g.evacuadorProductos&&g.evacuadorProductos[1]) ? g.evacuadorProductos[1].producto : '';
+  poblarEvacuadores();
   // Listas
   const L=d.listas||{};
   productosPedido=L.productosPedido||[]; agotadosList=L.agotadosList||[]; fechasList=L.fechasList||[]; ventasList=L.ventasList||[]; inventarioList=L.inventarioList||[]; exhibicionList=L.exhibicionList||[];
   muestrasList=L.muestrasList||[]; materialPopList=L.materialPopList||[]; chequeoList=L.chequeoList||[]; chequeoCompList=L.chequeoCompList||[];
-  renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); renderMuestras(); renderMaterialPop(); renderChequeo(); calcularTotalPedido();
+  renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); renderMuestras(); renderMaterialPop(); renderChequeo(); calcularTotalPedido(); calcularTotalVenta();
   // Ubicación
   ubicacion = d.ubicacion||{lat:null,lng:null,acc:null};
   if(ubicacion.lat&&ubicacion.lng){
@@ -1030,7 +1116,7 @@ function restaurarSesion(){
   }
   // Fotos (clave separada)
   let fotos={}; try{ fotos=JSON.parse(localStorage.getItem(LS_FOTOS)||'{}'); }catch(e){}
-  fotoPerfilURL=d.fotoPerfilURL||''; fotoExhibicionURL=d.fotoExhibicionURL||'';
+  fotoExhibicionURL=d.fotoExhibicionURL||'';
   fotosAntesURL = Array.isArray(d.fotosAntesURL) ? d.fotosAntesURL.slice(0,3) : (d.fotoAntesURL?[d.fotoAntesURL,'','']:['','','']);
   fotosDespuesURL = Array.isArray(d.fotosDespuesURL) ? d.fotosDespuesURL.slice(0,3) : (d.fotoDespuesURL?[d.fotoDespuesURL,'','']:['','','']);
   while(fotosAntesURL.length<3) fotosAntesURL.push('');
@@ -1038,8 +1124,6 @@ function restaurarSesion(){
   if(Array.isArray(fotos.fotosAntes)){ fotosAntes = fotos.fotosAntes.slice(0,3); while(fotosAntes.length<3) fotosAntes.push(''); }
   if(Array.isArray(fotos.fotosDespues)){ fotosDespues = fotos.fotosDespues.slice(0,3); while(fotosDespues.length<3) fotosDespues.push(''); }
   renderFotoSlots('antes'); renderFotoSlots('despues');
-  if(fotos.fotoPerfil){ aplicarFoto('perfil', fotos.fotoPerfil); }
-  else if(fotoPerfilURL){ setAvatar(fotoPerfilURL); setPersonaFoto(fotoPerfilURL); }
   if(fotos.fotoExhibicion){ aplicarFoto('exhibicion', fotos.fotoExhibicion); }
   else if(fotoExhibicionURL){ document.getElementById('imgExhibicion').src=fotoExhibicionURL; document.getElementById('defExhibicion').style.display='none'; document.getElementById('prevExhibicion').style.display='block'; document.getElementById('uploadExhibicion').classList.add('has'); }
   // Estado
@@ -1083,7 +1167,7 @@ async function cargarParametrizacion(){
   try{
     const res=await fetch(GAS_URL+'?action=parametrizacion',{redirect:'follow'});
     const data=await res.json();
-    if(data&&data.success&&data.ciudadesPDV&&Object.keys(data.ciudadesPDV).length>0){ parametrizacion=data; parametrizacion.muestras=data.muestras||[]; parametrizacion.materialPOPCat=data.materialPOPCat||[]; modoManual=false; activarModoSelect(); cargarCiudades(); poblarSkus(); aplicarPendCiudadPDV(); }
+    if(data&&data.success&&data.ciudadesPDV&&Object.keys(data.ciudadesPDV).length>0){ parametrizacion=data; parametrizacion.muestras=data.muestras||[]; parametrizacion.materialPOPCat=data.materialPOPCat||[]; parametrizacion.evacuadores=data.evacuadores||[]; modoManual=false; activarModoSelect(); cargarCiudades(); poblarSkus(); aplicarPendCiudadPDV(); }
     else activarModoManual((data&&data.error)?data.error:'La hoja respondió sin ciudades. Revisa la hoja "PDV ciudad".');
   }catch(err){ activarModoManual('No hay conexión con el servidor. ('+err.message+')'); }
 }
@@ -1101,17 +1185,54 @@ function onVentaChange(){ const v=(document.querySelector('input[name="ventaReal
 // ===== LISTAS (pedido / agotados / fechas) =====
 function findItem(id){ return productosPedido.find(x=>x.id===id) || agotadosList.find(x=>x.id===id) || fechasList.find(x=>x.id===id) || ventasList.find(x=>x.id===id) || inventarioList.find(x=>x.id===id) || exhibicionList.find(x=>x.id===id) || muestrasList.find(x=>x.id===id) || materialPopList.find(x=>x.id===id) || chequeoList.find(x=>x.id===id) || chequeoCompList.find(x=>x.id===id); }
 
-// Ventas (categoría + SKU + cantidad)
-function agregarVenta(){ ventasList.push({id:uid('v'),categoria:'',sku:'',cantidad:1}); renderVentas(); }
-function eliminarVenta(id){ ventasList=ventasList.filter(x=>x.id!==id); renderVentas(); }
+// Ventas (categoría + SKU + cantidad + precio/subtotal, para el total de venta y la regla de Evacuador)
+function agregarVenta(){ ventasList.push({id:uid('v'),categoria:'',sku:'',cantidad:1,precio:0,subtotal:0}); renderVentas(); calcularTotalVenta(); }
+function eliminarVenta(id){ ventasList=ventasList.filter(x=>x.id!==id); renderVentas(); calcularTotalVenta(); }
 function renderVentas(){
   const cont=document.getElementById('listaVentas'); if(!cont) return; cont.innerHTML='';
   if(ventasList.length===0){ cont.innerHTML='<div class="empty-hint">Agrega los productos vendidos.</div>'; return; }
   ventasList.forEach((p,idx)=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML=`
     <div class="item-head"><div class="item-title"><svg class="icon icon-sm"><use href="#i-cart"/></svg>Vendido ${idx+1}</div><button type="button" class="btn btn-danger btn-icon" onclick="eliminarVenta('${p.id}')"><svg class="icon icon-sm"><use href="#i-trash"/></svg></button></div>
     ${campoSkuCascada(p)}
-    <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setFld('${p.id}','cantidad',this.value)"></div>`; cont.appendChild(d); });
+    <div class="field" style="margin-bottom:0"><label class="label label-req">Cantidad</label><input type="number" class="input" min="1" value="${p.cantidad}" oninput="setCantidadVenta('${p.id}',this.value)"></div>
+    <div class="item-sub">Precio: <strong>$${fmt(p.precio)}</strong> · Subtotal: <strong>$${fmt(p.subtotal)}</strong></div>`; cont.appendChild(d); });
 }
+function setCantidadVenta(id,v){
+  const p=ventasList.find(x=>x.id===id); if(!p) return;
+  p.cantidad=parseFloat(v)||0; p.subtotal=p.cantidad*(p.precio||0);
+  subDOM('listaVentas',ventasList,p); calcularTotalVenta();
+}
+// Total de venta + regla Evacuador (venta > $30.000 → pregunta y 2 productos a entregar)
+function totalVentaValor(){ return ventasList.reduce((s,p)=>s+(p.subtotal||0),0); }
+function evacuadorAplica(){ return totalVentaValor() > 30000; }
+function calcularTotalVenta(){
+  const total=totalVentaValor();
+  const elTotal=document.getElementById('totalVenta'); if(elTotal) elTotal.textContent='$'+fmt(total);
+  const sec=document.getElementById('evacuadorSeccion');
+  const aplica=total>30000;
+  if(sec) sec.style.display=aplica?'block':'none';
+  if(!aplica && !restaurando){
+    const rEv=document.querySelector('input[name="evacuadorEntrega"]:checked'); if(rEv) rEv.checked=false;
+    const box=document.getElementById('evacuadorProductosBox'); if(box) box.style.display='none';
+    const s1=document.getElementById('evacuadorProd1'), s2=document.getElementById('evacuadorProd2');
+    if(s1) s1.value=''; if(s2) s2.value='';
+  }
+  return total;
+}
+function onEvacuadorChange(){
+  const v=(document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value;
+  const box=document.getElementById('evacuadorProductosBox'); if(box) box.style.display=v==='Si'?'block':'none';
+}
+function poblarEvacuadores(){
+  ['evacuadorProd1','evacuadorProd2'].forEach((id,idx)=>{
+    const sel=document.getElementById(id); if(!sel) return;
+    const pend=idx===0?pendEvacuador1:pendEvacuador2;
+    const actual=pend!=null?pend:sel.value;
+    sel.innerHTML='<option value="">Seleccionar producto</option>'+(parametrizacion.evacuadores||[]).map(e=>'<option value="'+escAttr(e.nombre)+'">'+escHtml(e.nombre)+'</option>').join('');
+    if(actual) sel.value=actual;
+  });
+}
+function precioRefEvacuador(nombre){ const m=(parametrizacion.evacuadores||[]).find(e=>e.nombre===nombre); return m?(m.precio||0):0; }
 
 // Inventario (categoría + SKU + cantidad en estante)
 function agregarInv(){ inventarioList.push({id:uid('n'),categoria:'',sku:'',cantidad:1}); renderInventario(); }
@@ -1216,7 +1337,7 @@ function setCategoriaItem(id, valor){
   if('precio' in p){ p.precio=0; p.subtotal=0; calcularTotalPedido(); subDOM('listaPedido',productosPedido,p); }
 }
 // Re-render de las listas para refrescar opciones cuando llegan los SKU de la API
-function poblarSkus(){ renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); renderMuestras(); renderMaterialPop(); renderChequeo(); }
+function poblarSkus(){ renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); renderMuestras(); renderMaterialPop(); renderChequeo(); calcularTotalVenta(); poblarEvacuadores(); }
 
 // ===== CASCADA GENÉRICA (Muestras / Material POP: catálogo nombre+categoría) =====
 function campoCascadaCatalogo(p, catalogo){
@@ -1320,16 +1441,21 @@ function renderChequeo(){
       </select></div>
     </div>`; contC.appendChild(d); });
 }
-// Guarda el SKU elegido en el item (y precio si es pedido)
+// Guarda el SKU elegido en el item (y precio si es pedido o venta)
 function setSkuItem(id, valor){
   const p=findItem(id); if(!p) return;
   p.sku=valor;
   const m=(parametrizacion.skus||[]).find(s=>s.completo===valor);
-  if('precio' in p){
+  if(productosPedido.includes(p)){
     if(m) p.precio=m.precio||0;
     p.subtotal=p.cantidad*(p.precio||0);
     subDOM('listaPedido',productosPedido,p);
     calcularTotalPedido();
+  } else if(ventasList.includes(p)){
+    if(m) p.precio=m.precio||0;
+    p.subtotal=p.cantidad*(p.precio||0);
+    subDOM('listaVentas',ventasList,p);
+    calcularTotalVenta();
   } else if(chequeoList.includes(p)){
     renderChequeo();
   }
@@ -1382,12 +1508,20 @@ function renderResumen(){
   const ubic=(ubicacion.lat&&ubicacion.lng)?'<a href="https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'" target="_blank">Abrir en Maps</a> ('+ubicacion.lat+', '+ubicacion.lng+')':'No capturada';
 
   let h='';
-  h+=sec('i-user','Mercaderista',[ ln('Nombre',escHtml(val('nombreMercaderista'))||'—'), ln('Documento',escHtml(val('cedulaMercaderista'))||'—'), ln('Teléfono',escHtml(val('telefono'))||'—'), ln('Foto ingreso',(fotoPerfil||fotoPerfilURL)?(fotoPerfilURL?'<a href="'+fotoPerfilURL+'" target="_blank">Ver foto</a>':'Tomada ✓'):'—') ]);
+  h+=sec('i-user','Mercaderista',[ ln('Nombre',escHtml(val('nombreMercaderista'))||'—'), ln('Documento',escHtml(val('cedulaMercaderista'))||'—'), ln('Teléfono',escHtml(val('telefono'))||'—'), ln('Código de sesión',escHtml(registroId)||'—') ]);
   h+=sec('i-pin','Punto de venta',[ ln('Ciudad',escHtml(getCiudad())||'—'), ln('PDV',escHtml(getPDV())||'—'), ln('Ubicación',ubic) ]);
 
   let vH='<div class="res-line"><span class="rk">¿Se realizó venta?</span><span class="rv">'+(ventaR||'—')+'</span></div>';
   if(ventaR==='No') vH+='<div class="res-line"><span class="rk">Motivo</span><span class="rv">'+(escHtml(val('ventaMotivoNo'))||'—')+'</span></div>';
-  if(ventaR==='Si') vH+=(ventasList.length?ventasList.map((p,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(p.sku)||'—')+'</b> · '+(p.cantidad||0)+' und</div>').join(''):'<div class="res-mini">Sin productos vendidos</div>');
+  if(ventaR==='Si'){
+    vH+=(ventasList.length?ventasList.map((p,i)=>'<div class="res-mini">'+(i+1)+'. <b>'+(escHtml(p.sku)||'—')+'</b> · '+(p.cantidad||0)+' und · $'+fmt(p.subtotal||0)+'</div>').join(''):'<div class="res-mini">Sin productos vendidos</div>');
+    vH+='<div class="res-line"><span class="rk">Total venta</span><span class="rv">$'+fmt(totalVentaValor())+'</span></div>';
+    if(evacuadorAplica()){
+      const evR=(document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value||'';
+      vH+='<div class="res-line"><span class="rk">Entrega Evacuador</span><span class="rv">'+(evR||'—')+'</span></div>';
+      if(evR==='Si') vH+='<div class="res-mini">'+(escHtml(val('evacuadorProd1'))||'—')+' · '+(escHtml(val('evacuadorProd2'))||'—')+'</div>';
+    }
+  }
   h+=secRaw('i-cart','Ventas',vH);
 
   let iH='<div class="res-line"><span class="rk">Material POP</span><span class="rv">'+(pop||'—')+'</span></div>';
@@ -1452,7 +1586,25 @@ function validarModulo(id){
     if(!getCiudad()) e.push('Ciudad');
     if(!getPDV()) e.push('Punto de venta');
   }
-  if(id==='ventas'){ const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value; if(!v) e.push('¿Se realizó venta?'); if(v==='No'&&!val('ventaMotivoNo')) e.push('Motivo de no venta'); if(v==='Si'){ if(ventasList.length===0) e.push('Agrega al menos un producto vendido'); ventasList.forEach((p,i)=>{ if(!p.sku) e.push('SKU vendido '+(i+1)); if(!p.cantidad||p.cantidad<1) e.push('Cantidad vendido '+(i+1)); }); } }
+  if(id==='ventas'){
+    const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value;
+    if(!v) e.push('¿Se realizó venta?');
+    if(v==='No'&&!val('ventaMotivoNo')) e.push('Motivo de no venta');
+    if(v==='Si'){
+      if(ventasList.length===0) e.push('Agrega al menos un producto vendido');
+      ventasList.forEach((p,i)=>{ if(!p.sku) e.push('SKU vendido '+(i+1)); if(!p.cantidad||p.cantidad<1) e.push('Cantidad vendido '+(i+1)); });
+      if(evacuadorAplica()){
+        const evR=(document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value;
+        if(!evR) e.push('¿Se realizó entrega de Evacuador? (venta superior a $30.000)');
+        if(evR==='Si'){
+          const p1=val('evacuadorProd1'), p2=val('evacuadorProd2');
+          if(!p1) e.push('Producto Evacuador 1');
+          if(!p2) e.push('Producto Evacuador 2');
+          if(p1&&p2&&p1===p2) e.push('Los 2 productos Evacuador deben ser diferentes');
+        }
+      }
+    }
+  }
   if(id==='inventarios'){ inventarioList.forEach((p,i)=>{ if(!p.sku) e.push('SKU inventario '+(i+1)); }); }
   if(id==='fotos'){
     const nA=fotosAntes.map((v,i)=>v||fotosAntesURL[i]).filter(Boolean).length;
@@ -1488,10 +1640,9 @@ function recolectarGestion(){
     nombreMercaderista: val('nombreMercaderista'), cedulaMercaderista: val('cedulaMercaderista'), telefono: val('telefono'),
     ciudad: getCiudad(), puntoVenta: getPDV(),
     latitud: ubicacion.lat||'', longitud: ubicacion.lng||'', precisionGPS: ubicacion.acc||'',
-    fotoPerfil: fotoPerfil, fotoPerfilURL: fotoPerfilURL,
     ventaRealizada: (document.querySelector('input[name="ventaRealizada"]:checked')||{}).value||'',
     ventaMotivoNo: val('ventaMotivoNo'),
-    ventaProductos: ventasList.map(p=>({categoria:p.categoria,sku:p.sku,cantidad:p.cantidad})),
+    ventaProductos: ventasList.map(p=>({categoria:p.categoria,sku:p.sku,cantidad:p.cantidad,precio:p.precio,subtotal:p.subtotal})),
     materialPOP: pop,
     inventarioProductos: inventarioList.map(p=>({categoria:p.categoria,sku:p.sku,cantidad:p.cantidad})),
     fotoAntes: fotosAntes[0]||'', fotoAntes2: fotosAntes[1]||'', fotoAntes3: fotosAntes[2]||'',
@@ -1511,13 +1662,20 @@ function recolectarGestion(){
     chequeoPrecios: chequeoList.map(c=>{ const r=rangoChequeo(c); return { categoria:c.categoria, sku:c.sku, precioEncontrado:c.precio, tipoPrecio:c.tipoPrecio||'', precioReferencia:r?r.ref:'', dentroDelRango:r?r.ok:'' }; }),
     chequeoCompetencia: chequeoCompList.map(c=>({producto:c.producto, valor:c.valor, tipo:c.tipo})),
     observacionesGenerales: val('observacionesGenerales'), proximaVisita: val('proximaVisita'),
-    modulosGuardados: ''
+    modulosGuardados: '',
+    // Evacuador (venta > $30.000) — al final, no altera el resto de la estructura
+    entregaEvacuador: evacuadorAplica() ? ((document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value||'') : '',
+    evacuadorProductos: (evacuadorAplica() && (document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value==='Si') ? [
+      { producto: val('evacuadorProd1'), precio: precioRefEvacuador(val('evacuadorProd1')) },
+      { producto: val('evacuadorProd2'), precio: precioRefEvacuador(val('evacuadorProd2')) }
+    ] : []
   };
 }
 
 async function guardarModulo(id, finalizar){
   const errs=validarModulo(id);
   if(errs.length>0){ alert('Completa antes de guardar:\n\n• '+errs.join('\n• ')); return; }
+  const eraNuevo=!registroId;
   const gestion=recolectarGestion();
   saved[id]=true;
   gestion.modulosGuardados=Object.keys(saved).filter(k=>saved[k]).join(', ');
@@ -1528,7 +1686,7 @@ async function guardarModulo(id, finalizar){
     const data=await res.json(); ocultarLoading();
     if(data&&data.success){
       registroId=data.registroId||registroId;
-      if(data.fotoPerfilURL){ fotoPerfilURL=data.fotoPerfilURL; fotoPerfil=''; }
+      if(eraNuevo&&registroId) mostrarCodigoSesion();
       let touched=false;
       [['fotoAntesURL',0,'antes'],['fotoAntes2URL',1,'antes'],['fotoAntes3URL',2,'antes'],['fotoDespuesURL',0,'despues'],['fotoDespues2URL',1,'despues'],['fotoDespues3URL',2,'despues']].forEach(([key,slot,tipo])=>{
         if(data[key]){ if(tipo==='antes'){fotosAntesURL[slot]=data[key]; fotosAntes[slot]='';} else {fotosDespuesURL[slot]=data[key]; fotosDespues[slot]='';} touched=true; }
@@ -1559,12 +1717,20 @@ function generarTextoGestion(){
   t+='👤 *'+(val('nombreMercaderista')||'-')+'*\n';
   t+='🪪 CC '+(val('cedulaMercaderista')||'-')+'\n';
   if(val('telefono')) t+='📞 '+val('telefono')+'\n';
-  if(fotoPerfilURL) t+='🤳 Foto ingreso: '+fotoPerfilURL+'\n';
+  t+='🔑 Código de sesión: '+(registroId||'-')+'\n';
   t+='📍 '+(getCiudad()||'-')+' · '+(getPDV()||'-')+'\n';
   if(ubicacion.lat&&ubicacion.lng) t+='🗺️ https://www.google.com/maps?q='+ubicacion.lat+','+ubicacion.lng+'\n';
   t+='\n🛒 *VENTAS:* '+(ventaR||'-')+'\n';
   if(ventaR==='No') t+='   ↳ Motivo: '+(val('ventaMotivoNo')||'-')+'\n';
-  if(ventaR==='Si') ventasList.forEach(p=>{ t+='   • '+(p.sku||'-')+'  _x'+(p.cantidad||0)+'_\n'; });
+  if(ventaR==='Si'){
+    ventasList.forEach(p=>{ t+='   • '+(p.sku||'-')+'  _x'+(p.cantidad||0)+'_ → $'+fmt(p.subtotal||0)+'\n'; });
+    t+='   Total venta: $'+fmt(totalVentaValor())+'\n';
+    const evR=(document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value||'';
+    if(evacuadorAplica()){
+      t+='   🎁 Entrega Evacuador: '+(evR||'-')+'\n';
+      if(evR==='Si'){ t+='      · '+(val('evacuadorProd1')||'-')+'\n      · '+(val('evacuadorProd2')||'-')+'\n'; }
+    }
+  }
   t+='\n📦 *INVENTARIO*  (POP: '+(pop||'-')+')\n';
   if(inventarioList.length) inventarioList.forEach(p=>{ t+='   • '+(p.sku||'-')+'  _'+(p.cantidad||0)+' und_\n'; }); else t+='   • -\n';
   const tieneEx2=(document.querySelector('input[name="tieneExhibicion"]:checked')||{}).value||'';
