@@ -481,8 +481,14 @@
             </div>
           </div>
           <div id="evacuadorProductosBox" style="display:none">
-            <div class="field"><label class="label label-req" for="evacuadorProd1">Producto Evacuador 1</label><select id="evacuadorProd1" class="select"><option value="">Seleccionar producto</option></select></div>
-            <div class="field"><label class="label label-req" for="evacuadorProd2">Producto Evacuador 2</label><select id="evacuadorProd2" class="select"><option value="">Seleccionar producto</option></select></div>
+            <div class="field-row">
+              <div class="field"><label class="label label-req" for="evacuadorProd1">Producto Evacuador 1</label><select id="evacuadorProd1" class="select"><option value="">Seleccionar producto</option></select></div>
+              <div class="field"><label class="label label-req" for="evacuadorCant1">Cantidad</label><input type="number" id="evacuadorCant1" class="input" min="1" value="1"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label class="label label-req" for="evacuadorProd2">Producto Evacuador 2</label><select id="evacuadorProd2" class="select"><option value="">Seleccionar producto</option></select></div>
+              <div class="field"><label class="label label-req" for="evacuadorCant2">Cantidad</label><input type="number" id="evacuadorCant2" class="input" min="1" value="1"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -810,6 +816,7 @@ let productosPedido = [], agotadosList = [], fechasList = [], ventasList = [], i
 let fotoExhibicion = '', fotoExhibicionURL = '';
 let pendCiudad = null, pendPDV = null, ayudasOpen = false, restaurando = false;
 let pendEvacuador1 = null, pendEvacuador2 = null;
+let registroPromise = null; // promesa de la creación inicial del registro; guardarModulo() la espera para no crear una fila duplicada
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -900,6 +907,7 @@ function onIdentChange(){
 
 // ===== PORTADA =====
 function comenzar(){
+  if(window._comenzando) return; // evita doble-tap disparando dos creaciones en paralelo
   const n=val('nombreMercaderista'), c=val('cedulaMercaderista');
   if(!n || !c || !(fotoPerfil||fotoPerfilURL)){
     const f=document.getElementById('portadaForm');
@@ -907,6 +915,7 @@ function comenzar(){
     document.getElementById('portadaErr').style.display='block';
     return;
   }
+  window._comenzando=true;
   document.getElementById('portadaErr').style.display='none';
   onIdentChange();
   capturarUbicacion(); // captura GPS automática al entrar (este click habilita el permiso)
@@ -914,9 +923,12 @@ function comenzar(){
   p.classList.add('hide');
   window._portadaTimer = setTimeout(()=>{ p.style.display='none'; }, 650);
   persistir(); persistirFotos();
-  guardarSilencioso(); // crea el registro y sube la selfie al Drive
+  // Crea el registro y sube la selfie al Drive. guardarModulo() espera esta misma promesa
+  // antes de guardar cualquier módulo, para no crear una fila duplicada si el usuario avanza muy rápido.
+  registroPromise = guardarSilencioso();
 }
 function reabrirPortada(){
+  window._comenzando=false; // permite volver a tocar "Comenzar" al reabrir la portada
   clearTimeout(window._portadaTimer);
   const p=document.getElementById('portada');
   p.style.display='flex';
@@ -993,6 +1005,9 @@ function aplicarGestionRemota(registroIdRecuperado, g){
   productosPedido=darId(g.pedidoProductos); agotadosList=darId(g.agotados); fechasList=darId(g.fechasCortas); ventasList=darId(g.ventaProductos); inventarioList=darId(g.inventarioProductos); exhibicionList=darId(g.exhibicionAdicionalProductos);
   muestrasList=darId(g.muestrasProductos); materialPopList=darId(g.materialPOPEntregado); chequeoList=darId(g.chequeoPrecios); chequeoCompList=darId(g.chequeoCompetencia);
   pendEvacuador1=(g.evacuadorProductos&&g.evacuadorProductos[0])?g.evacuadorProductos[0].producto:''; pendEvacuador2=(g.evacuadorProductos&&g.evacuadorProductos[1])?g.evacuadorProductos[1].producto:'';
+  { const c1=document.getElementById('evacuadorCant1'), c2=document.getElementById('evacuadorCant2');
+    if(c1) c1.value=(g.evacuadorProductos&&g.evacuadorProductos[0]&&g.evacuadorProductos[0].cantidad)||1;
+    if(c2) c2.value=(g.evacuadorProductos&&g.evacuadorProductos[1]&&g.evacuadorProductos[1].cantidad)||1; }
   renderPedido(); renderAgotados(); renderFechas(); renderVentas(); renderInventario(); renderExhibicion(); renderMuestras(); renderMaterialPop(); renderChequeo(); calcularTotalPedido(); calcularTotalVenta(); poblarEvacuadores();
   fotoPerfil=''; fotoPerfilURL=g.fotoPerfilURL||'';
   if(fotoPerfilURL){ const box=document.getElementById('fotoIngresoBox'); if(box){ box.classList.add('has'); document.getElementById('fiTitle').textContent='Selfie lista ✓'; document.getElementById('fiSub').textContent='Toca para volver a tomar'; } }
@@ -1121,6 +1136,9 @@ function restaurarSesion(){
   // Productos Evacuador (se aplican al cargar parametrización)
   pendEvacuador1 = (g.evacuadorProductos&&g.evacuadorProductos[0]) ? g.evacuadorProductos[0].producto : '';
   pendEvacuador2 = (g.evacuadorProductos&&g.evacuadorProductos[1]) ? g.evacuadorProductos[1].producto : '';
+  { const c1=document.getElementById('evacuadorCant1'), c2=document.getElementById('evacuadorCant2');
+    if(c1) c1.value=(g.evacuadorProductos&&g.evacuadorProductos[0]&&g.evacuadorProductos[0].cantidad)||1;
+    if(c2) c2.value=(g.evacuadorProductos&&g.evacuadorProductos[1]&&g.evacuadorProductos[1].cantidad)||1; }
   poblarEvacuadores();
   // Listas
   const L=d.listas||{};
@@ -1239,6 +1257,8 @@ function calcularTotalVenta(){
     const box=document.getElementById('evacuadorProductosBox'); if(box) box.style.display='none';
     const s1=document.getElementById('evacuadorProd1'), s2=document.getElementById('evacuadorProd2');
     if(s1) s1.value=''; if(s2) s2.value='';
+    const c1=document.getElementById('evacuadorCant1'), c2=document.getElementById('evacuadorCant2');
+    if(c1) c1.value=1; if(c2) c2.value=1;
   }
   return total;
 }
@@ -1574,7 +1594,7 @@ function renderResumen(){
     if(evacuadorAplica()){
       const evR=(document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value||'';
       vH+='<div class="res-line"><span class="rk">Entrega Evacuador</span><span class="rv">'+(evR||'—')+'</span></div>';
-      if(evR==='Si') vH+='<div class="res-mini">'+(escHtml(val('evacuadorProd1'))||'—')+' · '+(escHtml(val('evacuadorProd2'))||'—')+'</div>';
+      if(evR==='Si') vH+='<div class="res-mini">'+(escHtml(val('evacuadorProd1'))||'—')+' · x'+(val('evacuadorCant1')||0)+'</div><div class="res-mini">'+(escHtml(val('evacuadorProd2'))||'—')+' · x'+(val('evacuadorCant2')||0)+'</div>';
     }
   }
   h+=secRaw('i-cart','Ventas',vH);
@@ -1653,8 +1673,11 @@ function validarModulo(id){
         if(!evR) e.push('¿Se realizó entrega de Evacuador? (venta superior a $30.000)');
         if(evR==='Si'){
           const p1=val('evacuadorProd1'), p2=val('evacuadorProd2');
+          const c1=parseFloat(val('evacuadorCant1')), c2=parseFloat(val('evacuadorCant2'));
           if(!p1) e.push('Producto Evacuador 1');
+          if(!c1||c1<1) e.push('Cantidad Evacuador 1');
           if(!p2) e.push('Producto Evacuador 2');
+          if(!c2||c2<1) e.push('Cantidad Evacuador 2');
           if(p1&&p2&&p1===p2) e.push('Los 2 productos Evacuador deben ser diferentes');
         }
       }
@@ -1722,8 +1745,8 @@ function recolectarGestion(){
     // Evacuador (venta > $30.000) — al final, no altera el resto de la estructura
     entregaEvacuador: evacuadorAplica() ? ((document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value||'') : '',
     evacuadorProductos: (evacuadorAplica() && (document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value==='Si') ? [
-      { producto: val('evacuadorProd1'), precio: precioRefEvacuador(val('evacuadorProd1')) },
-      { producto: val('evacuadorProd2'), precio: precioRefEvacuador(val('evacuadorProd2')) }
+      { producto: val('evacuadorProd1'), cantidad: parseFloat(val('evacuadorCant1'))||0, precio: precioRefEvacuador(val('evacuadorProd1')) },
+      { producto: val('evacuadorProd2'), cantidad: parseFloat(val('evacuadorCant2'))||0, precio: precioRefEvacuador(val('evacuadorProd2')) }
     ] : []
   };
 }
@@ -1731,6 +1754,9 @@ function recolectarGestion(){
 async function guardarModulo(id, finalizar){
   const errs=validarModulo(id);
   if(errs.length>0){ alert('Completa antes de guardar:\n\n• '+errs.join('\n• ')); return; }
+  // Si el registro inicial (portada) todavía se está creando, espera a que termine para no
+  // generar una fila duplicada con un registroId distinto (eso separaba la foto de los demás datos).
+  if(registroPromise){ mostrarLoading('Guardando...'); try{ await registroPromise; }catch(e){} registroPromise=null; }
   const eraNuevo=!registroId;
   const gestion=recolectarGestion();
   saved[id]=true;
@@ -1785,7 +1811,7 @@ function generarTextoGestion(){
     const evR=(document.querySelector('input[name="evacuadorEntrega"]:checked')||{}).value||'';
     if(evacuadorAplica()){
       t+='   🎁 Entrega Evacuador: '+(evR||'-')+'\n';
-      if(evR==='Si'){ t+='      · '+(val('evacuadorProd1')||'-')+'\n      · '+(val('evacuadorProd2')||'-')+'\n'; }
+      if(evR==='Si'){ t+='      · '+(val('evacuadorProd1')||'-')+' _x'+(val('evacuadorCant1')||0)+'_\n      · '+(val('evacuadorProd2')||'-')+' _x'+(val('evacuadorCant2')||0)+'_\n'; }
     }
   }
   t+='\n📦 *INVENTARIO*  (POP: '+(pop||'-')+')\n';
