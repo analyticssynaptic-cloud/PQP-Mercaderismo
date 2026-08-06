@@ -784,6 +784,7 @@ const AYUDAS = {
 };
 const LS_KEY = 'pqp_session_v1';
 const LS_FOTOS = 'pqp_fotos_v1';
+const SESION_MAX_MS = 6 * 60 * 60 * 1000; // si dejan la sesión abierta más de 6h, se cierra sola
 
 // Orden = ruta lógica de la visita: llegada, inventario, fotos, ventas, exhibición, agotados, fechas, muestras, POP, chequeo, sugerido, resumen
 const MODS = [
@@ -1107,17 +1108,22 @@ function persistir(){
   try{
     const campos=recolectarGestion(); campos.fotoPerfil=''; campos.fotoExhibicion='';
     ['fotoAntes','fotoAntes2','fotoAntes3','fotoDespues','fotoDespues2','fotoDespues3'].forEach(k=>campos[k]='');
-    const data={ loggedIn:true, registroId, saved, current, ubicacion, fotosAntesURL, fotosDespuesURL, fotoExhibicionURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList, exhibicionList, muestrasList, materialPopList, chequeoList, chequeoCompList } };
+    const data={ loggedIn:true, guardadoEn:Date.now(), registroId, saved, current, ubicacion, fotosAntesURL, fotosDespuesURL, fotoExhibicionURL, campos, listas:{ productosPedido, agotadosList, fechasList, ventasList, inventarioList, exhibicionList, muestrasList, materialPopList, chequeoList, chequeoCompList } };
     localStorage.setItem(LS_KEY, JSON.stringify(data));
   }catch(e){}
 }
 // Las fotos base64 se guardan aparte y SOLO cuando cambian (evita lag en cada tecla/click)
 function persistirFotos(){ try{ localStorage.setItem(LS_FOTOS, JSON.stringify({ fotoPerfil, fotosAntes, fotosDespues, fotoExhibicion })); }catch(e){} }
+function limpiarSesionLocal(){ try{ localStorage.removeItem(LS_KEY); localStorage.removeItem(LS_FOTOS); }catch(e){} }
 function restaurarSesion(){
   let raw; try{ raw=localStorage.getItem(LS_KEY); }catch(e){ return false; }
   if(!raw) return false;
   let d; try{ d=JSON.parse(raw); }catch(e){ return false; }
   if(!d || !d.loggedIn || !d.campos) return false;
+  if(d.guardadoEn && (Date.now()-d.guardadoEn) > SESION_MAX_MS){
+    limpiarSesionLocal();
+    return false; // sesión vieja (>20h abierta): se descarta y arranca de cero en la portada
+  }
   restaurando = true;
   const g=d.campos;
   // Campos simples
@@ -1842,7 +1848,7 @@ function copiarGestion(){
 }
 function fallbackCopy(t){ const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.focus(); ta.select(); try{ document.execCommand('copy'); toast('Copiado al portapapeles'); }catch(e){ prompt('Copia manual:', t); } document.body.removeChild(ta); }
 
-function nuevaGestion(){ try{ localStorage.removeItem(LS_KEY); localStorage.removeItem(LS_FOTOS); }catch(e){} location.reload(); }
+function nuevaGestion(){ limpiarSesionLocal(); location.reload(); }
 function val(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
 </script>
 </body>
