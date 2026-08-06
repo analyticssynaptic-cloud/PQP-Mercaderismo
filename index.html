@@ -863,10 +863,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== NAV =====
 function identDone(){ return !!(val('nombreMercaderista') && val('cedulaMercaderista')); }
-function modAvailable(id){ return true; } // navegación libre tras el login
+function esSabado(){ return new Date().getDay() === 6; } // 0=domingo...6=sábado
+function modAvailable(id){ return id !== 'ventas' || esSabado(); } // Ventas solo se habilita los sábados
 function availableMods(){ return MODS.slice(); }
 
 function goTo(id){
+  if(!modAvailable(id)){ toast('El módulo de Ventas solo está disponible los sábados', true); closeFlower(); return; }
   current=id; renderNav(); closeFlower();
   if(id==='resumen') renderResumen();
 }
@@ -1169,6 +1171,7 @@ function restaurarSesion(){
   else if(fotoExhibicionURL){ document.getElementById('imgExhibicion').src=fotoExhibicionURL; document.getElementById('defExhibicion').style.display='none'; document.getElementById('prevExhibicion').style.display='block'; document.getElementById('uploadExhibicion').classList.add('has'); }
   // Estado
   saved=d.saved||{}; registroId=d.registroId||''; current=d.current||'inicio';
+  if(!modAvailable(current)) current='inicio'; // ej. quedó abierto en Ventas un sábado y hoy ya no está disponible
   onIdentChange();
   // Ocultar portada (ya estaba logueado)
   const p=document.getElementById('portada'); p.classList.add('hide'); p.style.display='none';
@@ -1662,6 +1665,7 @@ function validarModulo(id){
     if(!getPDV()) e.push('Punto de venta');
   }
   if(id==='ventas'){
+    if(!esSabado()) e.push('El módulo de Ventas solo está disponible los sábados');
     const v=(document.querySelector('input[name="ventaRealizada"]:checked')||{}).value;
     if(!v) e.push('¿Se realizó venta?');
     if(v==='No'&&!val('ventaMotivoNo')) e.push('Motivo de no venta');
